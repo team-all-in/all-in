@@ -1,7 +1,9 @@
-export default function Header({}) {
+import Logo from './logo';
+
+export default function Header() {
   return (
-    <header className="border border-red-500 bg-red-500/30 backdrop-blur fixed top-0 w-full p-2 z-40">
-      header
+    <header className='fixed top-0 z-40 w-full border-b bg-card/10 p-2 backdrop-blur'>
+      <Logo />
     </header>
   );
 }
