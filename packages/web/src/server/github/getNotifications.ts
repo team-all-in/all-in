@@ -1,34 +1,13 @@
 'use server';
 
-import { createClient } from '~/libs/supabase/server';
 import type { Message } from '~/libs/types/message';
-import { getUser } from '../auth/data';
+import { API_URL, header } from './configs';
 import type { GitHubNotificationsResponse } from './types';
+import { getToken } from './utils';
 
 export const getGitHubNotifications = async (startDate: string): Promise<Message[] | undefined> => {
   // DBからトークン取得
-  const user = await getUser();
-  if (!user) {
-    console.error('user not found');
-    return;
-  }
-
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from('github_settings')
-    .select('encrypt_pat_token')
-    .eq('user_id', user.id)
-    .single();
-
-  if (error) {
-    if (error.code !== 'PGRST116') {
-      console.error('error', error);
-    }
-    return;
-  }
-
-  //TODO: トークンを復号化
-  const token = data.encrypt_pat_token;
+  const token = await getToken();
 
   // GitHub APIで通知取得
   const baseDate = new Date(startDate);
@@ -36,17 +15,16 @@ export const getGitHubNotifications = async (startDate: string): Promise<Message
 
   try {
     const params = new URLSearchParams({
-      all: 'true',
+      all: 'false',
       since: baseDate.toISOString(),
       before: fiveDaysLater.toISOString(),
-      per_page: '30',
+      per_page: '50',
     });
 
-    const response = await fetch(`https://api.github.com/notifications?${params}`, {
+    const response = await fetch(`${API_URL}?${params}`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
+        ...header,
       },
     });
 
@@ -56,6 +34,9 @@ export const getGitHubNotifications = async (startDate: string): Promise<Message
 
     const notifications = (await response.json()) as GitHubNotificationsResponse;
 
+    console.log('notifications', notifications);
+
+    // 通知をメッセージに変換
     const messages: Message[] = notifications.map(notification => ({
       id: notification.id,
       app: 'github',
