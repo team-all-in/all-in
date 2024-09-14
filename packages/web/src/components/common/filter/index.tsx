@@ -1,5 +1,5 @@
-import PcFilter from "./pc";
-import SpFilter from "./sp";
+import PcFilter from './pc';
+import SpFilter from './sp';
 
 export default function Filter() {
   return (
