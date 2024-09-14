@@ -21,11 +21,11 @@ export const getGitHubNotifications = async (startDate: string): Promise<Message
     .single();
 
   if (error) {
-    console.error('error', error);
+    if (error.code !== 'PGRST116') {
+      console.error('error', error);
+    }
     return;
   }
-
-  console.log('data', data.encrypt_pat_token);
 
   //TODO: トークンを復号化
   const token = data.encrypt_pat_token;
