@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Filter from '~/components/common/filter';
 import SettingsLink from './components/settings-link';
 
@@ -9,8 +10,9 @@ export default function InboxLayout({
   return (
     <div className='flex h-screen flex-col overflow-hidden sm:flex-row'>
       <SettingsLink />
-
-      <Filter />
+      <Suspense fallback={null}>
+        <Filter />
+      </Suspense>
       <main className='flex-1'>{children}</main>
     </div>
   );
