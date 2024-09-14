@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useQueryState } from 'nuqs';
-import { cn } from '~/lib/classes';
+import { cn } from '~/libs/classes';
 
 export const filterItems: string[] = ['discord', 'slack', 'github'];
 
