@@ -27,8 +27,7 @@ def message_test(message, say):
     print("-"*40)
     print(message)
     print("-"*40)
-    say(f"Hello, <@{message['user']}>! This message's ts(message_id) is {message['ts']}")
-    say(f"{message['text']}")
+    say(f"channel: {message['channel']}, ts(message_id) is {message['ts']},\n {message['text']}")
 
 
 channels_list = client.conversations_list()
@@ -38,8 +37,11 @@ for channel_id in channel_ids:
     # 全チャンネルにbotを追加
     client.conversations_join(channel=channel_id)
 
-# history = client.conversations_history(channel='C07MELMF3TM')
-# print(history)
+channel = 'C07MELMF3TM'
+ts = '1726314416.256329'
+
+history = client.conversations_history(channel=channel, inclusive=True, latest=ts, limit=1)
+print(history['messages'][0]['text'])
 
 # アプリを起動します
 if __name__ == "__main__":
