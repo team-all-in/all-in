@@ -1,0 +1,152 @@
+---
+name: plan
+on:
+  workflow_call:
+    inputs:
+      targets:
+        required: true
+        type: string
+      ref:
+        required: true
+        type: string
+    secrets:
+      gh_app_id:
+        required: true
+      gh_app_private_key:
+        required: true
+
+jobs:
+  plan:
+    timeout-minutes: 30
+    name: "plan (${{matrix.target.target}})"
+    runs-on: ${{matrix.target.runs_on}}
+    permissions:
+      id-token: write # For OIDC
+      contents: read # To checkout private repositories
+    env:
+      TFACTION_TARGET: ${{matrix.target.target}}
+      TFACTION_JOB_TYPE: ${{matrix.target.job_type}}
+      GH_COMMENT_SHA1: ${{inputs.ref}}
+      TFCMT_SHA: ${{inputs.ref}}
+    strategy:
+      fail-fast: true
+      matrix:
+        target: ${{fromJSON(inputs.targets)}}
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          ref: ${{inputs.ref}}
+
+      - name: Generate token (aqua)
+        id: aqua_installer_token
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        with:
+          app_id: ${{secrets.gh_app_id}}
+          private_key: ${{secrets.gh_app_private_key}}
+          permissions: >-
+            {}
+          repositories: >-
+            []
+
+      - uses: aquaproj/aqua-installer@6ce1f8848ec8e61f14d57bd5d7597057a6dd187c # v3.0.1
+        with:
+          aqua_version: v2.31.0
+        env:
+          AQUA_GITHUB_TOKEN: ${{steps.aqua_installer_token.outputs.token}}
+
+      - uses: suzuki-shunsuke/tfaction/export-secrets@01829b75913b9424932c982b2d9e05ee908b647f # v1.5.2
+        with:
+          # If this action doesn't export secrets as you expect, please check if secrets are passed to this action properly.
+          # If you use reusable workflows, maybe secrets aren't passed to the reusable workflow.
+          # If so, please pass secrets properly.
+          # 
+          # - https://docs.github.com/en/actions/using-workflows/reusing-workflows#passing-inputs-and-secrets-to-a-reusable-workflow
+          # - https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsecrets
+          secrets: ${{toJSON(secrets)}}
+
+      - name: Generate token to download private Terraform Modules
+        id: gh_setup_token
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        with:
+          app_id: ${{ secrets.gh_app_id }}
+          private_key: ${{ secrets.gh_app_private_key }}
+          # If you use private registries, contents:read is required
+          permissions: >-
+            {
+              "contents": "read"
+            }
+          # private repositories hosting private modules
+          repositories: >-
+            []
+
+      # This is required to download private modules in `terraform init`
+      - run: gh auth setup-git
+        env:
+          GITHUB_TOKEN: ${{steps.gh_setup_token.outputs.token}}
+
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        with:
+          app_id: ${{secrets.gh_app_id}}
+          private_key: ${{secrets.gh_app_private_key}}
+          # issues:write - Create labels
+          # pull_requests:write - Post comments and set labels
+          # contents:write - Push commits
+          permissions: >-
+            {
+              "pull_requests": "write",
+              "issues": "write",
+              "contents": "write"
+            }
+          repositories: >-
+            ["${{github.event.repository.name}}"]
+
+      - uses: suzuki-shunsuke/tfaction/setup@01829b75913b9424932c982b2d9e05ee908b647f # v1.5.2
+        with:
+          github_token: ${{steps.generate_token.outputs.token}}
+        env:
+          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}} # For GitHub Provider
+
+      - uses: suzuki-shunsuke/tfaction/get-target-config@01829b75913b9424932c982b2d9e05ee908b647f # v1.5.2
+        id: target-config
+
+      - name: Generate token (pull request write)
+        id: pull_request_token
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        with:
+          app_id: ${{secrets.gh_app_id}}
+          private_key: ${{secrets.gh_app_private_key}}
+          permissions: >-
+            {
+              "pull_requests": "write"
+            }
+          repositories: >-
+            ["${{github.event.repository.name}}"]
+
+      - run: |
+          set -euo pipefail
+          tfprovidercheck -v
+          github-comment exec -- terraform version -json | github-comment exec -- tfprovidercheck
+        working-directory: ${{ steps.target-config.outputs.working_directory }}
+        env:
+          TFPROVIDERCHECK_CONFIG_BODY: |
+            providers:
+              - name: registry.terraform.io/hashicorp/aws
+              - name: registry.terraform.io/hashicorp/google
+              - name: registry.terraform.io/hashicorp/null
+              - name: registry.terraform.io/hashicorp/tls
+              - name: registry.terraform.io/integrations/github
+          GITHUB_TOKEN: ${{steps.pull_request_token.outputs.token}} # For github-comment
+
+      - uses: suzuki-shunsuke/tfaction/test@01829b75913b9424932c982b2d9e05ee908b647f # v1.5.2
+        with:
+          github_token: ${{steps.generate_token.outputs.token}}
+        env:
+          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}} # For GitHub Provider and reviewdog and github-comment
+
+      - uses: suzuki-shunsuke/tfaction/plan@01829b75913b9424932c982b2d9e05ee908b647f # v1.5.2
+        with:
+          github_token: ${{steps.generate_token.outputs.token}}
+        env:
+          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}} # For GitHub Provider and tfcmt and github-comment

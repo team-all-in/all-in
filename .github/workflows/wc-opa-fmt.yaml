@@ -1,0 +1,44 @@
+---
+name: opa-fmt
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: false
+        type: string
+    secrets:
+      gh_app_id:
+        required: false
+      gh_app_private_key:
+        required: false
+jobs:
+  opa-fmt:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # To checkout private repositories
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          ref: ${{inputs.ref}}
+
+      - id: generate_token
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        with:
+          app_id: ${{secrets.gh_app_id}}
+          private_key: ${{secrets.gh_app_private_key}}
+          # contents:write - Push commits
+          permissions: >-
+            {"contents": "write"}
+          repositories: >-
+            ["${{github.event.repository.name}}"]
+
+      - uses: aquaproj/aqua-installer@6ce1f8848ec8e61f14d57bd5d7597057a6dd187c # v3.0.1
+        with:
+          aqua_version: v2.31.0
+        env:
+          AQUA_GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+
+      - uses: suzuki-shunsuke/github-action-opa-fmt@59d2b3726741e2aeb3fc96ba2cbdfd05ae879f28 # v0.1.0
+        with:
+          github_token: ${{steps.generate_token.outputs.token}}
