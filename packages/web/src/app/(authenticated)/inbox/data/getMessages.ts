@@ -5,11 +5,13 @@ import type { Message } from '~/libs/types/message';
 import { getGitHubNotifications } from '~/server/github/getNotifications';
 
 export const getMessages = async (): Promise<Message[] | undefined> => {
-  console.log('getMessages');
+  const messages: Message[] = [];
+
+  // console.log('getMessages');
 
   // TODO: 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
-  const messages = dummyMessages;
-  console.log('messages', messages);
+  messages.push(...dummyMessages);
+  // console.log('messages', messages);
 
   // TODO: Discord、SlackメッセージId含めたリクエストをバックエンドに送る。
 
@@ -18,14 +20,13 @@ export const getMessages = async (): Promise<Message[] | undefined> => {
   // TODO: Discord、Slackメッセージの最遅日の日付を取得する。
 
   // TODO: 最遅日の日付と今日から+5日の日付を比較して、大きい方の日付から今日までのGitHubの通知を取得する。
-  const githubMessages = await getGitHubNotifications();
-  console.log('githubMessages', githubMessages);
+
+  const githubMessages = await getGitHubNotifications('2024-09-14T00:00:00Z');
 
   // TODO: GitHubの通知とDiscord、Slackメッセージの統合する。
-  if (!githubMessages) {
-    return messages;
+  if (githubMessages) {
+    messages.push(...githubMessages);
   }
-  const margeMessages = [...messages, ...githubMessages];
 
-  return margeMessages;
+  return messages;
 };
