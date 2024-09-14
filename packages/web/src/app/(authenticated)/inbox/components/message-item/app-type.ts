@@ -3,12 +3,6 @@ import DiscordImg from '../../../../../../public/app-logo/discord.svg'
 import SlackImg from '../../../../../../public/app-logo/slack.svg'
 import GitHub from '../../../../../../public/app-logo/github.svg'
 
-enum AppType {
-  Discord,
-  Slack,
-  GitHub
-}
-
 enum ButtonState {
   Black,
   White
@@ -26,20 +20,20 @@ type AppProps = {
   buttonBackgroundState: ButtonState
 }
 
-const AppsProps: Record<AppType, AppProps> = {
-  [AppType.Discord]: {
+const AppsProps: Record<string, AppProps> = {
+  discord: {
     img: DiscordImg,
     hasInvert: true,
     itemClass: " text-white bg-blue-800",
     buttonBackgroundState: ButtonState.White
   },
-  [AppType.Slack]: {
+  slack: {
     img: SlackImg,
     hasInvert: false,
     itemClass: " text-black bg-white",
     buttonBackgroundState: ButtonState.Black
   },
-  [AppType.GitHub]: {
+  gitHub: {
     img: GitHub,
     hasInvert: true,
     itemClass: " text-white bg-black",
@@ -47,7 +41,12 @@ const AppsProps: Record<AppType, AppProps> = {
   }
 }
 
-export {
-  AppType, ButtonState, ButtonColorClasses, AppsProps
-}
+const defaultAppProps: AppProps = {
+  img: undefined,
+  hasInvert: false,
+  itemClass: " text-black bg-gray-400",
+  buttonBackgroundState: ButtonState.Black
+};
+
+export { ButtonState, ButtonColorClasses, AppsProps, defaultAppProps }
 export type { AppProps }

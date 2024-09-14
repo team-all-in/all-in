@@ -1,32 +1,28 @@
-enum LabelType {
-  High,
-  Middle,
-  Row
-}
 
 type LabelProps = {
   class: string,
   text: string
 }
 
-const LabelsProps: Record<LabelType, LabelProps> = {
-  [LabelType.High]: {
+const LabelsProps: Record<string, LabelProps> = {
+  high: {
     class: "border-red-500 text-red-500",
     text: "High"
   },
-  [LabelType.Middle]: {
+  medium: {
     class: "border-yellow-500 text-yellow-500",
-    text: "Middle"
+    text: "Medium"
   },
-  [LabelType.Row]: {
+  low: {
     class: "border-blue-500 text-blue-500",
-    text: "Row"
+    text: "Low"
   }
 }
 
+const defaultLabelsProps: LabelProps = {
+    class: "border-red-500 text-red-500",
+    text: "High"
+};
 
-
-export {
-  LabelType, LabelsProps
-}
+export { LabelsProps, defaultLabelsProps }
 export type { LabelProps }
