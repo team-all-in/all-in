@@ -45,7 +45,7 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:BatchCheckLayerAvailability"
     ]
     effect    = "Allow"
-    resources = []
+    resources = [data.terraform_remote_state.all_in_env.outputs.ecr_arn]
   }
 }
 
