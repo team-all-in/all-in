@@ -1,4 +1,4 @@
-import { signOut } from '~/server/actions/auth';
+import { signOut } from '~/server/auth/actions';
 
 export default function UserSetting() {
   return (
