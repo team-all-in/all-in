@@ -1,7 +1,12 @@
+data "aws_partition" "current" {}
+
 resource "aws_apprunner_service" "all_in_api" {
   service_name = "all_in"
 
   source_configuration {
+    authentication_configuration {
+      access_role_arn = aws_iam_role.access.arn
+    }
     image_repository {
       image_configuration {
         port = "8000"
@@ -15,4 +20,54 @@ resource "aws_apprunner_service" "all_in_api" {
   tags = {
     Name = "all-in-apprunner-service"
   }
+}
+
+data "aws_iam_policy_document" "access_assume_role" {
+
+  statement {
+    sid     = "AccessAssumeRole"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["build.apprunner.${data.aws_partition.current.dns_suffix}"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "access" {
+  statement {
+    sid = "ReadPrivateEcr"
+    actions = [
+      "ecr:BatchGetImage",
+      "ecr:DescribeImages",
+      "ecr:GetDownloadUrlForLayer",
+    ]
+    resources = [aws_ecr_repository.all_in_api.arn]
+  }
+
+  statement {
+
+    sid = "AuthPrivateEcr"
+    actions = [
+      "ecr:DescribeImages",
+      "ecr:GetAuthorizationToken",
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "access" {
+  name   = "apprunner-access-ecr"
+  policy = data.aws_iam_policy_document.access.json
+}
+
+resource "aws_iam_role_policy_attachment" "access" {
+  policy_arn = aws_iam_policy.access.arn
+  role       = aws_iam_role.access.name
+}
+
+resource "aws_iam_role" "access" {
+  name               = "apprunner_access_role"
+  assume_role_policy = data.aws_iam_policy_document.access_assume_role.json
 }
