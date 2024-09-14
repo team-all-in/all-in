@@ -40,6 +40,9 @@ const MessageItem: NextPage<Message> = ({
             {priority && <Label priority={priority} />}
             {sentiment && <span>{sentiment}</span>}
           </div>
+          {/*
+            //TODO: 時間の部分だけ表示する
+          */}
           <p>{send_at}</p>
         </div>
       </div>
