@@ -84,3 +84,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* スクロールバーを消すためのCSS */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* WebKit-based browsers */
+}
