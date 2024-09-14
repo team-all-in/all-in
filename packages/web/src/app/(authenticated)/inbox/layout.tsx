@@ -1,5 +1,6 @@
-import Link from "next/link";
-import Filter from "~/components/common/filter";
+import { Suspense } from 'react';
+import Filter from '~/components/common/filter';
+import SettingsLink from './components/settings-link';
 
 export default function InboxLayout({
   children,
@@ -7,13 +8,12 @@ export default function InboxLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen overflow-hidden flex-col sm:flex-row">
-      <Link href="/settings" className="fixed top-2 right-3 z-50">
-        settings
-      </Link>
-
-      <Filter />
-      <main className="flex-1">{children}</main>
+    <div className='flex h-screen flex-col overflow-hidden sm:flex-row'>
+      <SettingsLink />
+      <Suspense fallback={null}>
+        <Filter />
+      </Suspense>
+      <main className='flex-1'>{children}</main>
     </div>
   );
 }

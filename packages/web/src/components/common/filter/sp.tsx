@@ -1,7 +1,9 @@
+import { FilterItems } from './items';
+
 export default function SpFilter() {
   return (
-    <aside className="border border-blue-600  backdrop-blur bg-blue-600/20 p-4 block fixed top-10 w-full sm:hidden">
-      Filter
+    <aside className='fixed top-14 right-1/2 flex translate-x-1/2 gap-1 rounded-full border p-1.5 px-2 backdrop-blur sm:hidden'>
+      <FilterItems />
     </aside>
   );
 }
