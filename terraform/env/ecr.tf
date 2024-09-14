@@ -1,10 +1,10 @@
-resource "aws_ecr_repository" "all-in-api" {
-  name                 = "all-in-api"
+resource "aws_ecr_repository" "all_in_api" {
+  name                 = "all_in_api"
   image_tag_mutability = "MUTABLE"
 }
 
-resource "aws_ecr_lifecycle_policy" "all-in-api" {
-  repository = aws_ecr_repository.all-in-api.name
+resource "aws_ecr_lifecycle_policy" "all_in_api" {
+  repository = aws_ecr_repository.all_in_api.name
 
   policy = <<EOF
 {
