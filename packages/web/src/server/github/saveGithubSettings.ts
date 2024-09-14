@@ -4,21 +4,18 @@ import { createClient } from '~/libs/supabase/server';
 import { getUser } from '~/server/auth/data';
 
 export const saveGithubSettings = async (pat_token: string) => {
-  console.log('saveGithubSettings');
-  console.log('pat_token', pat_token);
-
   const user = await getUser();
   if (!user) {
     console.error('user not found');
     return;
   }
-  
-  const crypto = require('node:crypto');
-  const cipher = crypto.createCipher('aes-256-cbc', 'allinpassword');
-  const crypted = cipher.update(pat_token, 'utf-8', 'hex');
-  const encrypt_pat_token = crypted + cipher.final('hex');
 
-  console.log(encrypt_pat_token);
+  const crypto = require('node:crypto');
+  const key = Buffer.from(process.env.KEY || '', 'hex');
+  const iv = Buffer.from(process.env.IV || '', 'hex');
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  let encrypt_pat_token = cipher.update(pat_token, 'utf8', 'hex');
+  encrypt_pat_token += cipher.final('hex');
 
   const supabase = createClient();
   const { data: github_settings, error: github_settings_error } = await supabase
