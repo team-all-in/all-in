@@ -6,19 +6,19 @@ import { NextPage } from 'next';
 
 type Props = {
   appImg: string | StaticImport,
-  user: {
-    img: string | StaticImport,
-    name: string
-  }
+  sender_image: string | StaticImport
+  sender_name: string
 }
 
-const Account:NextPage<Props> = ({appImg, user}) => {
+const Account:NextPage<Props> = ({appImg, sender_image, sender_name}) => {
   return (
     <div className='flex gap-4 items-center'>
       <div className='relative'>
         <div className='flex items-center justify-center h-12 aspect-square rounded-full bg-white overflow-hidden border-2 border-gray-200'>
           <Image
-            src={user.img}
+            src={sender_image}
+            width={48}
+            height={48}
             alt='tool-icon'
           />
         </div>
@@ -30,7 +30,7 @@ const Account:NextPage<Props> = ({appImg, user}) => {
           />
         </div>
       </div>
-      <p>{user.name}</p>
+      <p>{sender_name}</p>
     </div>
   )
 }
