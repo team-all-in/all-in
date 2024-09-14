@@ -30,7 +30,7 @@ const Account:NextPage<Props> = ({appImg, sender_image, sender_name}) => {
           />
         </div>
       </div>
-      <p>{sender_name}</p>
+      <p className='w-40'>{sender_name}</p>
     </div>
   )
 }
