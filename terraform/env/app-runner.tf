@@ -21,6 +21,11 @@ resource "aws_apprunner_service" "all_in_api" {
     auto_deployments_enabled = true
   }
 
+  instance_configuration {
+    cpu    = "0.5 vCPU"
+    memory = "1 GB"
+  }
+
   tags = {
     Name = "all-in-apprunner-service"
   }
