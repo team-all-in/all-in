@@ -9,7 +9,7 @@ export const signInWithGoogle = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'http://localhost:3000/auth/callback',
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     },
   });
 
@@ -17,8 +17,6 @@ export const signInWithGoogle = async () => {
     console.error('Error signing in with Google:', error.message);
     return;
   }
-
-  console.log('Signed in with Google:', data);
 
   if (data.url) {
     redirect(data.url); // use the redirect API for your server framework
