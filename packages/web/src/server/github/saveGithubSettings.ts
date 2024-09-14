@@ -1,3 +1,5 @@
+'use server';
+
 import { getUser } from '~/server/auth/data';
 
 export const saveGithubSettings = async (pat_token: string) => {
