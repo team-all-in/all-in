@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function SettingsLayout({
   children,
@@ -6,8 +6,8 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="pt-14 p-3">
-      <Link href="/inbox">← back to inbox</Link>
+    <div className='z-0 h-screen bg-white pt-14'>
+      <Link href='/inbox'>← back to inbox</Link>
       {children}
     </div>
   );
