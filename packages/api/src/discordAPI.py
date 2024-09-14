@@ -4,10 +4,15 @@ import discord
 # from discord import app_commands
 from dotenv import load_dotenv
 import os
-from models import messages, User, discord_settings
+from supabase import create_client, Client
 import datetime
 
-client = discord.Client()
+url: str = os.getenv("SUPABASE_URL")
+key: str = os.getenv("SUPABASE_ANON_KEY")
+
+supabase: Client = create_client(url, key)
+
+client = discord.Client(intents=discord.Intents.default())
 load_dotenv()
 
 priority_rule = {
@@ -18,6 +23,10 @@ priority_rule = {
     "critical": 0
 }
 
+@client.event
+async def on_ready():
+    print('Bot is ready')
+
 @app.get("/redirect")
 async def listen_code(code: str = ""):
     return {"code: ": code}
@@ -25,8 +34,8 @@ async def listen_code(code: str = ""):
 # メッセージを取得する関数
 @app.get("/fetch_messages")
 async def fetch_messages(userId: int, code: str) -> dict:
-    discord_settings = discord_settings.get(userId == userId)
-    user = User.get(userId == userId)
+    discord_settings = supabase.table("discord_settings").select("*").eq("user_id", userId).execute()
+    user = supabase.table("users").select("*").eq("id", userId).execute()
     messages = []
     for message in discord.message.Message:
         if message.mentions.find(user.name) or discord.message.mention_everyone:
@@ -53,20 +62,3 @@ async def fetch_messages(userId: int, code: str) -> dict:
     messages.sort(key=lambda x: x["send_at"], reverse=True)
     # 上位20件を返す
     return JSONResponse(content={"messages": messages[0:20]})
-
-
-# codeを取得
-# codeを使ってアクセストークンを取得
-
-# データベース設定
-# ACCESTOKEN = os.getenv("ACCESTOKEN")
-#
-# intents = discord.Intents.default()
-# client = discord.Client(intents=intents)
-#
-#
-# @client.event
-# async def on_ready():
-#     print('Bot is ready')
-#
-# client.run(ACCESTOKEN)
