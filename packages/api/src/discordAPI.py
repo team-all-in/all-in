@@ -30,6 +30,7 @@ async def fetch_messages(userId: int, code: str) -> dict:
     messages = []
     for message in discord.message.Message:
         if message.mentions.find(user.name) or discord.message.mention_everyone:
+            # 優先度の基準によって変化する
             if datetime.datetime.today() - message.created_at < priority_rule["critical"]:
                 priority = "critical"
             elif datetime.datetime.today() - message.created_at < priority_rule["urgent"]:
@@ -41,15 +42,17 @@ async def fetch_messages(userId: int, code: str) -> dict:
             elif datetime.datetime.today() - message.created_at < priority_rule["low"]:
                 priority = "low"
             messages.append({
-                "channel": discord.message.channel,
-                "sender_name": messages.author,
-                "content": messages.content,
-                "message_link": messages.jump_url,
-                "sentiment": messages.emoji,
+                "channel": message.channel,
+                "sender_name": message.author,
+                "content": message.content,
+                "message_link": message.jump_url,
+                "sentiment": message.emoji,
                 "priority": priority,
-                "send_at": messages.created_at
+                "send_at": message.edited_at | message.created_at
             })
-    return JSONResponse(content={"messages": messages})
+    messages.sort(key=lambda x: x["send_at"], reverse=True)
+    # 上位20件を返す
+    return JSONResponse(content={"messages": messages[0:20]})
 
 
 # codeを取得
