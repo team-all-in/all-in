@@ -9,8 +9,8 @@ enum ButtonState {
 }
 
 const ButtonColorClasses: Record<ButtonState, string> = {
-  [ButtonState.Black]: ' bg-black text-white',
-  [ButtonState.White]: ' bg-white text-black',
+  [ButtonState.Black]: ' bg-black text-white hover:bg-black/70',
+  [ButtonState.White]: ' bg-white text-black hover:bg-white/70',
 };
 
 type AppProps = {

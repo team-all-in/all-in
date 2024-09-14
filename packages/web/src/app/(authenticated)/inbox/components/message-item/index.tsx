@@ -1,7 +1,8 @@
 import { Check, Sparkles } from 'lucide-react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { Button } from '~/components/ui/button';
+import { Button, buttonVariants } from '~/components/ui/button';
+import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
 import Account from './account';
 import { type AppProps, AppsProps, ButtonColorClasses, defaultAppProps } from './app-type';
@@ -44,7 +45,7 @@ const MessageItem: NextPage<Message> = ({
       </div>
       <div className='z-10 flex flex-grow flex-col justify-between overflow-hidden text-ellipsis sm:ml-4'>
         <p className='line-clamp-2 sm:line-clamp-3'>{content}</p>
-        <div className='flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-8'>
+        <div className='flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-3'>
           {app === 'github' ? (
             <form action=''>
               <Button variant='secondary'>
@@ -61,7 +62,12 @@ const MessageItem: NextPage<Message> = ({
               <span>返信メッセージを生成する</span>
             </Button>
           )}
-          <a href={message_link} target='_blank' rel='noreferrer'>
+          <a
+            href={message_link}
+            className={cn(buttonVariants({ variant: 'link' }), appType.itemClass, 'bg-transparent')}
+            target='_blank'
+            rel='noreferrer'
+          >
             元のメッセージを見る
           </a>
         </div>
