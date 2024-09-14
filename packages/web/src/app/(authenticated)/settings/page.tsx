@@ -1,7 +1,7 @@
-import DiscordButton from '~/components/common/settings/DiscordButton';
-import GithubButton from '~/components/common/settings/GithubButton';
-import SignoutButton from '~/components/common/settings/SignoutButton';
-import SlackButton from '~/components/common/settings/SlackButton';
+import DiscordButton from './components/DiscordButton';
+import GithubButton from './components/GithubButton';
+import SignoutButton from './components/SignoutButton';
+import SlackButton from './components/SlackButton';
 
 export default async function Settings() {
   return (
