@@ -10,6 +10,9 @@ export default async function Inbox() {
       <div className='flex'>
         <div className='w-4 flex-grow rounded-full bg-black' />
         <div className='flex w-full flex-col gap-4 p-3'>
+          {/*
+            //TODO: 日付で仕分けて表示する
+          */}
           <h2 className='font-bold text-xl'>2024/09/15</h2>
           {messages?.map(message => (
             <MessageItem key={message.id} {...message} />
