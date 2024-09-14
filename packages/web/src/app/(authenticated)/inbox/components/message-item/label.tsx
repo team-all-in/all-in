@@ -1,12 +1,12 @@
 import { NextPage } from "next"
-import { LabelsProps, LabelType } from "./label-type"
+import { defaultLabelsProps, LabelsProps } from "./label-type"
 
 type Props = {
-  labelType: LabelType
+  priority: string
 }
 
-const Label: NextPage<Props> = ({ labelType }) => {
-  const labelState = LabelsProps[labelType]
+const Label: NextPage<Props> = ({ priority }) => {
+  const labelState = LabelsProps[priority] || defaultLabelsProps
 
   return (
     <div className={ 'py-1 px-4 h-fit w-fit bg-white bg-opacity-40 border-2 rounded-full ' + labelState.class}>
