@@ -55,6 +55,6 @@ resource "aws_iam_policy" "ecr" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecr" {
-  role       = aws_iam_role.terraform_plan.name
+  role       = aws_iam_role.ecr.name
   policy_arn = aws_iam_policy.ecr.arn
 }
