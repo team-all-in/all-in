@@ -10,6 +10,10 @@ resource "aws_apprunner_service" "all_in_api" {
     image_repository {
       image_configuration {
         port = "8000"
+        runtime_environment_variables = {
+          SUPABASE_URL      = "https://cajjmsopjzveypmycwqe.supabase.co"
+          SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhamptc29wanp2ZXlwbXljd3FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYyNDY5ODgsImV4cCI6MjA0MTgyMjk4OH0.JrXfH8vNCla4BzoWVbV6IUPOyrg5PoN239qslbb567Q"
+        }
       }
       image_identifier      = "${aws_ecr_repository.all_in_api.repository_url}:latest"
       image_repository_type = "ECR"
