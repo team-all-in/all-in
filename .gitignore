@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+
+# env files
+.env*
+.env*.local
+
+# Biome
+.biome/
+
+# Lefthook
+.lefthook-local/
