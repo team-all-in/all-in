@@ -1,4 +1,4 @@
-import { signInWithGoogle } from '~/server/actions/auth';
+import { signInWithGoogle } from '~/server/auth/actions';
 
 export default function Home() {
   return (
