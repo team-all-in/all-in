@@ -5,7 +5,9 @@ export default function SignoutButton() {
   return (
     <div className='mx-[10%] my-24'>
       <Link href='/settings/user'>
-        <Button size='signout'>Sign Out</Button>
+        <Button variant='default' size='signout'>
+          Sign Out
+        </Button>
       </Link>
     </div>
   );
