@@ -11,7 +11,7 @@ const FilterItem = ({ item }: { item: string }) => {
 
   const handleClick = () => {
     if (name === item) {
-      setName('');
+      setName(null);
     } else {
       setName(item);
     }
