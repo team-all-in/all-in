@@ -5,15 +5,27 @@ import { createClient } from '~/libs/supabase/server';
 export const getUser = async () => {
   const supabase = createClient();
 
-  const user = supabase.auth.getUser();
+  const getUserRes = await supabase.auth.getUser();
 
-  return user;
+  if (getUserRes.error) {
+    return null;
+  }
+
+  const data = getUserRes.data;
+
+  return data.user;
 };
 
 export const getSession = async () => {
   const supabase = createClient();
 
-  const user = supabase.auth.getSession();
+  const getSessionRes = await supabase.auth.getSession();
 
-  return user;
+  if (getSessionRes.error) {
+    return null;
+  }
+
+  const data = getSessionRes.data;
+
+  return data.session;
 };
