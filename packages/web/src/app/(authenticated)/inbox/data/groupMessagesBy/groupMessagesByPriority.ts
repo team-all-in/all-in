@@ -1,7 +1,7 @@
 import type { Message } from '~/libs/types/message';
 
 export const groupMessagesByPriority = (messages: Message[]) => {
-  return messages.reduce((acc, message) => {
+  const grouped = messages.reduce((acc, message) => {
     const priority = message.priority;
 
     if (priority) {
@@ -12,6 +12,8 @@ export const groupMessagesByPriority = (messages: Message[]) => {
       acc[priority].push(message);
     }
 
-    return acc;
+    return (acc);
   }, {} as Record<string, Message[]>);
+
+  return Object.entries(grouped)
 };
