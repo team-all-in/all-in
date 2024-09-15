@@ -2,10 +2,13 @@ from datetime import datetime
 
 from decode import decrypt
 from slack_sdk import WebClient
+from src.app import MessageResponse
 from src.app_setting import supabase_client
 
 
-def get_slack_message(user_id, server_id, channel_id, message_id):
+def get_slack_message(
+    user_id: str, server_id: str, channel_id: str, message_id: str
+) -> MessageResponse:
     # 暗号化されたトークンを取得
     encrypted_token = (
         supabase_client.table("slack_settings")
@@ -49,7 +52,7 @@ def get_slack_message(user_id, server_id, channel_id, message_id):
     )
     sender_image = member_info["user"]["profile"]["image_48"]
 
-    response = {
+    return {
         "id": message_id,
         "server_name": server_name,
         "server_image": server_image,
@@ -63,8 +66,6 @@ def get_slack_message(user_id, server_id, channel_id, message_id):
             "%Y-%m-%dT%H:%M:%SZ"
         ),
     }
-
-    return response
 
 
 # また今度やる
