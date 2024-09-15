@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server';
 import { encryptToken } from '~/libs/encryptions/token';
 import { createClient } from '~/libs/supabase/server';
 
-const clientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
-const clientSecret = process.env.DISCORD_CLIENT_SECRET;
-const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/oauth/discord/`;
+const clientId = process.env.NEXT_PUBLIC_SLACK_CLIENT_ID;
+const clientSecret = process.env.SLACK_CLIENT_SECRET;
+const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/oauth/slack`;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -15,8 +15,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'No code provided' }, { status: 400 });
   }
 
-  // アクセストークンを取得
-  const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
+  const tokenRes = await fetch('https://slack.com/api/oauth.v2.access', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -27,19 +26,19 @@ export async function GET(request: Request) {
       grant_type: 'authorization_code',
       code: code,
       redirect_uri: redirectUri || '',
-    }).toString(),
+    }),
   });
 
-  const tokenData = await tokenResponse.json();
+  const tokenData = await tokenRes.json();
 
-  if (!tokenResponse.ok) {
+  if (!tokenRes.ok) {
+    console.error('Fetch error:', tokenRes.statusText); // エラーハンドリング
     return NextResponse.json(
       { error: 'Failed to fetch access token', details: tokenData },
       { status: 500 },
     );
   }
 
-  // トークンを暗号化
   const encryptedAccessToken = encryptToken(tokenData.access_token);
   const encryptedRefreshToken = encryptToken(tokenData.refresh_token);
 
@@ -51,8 +50,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
 
-  // supabaseにaccessToken, refreshTokenを保存
-  const { error } = await supabase.from('discord_settings').upsert(
+  const { error } = await supabase.from('slack_settings').upsert(
     {
       user_id,
       access_token: encryptedAccessToken,
@@ -69,6 +67,5 @@ export async function GET(request: Request) {
     );
   }
 
-  // アプリにリダイレクト
   redirect('/settings');
 }

@@ -1,8 +1,5 @@
-from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from app_setting import app
 import discord
-# from discord import app_commands
 from dotenv import load_dotenv, find_dotenv
 import os
 from supabase import create_client, Client
@@ -51,14 +48,12 @@ priority_rule = {
 #             }
 #             supabase.table("message").insert(message).execute()
 
-@app.post("/get_messages")
-def get_messages() -> dict:
-    app = requests["app"]
-    if app != "discord":
-        return JSONResponse(status_code=400, content={"error": "app is not discord"})
-    message_id = requests["message_id"]
-    channel_id = requests["channel_id"]
-    url = f'https://discord.com/api/v10/channels/{channel_id}/messages/{message_id}'
+
+def get_discord_messages(
+    message_id: str, channel_id: str
+) -> dict:
+    url = f'''https://discord.com/api/v10/channels/{
+        channel_id}/messages/{message_id}'''
     message = requests.get(url, headers=headers).json()
     response = {
         "id": message["id"],

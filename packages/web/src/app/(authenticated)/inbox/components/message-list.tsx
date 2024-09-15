@@ -42,7 +42,7 @@ export default function MessageList({
     <>
       {Object.entries(groupedMessages).map(([date, messages]) => (
         <div key={date} className='flex'>
-          <div className='w-4 flex-grow rounded-full bg-black' />
+          <div className='w-4 flex-grow rounded-full bg-muted' />
           <div className='flex w-full flex-col gap-4 p-3'>
             <h2 className='font-bold text-xl'>{date}</h2>
             {messages.map(message => (
