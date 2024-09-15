@@ -118,20 +118,22 @@ channel_id = 'C07MELMF3TM'
 message_id = '1726380661.651149'
 
 def get_message(user_id, server_id, channel_id, message_id):
-    # tokenをdbから取得する
-    token = ""
+    # token = supabase_client.table('slack_settings').select('access_token').eq('user_id', user_id).execute().data[0]['access_token']
     # 複合化する
-    token = token
-    # client WebClient(token=token)
+    # token = token
+    # client = WebClient(token=token)
 
+    # サーバー
     server_info = client.team_info(team=server_id)["team"]
     server_name = server_info['name']
     server_image = server_info['icon']['image_34']
 
+    # メッセージ
     message = client.conversations_history(channel=channel_id, inclusive=True, latest=message_id, limit=1)
     context = message['messages'][0]['text']
     message_link = server_info['url'] + "archives/" + channel_id + "/p" + message_id.replace(".", "")
 
+    # 送信者
     member_info = client.users_info(user=message['messages'][0]['user'])
     sender_name = member_info['user']['profile']['display_name'] if member_info['user']['profile']['display_name'] != "" else member_info['user']['real_name']
     sender_image = member_info['user']['profile']['image_48']
