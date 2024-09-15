@@ -23,7 +23,7 @@ async def auth_check(
 
 @app.post("/messages")
 async def get_messages(
-    messages: list[Message], user: str = Depends(get_current_user)
+    messages: list[Message], user = Depends(get_current_user)
 ) -> list[MessageResponse]:
     responses = []
 
@@ -31,7 +31,7 @@ async def get_messages(
         if message.app.SLACK:
             responses.append(
                 get_slack_message(
-                    user_id=user,
+                    user_id=user.id,
                     server_id=message.server_id,
                     channel_id=message.channel_id,
                     message_id=message.message_id,
