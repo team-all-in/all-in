@@ -25,7 +25,7 @@ const MessageItem: NextPage<Message> = ({
 
   return (
     <div
-      className={`relative flex h-72 w-full flex-row gap-5 overflow-hidden border-2 rounded-2xl  p-3 sm:h-40 ${appType.itemClass}`}
+      className={`relative flex h-72 w-full flex-row gap-5 overflow-hidden border-2 rounded-2xl p-3 sm:h-40 ${appType.itemClass}`}
     >
       {appType.img && (
         <Image
@@ -36,11 +36,11 @@ const MessageItem: NextPage<Message> = ({
           }`}
         />
       )}
-      <AccountIcon app={app} sender_image={sender_image} className='hidden sm:block' />
+      <AccountIcon app={app} sender_image={sender_image} className='hidden sm:block' iconBackgroundColor={appType.iconBackgroundColorClass} />
       <div className='flex flex-col gap-3 h-full w-full'>
         <div className='flex flex-col gap-4 sm:flex-row sm:items-center'>
           <div className='flex items-center gap-4'>
-            <AccountIcon app={app} sender_image={sender_image} className='sm:hidden' />
+            <AccountIcon app={app} sender_image={sender_image} className='sm:hidden' iconBackgroundColor={appType.iconBackgroundColorClass} />
             <p className='whitespace-nowrap'>{sender_name}</p>
           </div>
           <div className='flex w-full items-center justify-between'>
