@@ -8,11 +8,9 @@ export default function Slack() {
   const response_type = 'code';
   const scope =
     'channels:history,channels:join,channels:read,chat:write,groups:history,groups:read,users:read';
-  const team = 'T07MK5E7A68';
 
   const params = new URLSearchParams({
     client_id,
-    team,
     redirect_uri,
     response_type,
     scope,
