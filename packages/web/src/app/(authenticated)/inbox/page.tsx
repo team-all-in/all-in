@@ -1,13 +1,40 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import MessageItem from './components/message-item';
 import { getMessages } from './data/getMessages';
 import { groupMessagesByDate } from './data/groupMessagesByDate';
+import { Message } from '~/libs/types/message';
+import { parseAsString, useQueryState } from 'nuqs';
+import { filterMessagesByApp } from './data/filterMessageByApp';
 
-export default async function Inbox() {
-  const messages = await getMessages();
-  const sortedMessages =
-    messages?.sort((a, b) => dayjs(b.send_at).unix() - dayjs(a.send_at).unix()) || [];
-  const groupedMessages = messages ? groupMessagesByDate(sortedMessages) : {};
+export default function Inbox() {
+  const [filter] = useQueryState('filter', parseAsString);
+  const [allMessages, setAllMessages] = useState<Message[]>([]);
+  const [groupedMessages, setGroupedMessages] = useState<Record<string, Message[]>>({});
+
+  const fetchMessages = async () => {
+    const fetchedMessages = await getMessages();
+    if (fetchedMessages) {
+      const sorted = fetchedMessages.sort((a, b) => dayjs(b.send_at).unix() - dayjs(a.send_at).unix());
+      setAllMessages(sorted); // 全メッセージを保持
+      setGroupedMessages(groupMessagesByDate(sorted));
+    }
+  };
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
+
+  useEffect(() => {
+    if (filter) {
+      const filteredMessages = filterMessagesByApp(allMessages, filter);
+      setGroupedMessages(groupMessagesByDate(filteredMessages));
+    } else {
+      setGroupedMessages(groupMessagesByDate(allMessages));
+    }
+  }, [filter, allMessages]);
 
   return (
     <div className='h-dvh space-y-8 overflow-y-auto p-3 pt-32 sm:pt-14'>
