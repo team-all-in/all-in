@@ -1,5 +1,5 @@
 resource "aws_apprunner_service" "all_in_api_slack" {
-  service_name = "all_in"
+  service_name = "all_in_slack"
 
   source_configuration {
     authentication_configuration {
@@ -62,7 +62,7 @@ data "aws_iam_policy_document" "slack_access" {
 }
 
 resource "aws_iam_policy" "slack_access" {
-  name   = "apprunner-access-ecr"
+  name   = "apprunner-access-ecr-slack"
   policy = data.aws_iam_policy_document.slack_access.json
 }
 
