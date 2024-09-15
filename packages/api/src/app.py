@@ -1,8 +1,10 @@
+from src.app_setting import app, supabase_client, get_current_user
+from fastapi import Depends, HTTPException
+from src.emotion.emotion import analyze_emotion
+from src.priority.priority import prioritize_message
 from enum import Enum
 
-from fastapi import Depends
 from pydantic import BaseModel
-from src.app_setting import app, get_current_user
 from src.slack.slack import get_slack_message
 from src.discord.discord import get_discord_message
 
@@ -30,7 +32,6 @@ class MessageResponse(BaseModel):
     content: str
     message_link: str
     send_at: str
-
 
 # ルートエンドポイント
 
@@ -76,4 +77,15 @@ def get_messages(
                 )
             )
 
-    return responses
+
+@app.get("/predict")
+async def predict(
+    text: str,
+):
+    emoji = analyze_emotion(text)["emoji"]
+    priority = prioritize_message(text)
+
+    return {
+        'sentiment': emoji,
+        'priority': priority
+    }
