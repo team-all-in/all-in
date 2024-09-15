@@ -6,7 +6,7 @@ export default async function Inbox() {
   const messages = await getMessages();
 
   return (
-    <div className='h-dvh space-y-8 overflow-y-auto p-3 pt-32 sm:pt-14'>
+    <div className='h-dvh space-y-8 overflow-y-auto p-3 pt-16'>
       <Suspense>
         <MessageList messages={messages} />
       </Suspense>
