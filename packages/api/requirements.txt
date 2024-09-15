@@ -67,7 +67,7 @@ multidict==6.1.0
     # via
     #   aiohttp
     #   yarl
-openai==1.26.0
+openai==0.28
 packaging==24.1
     # via deprecation
 postgrest==0.16.11
