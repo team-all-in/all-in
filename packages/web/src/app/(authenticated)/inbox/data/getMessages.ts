@@ -1,5 +1,6 @@
 'use server';
 
+import { dummyMessages } from '~/__test__/message/fixutures';
 import { createClient } from '~/libs/supabase/server';
 import type { Database } from '~/libs/types/database';
 import type { Message } from '~/libs/types/message';
@@ -78,6 +79,7 @@ export const getMessages = async ({
     // TODO: GitHubの通知とDiscord、Slackメッセージの統合する。
     if (githubMessages) {
       messages.push(...githubMessages);
+      // messages.push(...dummyMessages);
     }
   }
 
