@@ -5,7 +5,7 @@ import UserSettings from './components/user';
 export default async function Settings() {
   return (
     <article>
-      <BackLink />
+      <BackLink place='メッセージ一覧' />
       <div className='space-y-3 px-3'>
         <AppSettings />
         <UserSettings />
