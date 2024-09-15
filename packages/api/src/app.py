@@ -24,26 +24,3 @@ async def read_root(
 async def read_items():
     response = supabase_client.table("your_table_name").select("*").execute()
     return response.data
-
-# 感情分析
-@app.post("/analyze_emotion")
-async def analyze_emotion_endpoint(input: TextInput):
-    emotion_data = await analyze_emotion(input.text)
-    if not emotion_data:
-        raise HTTPException(status_code=500, detail="感情分析中にエラーが発生しました")
-    
-    # 感情と絵文字を返す
-    return {
-        "emotion": emotion_data["emotion"],
-        "emoji": emotion_data["emoji"]
-    }
-
-# メッセージ生成
-@app.post("/generate_message")
-async def generate_message_endpoint(input: TextInput):
-    emotion_data = await analyze_emotion(input.text)
-    if not emotion_data:
-        raise HTTPException(status_code=500, detail="感情分析中にエラーが発生しました")
-    
-    generated_message = await generate_message(input.text, emotion_data["emotion"], emotion_data["emoji"])
-    return {"generated_message": generated_message}
