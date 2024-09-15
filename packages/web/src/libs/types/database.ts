@@ -3,6 +3,38 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      discord_settings: {
+        Row: {
+          access_token: string | null;
+          created_at: string;
+          id: number;
+          refresh_token: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          access_token?: string | null;
+          created_at?: string;
+          id?: number;
+          refresh_token?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          access_token?: string | null;
+          created_at?: string;
+          id?: number;
+          refresh_token?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'discord_settings_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'messages';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       github_settings: {
         Row: {
           created_at: string;
@@ -26,7 +58,7 @@ export type Database = {
           {
             foreignKeyName: 'github_settings_user_id_fkey';
             columns: ['user_id'];
-            isOneToOne: false;
+            isOneToOne: true;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },

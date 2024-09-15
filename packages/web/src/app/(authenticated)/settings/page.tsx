@@ -1,17 +1,15 @@
-import Link from "next/link";
+import AppSettings from './components/app';
+import BackLink from './components/back-link';
+import UserSettings from './components/user';
 
 export default async function Settings() {
   return (
-    <div>
-      settings page
-      <div>
-        <Link href="/settings/discord">Discord</Link>
-        <Link href="/settings/slack">Slack</Link>
-        <Link href="/settings/github">GitHub</Link>
+    <article>
+      <BackLink />
+      <div className='space-y-3 px-3'>
+        <AppSettings />
+        <UserSettings />
       </div>
-      <div>
-        <Link href="/settings/user">User</Link>
-      </div>
-    </div>
+    </article>
   );
 }
