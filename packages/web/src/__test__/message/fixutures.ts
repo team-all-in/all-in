@@ -9,7 +9,7 @@ export const dummyMessages: Message[] = [
     content: 'お疲れ様です！今日のミーティングの議事録をシェアしました。',
     message_link: 'https://discord.com/channels/123456789/1',
     sentiment: 'positive',
-    priority: 'low',
+    priority: 1,
     send_at: '2023-09-15T10:30:00+09:00',
   },
   {
@@ -20,7 +20,7 @@ export const dummyMessages: Message[] = [
     content: '緊急：サーバーダウンの報告があります。すぐに対応が必要です。',
     message_link: 'https://slack.com/archives/C01234ABCD/p9876543210',
     sentiment: 'negative',
-    priority: 'urgent',
+    priority: 4,
     send_at: '2023-09-15T14:45:00+09:00',
   },
   {
@@ -31,7 +31,7 @@ export const dummyMessages: Message[] = [
     content: '新機能のベータテストが成功しました！フィードバックは非常に良好です。',
     message_link: 'https://discord.com/channels/123456789/3',
     sentiment: 'positive',
-    priority: 'medium',
+    priority: 2,
     send_at: '2023-09-16T09:15:00+09:00',
   },
   {
@@ -42,7 +42,7 @@ export const dummyMessages: Message[] = [
     content: 'Pull Request #42: バグ修正とパフォーマンス改善',
     message_link: 'https://github.com/org/repo/pull/42',
     sentiment: 'neutral',
-    priority: 'high',
+    priority: 3,
     send_at: '2023-09-16T16:20:00+09:00',
   },
   {
@@ -53,7 +53,7 @@ export const dummyMessages: Message[] = [
     content: '週次プログレスレポートを共有しました。目標達成に向けて順調です！',
     message_link: 'https://discord.com/channels/123456789/5',
     sentiment: 'positive',
-    priority: 'low',
+    priority: 1,
     send_at: '2023-09-17T11:00:00+09:00',
   },
   {
@@ -64,7 +64,7 @@ export const dummyMessages: Message[] = [
     content: 'セキュリティアップデート：全員のパスワード変更が必要です。',
     message_link: 'https://slack.com/archives/C01234ABCD/p1234567890',
     sentiment: 'negative',
-    priority: 'critical',
+    priority: 5,
     send_at: '2023-09-17T18:30:00+09:00',
   },
   {
@@ -75,7 +75,7 @@ export const dummyMessages: Message[] = [
     content: 'Issue #99: 新しい機能リクエスト - ユーザーダッシュボードの改善',
     message_link: 'https://github.com/org/repo/issues/99',
     sentiment: 'neutral',
-    priority: 'medium',
+    priority: 3,
     send_at: '2023-09-18T08:45:00+09:00',
   },
 ];
