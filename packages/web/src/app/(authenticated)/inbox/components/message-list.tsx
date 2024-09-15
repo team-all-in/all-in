@@ -5,7 +5,7 @@ import { parseAsString, useQueryState } from 'nuqs';
 import { useEffect, useState } from 'react';
 import type { Message } from '~/libs/types/message';
 import { filterMessagesByApp } from '../data/filterMessageByApp';
-import { groupMessagesByDate } from '../data/groupMessagesByDate';
+import { groupMessagesBy } from '../data/groupMessagesBy';
 import MessageItem from './message-item';
 
 export default function MessageList({
@@ -14,6 +14,7 @@ export default function MessageList({
   messages: Message[] | undefined;
 }) {
   const [filter] = useQueryState('filter', parseAsString);
+  const [sort] = useQueryState('sort', parseAsString);
   const [allMessages, setAllMessages] = useState<Message[]>(messages || []);
   const [groupedMessages, setGroupedMessages] = useState<Record<string, Message[]>>({});
 
@@ -24,7 +25,8 @@ export default function MessageList({
           (a, b) => dayjs(b.send_at).unix() - dayjs(a.send_at).unix(),
         );
         setAllMessages(sorted);
-        setGroupedMessages(groupMessagesByDate(sorted));
+        setGroupedMessages(groupMessagesBy(sort ?? 'time', sorted));
+        console.log(groupMessagesBy(sort ?? 'time', sorted));
       }
     };
 
@@ -34,11 +36,11 @@ export default function MessageList({
   useEffect(() => {
     if (filter) {
       const filteredMessages = filterMessagesByApp(allMessages, filter);
-      setGroupedMessages(groupMessagesByDate(filteredMessages));
+      setGroupedMessages(groupMessagesBy(sort ?? 'time', filteredMessages));
     } else {
-      setGroupedMessages(groupMessagesByDate(allMessages));
+      setGroupedMessages(groupMessagesBy(sort ?? 'time', allMessages));
     }
-  }, [filter, allMessages]);
+  }, [filter, allMessages, sort]);
 
   return (
     <>
