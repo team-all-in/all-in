@@ -15,6 +15,9 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY . .
 
+RUN groupadd -r all-in-api && useradd --no-log-init -r -g all-in-api all-in-api
+USER all-in-api
+
 EXPOSE 8000
 
 CMD ["uvicorn", "src.app:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]

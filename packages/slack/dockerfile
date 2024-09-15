@@ -15,12 +15,9 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY . .
 
+RUN groupadd -r all-in-api && useradd --no-log-init -r -g all-in-api all-in-api
+USER all-in-api
+
 EXPOSE 8000
 
-# ADD entrypoint.sh /
-# RUN chmod +x /entrypoint.sh
-
-# CMD ["python", "slack_bot.py"]
-# CMD ["python", "slack_bot.py", "&", ";" "uvicorn", "slack_bot:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
 CMD ["sh", "-c", "uvicorn slack_bot:api --reload --host 0.0.0.0 --port 8000 & python slack_bot.py"]
-# ENTRYPOINT /entrypoint.sh
