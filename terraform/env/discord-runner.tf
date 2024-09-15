@@ -16,7 +16,7 @@ resource "aws_apprunner_service" "all_in_api_discord" {
           OPENAI_API_KEY    = data.aws_ssm_parameter.openai_api_key.arn
           KEY               = data.aws_ssm_parameter.all_in_key.arn
           IV                = data.aws_ssm_parameter.all_in_iv.arn
-          DISCORD_SECRET_ID = data.aws_ssm_parameter.discord_secret_id.arn
+          DISCORD_BOT_TOKEN = data.aws_ssm_parameter.discord_bot_token.arn
         }
       }
       image_identifier      = "${aws_ecr_repository.all_in_api_discord.repository_url}:latest"
