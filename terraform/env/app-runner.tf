@@ -29,8 +29,9 @@ resource "aws_apprunner_service" "all_in_api" {
   }
 
   instance_configuration {
-    cpu               = "0.5 vCPU"
-    memory            = "1 GB"
+    cpu    = "0.5 vCPU"
+    memory = "1 GB"
+    # instance_role_arn = aws_iam_instance_profile.app_runner_instance_profile.arn
     instance_role_arn = aws_iam_role.app_runner_ssm_role.arn
   }
 
@@ -69,6 +70,7 @@ data "aws_iam_policy_document" "access" {
     actions = [
       "ecr:DescribeImages",
       "ecr:GetAuthorizationToken",
+      "ssm:DescribeParameters",
     ]
     resources = ["*"]
   }
@@ -99,7 +101,7 @@ resource "aws_iam_role" "app_runner_ssm_role" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          Service = "ec2.amazonaws.com"
+          Service = "tasks.apprunner.amazonaws.com"
         }
       }
     ]
@@ -128,8 +130,8 @@ resource "aws_iam_role_policy_attachment" "attach_ssm_policy" {
   policy_arn = aws_iam_policy.ssm_get_parameters_policy.arn
 }
 
-# resource "aws_iam_instance_profile" "app_runner_instance_profile" {
-#   name = "app_runner_instance_profile"
-#   role = aws_iam_role.app_runner_ssm_role.name
-# }
+resource "aws_iam_instance_profile" "app_runner_instance_profile" {
+  name = "app_runner_instance_profile"
+  role = aws_iam_role.app_runner_ssm_role.name
+}
 
