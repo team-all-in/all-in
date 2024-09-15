@@ -8,7 +8,7 @@ export default async function SlackButton() {
 
   return (
     <div className='mx-4 flex-col'>
-      <div className='flex justify-center'>
+      <div className='relative flex justify-center'>
         <Link href='/settings/slack'>
           <Button variant='slack' size='tools' />
         </Link>
