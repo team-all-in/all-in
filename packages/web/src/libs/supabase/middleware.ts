@@ -43,7 +43,8 @@ export async function updateSession(request: NextRequest) {
   if (user) {
     if (
       !request.nextUrl.pathname.startsWith('/inbox') &&
-      !request.nextUrl.pathname.startsWith('/settings')
+      !request.nextUrl.pathname.startsWith('/settings') &&
+      !request.nextUrl.pathname.startsWith('/oauth')
     ) {
       const url = request.nextUrl.clone();
       url.pathname = '/inbox';
