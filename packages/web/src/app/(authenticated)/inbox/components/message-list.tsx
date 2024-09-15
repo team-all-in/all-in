@@ -30,7 +30,7 @@ export default function MessageList({
     };
 
     sortMessages();
-  }, [allMessages]);
+  }, [messages]);
 
   useEffect(() => {
     if (filter) {

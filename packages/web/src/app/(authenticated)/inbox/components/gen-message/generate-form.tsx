@@ -9,6 +9,7 @@ import { AutosizeTextarea } from '~/components/ui/autosize-textarea';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
+import { cn } from '~/libs/classes';
 import { generateMessageAction } from '../../actions/generateMessage';
 import loadingSrc from './assets/loading.gif';
 import { ShareButton } from './share-button';
@@ -34,11 +35,14 @@ export default function GenerateForm({ message }: { message: string }) {
 
   return (
     <div className='relative'>
-      {isPending && (
-        <div className='absolute inset-0 z-40 grid place-content-center rounded-md bg-white'>
-          <Image src={loadingSrc} alt='Loading' width={120} height={120} />
-        </div>
-      )}
+      <div
+        className={cn(
+          'absolute inset-0 grid place-content-center rounded-md bg-white',
+          isPending ? 'z-40 opacity-100' : '-z-40 opacity-0',
+        )}
+      >
+        <Image src={loadingSrc} alt='Loading' width={120} height={120} />
+      </div>
       {!state ? (
         <form {...getFormProps(form)} action={formAction} className='space-y-3'>
           <Input {...getInputProps(fields.message, { type: 'hidden' })} value={message} />

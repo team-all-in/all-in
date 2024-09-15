@@ -26,17 +26,17 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"], 
+    allow_headers=["*"],
 )
 
-supabase_client:Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
+supabase_client: Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> str:
     token = credentials.credentials
-    user = supabase_client.auth.api.get_user(token.access_token)
-    if 'error' in user:
+    data = supabase_client.auth.get_user(token)
+    if 'error' in data:
         raise Exception('Token verification failed.')
-    return user
+    return data.user

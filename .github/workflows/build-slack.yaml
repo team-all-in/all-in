@@ -1,0 +1,24 @@
+---
+name: Build
+on: 
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - "packages/slack/**"
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@6d193bf28034eafb982f37bd894289fe649468fc #v4
+      - name: build and push
+        working-directory: packages/slack
+        run: |
+          docker build . -t all-in-api-slack --platform linux/amd64
