@@ -1,12 +1,12 @@
 ---
-name: Build
+name: Build Discord
 on: 
   pull_request:
     types:
       - opened
       - synchronize
     paths:
-      - "packages/api/**"
+      - "packages/discord/**"
 
 jobs:
   build:
@@ -19,6 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@6d193bf28034eafb982f37bd894289fe649468fc #v4
       - name: build and push
-        working-directory: packages/api
+        working-directory: packages/discord
         run: |
-          docker build . -t all-in-api --platform linux/amd64
+          docker build . -t all-in-api-discord --platform linux/amd64
