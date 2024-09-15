@@ -13,7 +13,7 @@ const LabelsProps: Record<number, LabelProps> = {
     text: 'Medium',
   },
   3: {
-    color: '#eab308',
+    color: '#FFDC7F',
     text: 'High',
   },
   4: {
