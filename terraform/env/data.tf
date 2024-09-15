@@ -9,3 +9,7 @@ data "aws_ssm_parameter" "all_in_key" {
 data "aws_ssm_parameter" "all_in_iv" {
   name = "all-in-iv"
 }
+
+data "aws_ssm_parameter" "slack_app_token" {
+  name = "slack_app_token"
+}
