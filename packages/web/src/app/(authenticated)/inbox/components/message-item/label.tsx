@@ -12,6 +12,7 @@ const Label: NextPage<Props> = ({ priority }) => {
   return (
     <Badge
       variant="outline"
+      className='bg-white'
       style={{
         borderColor: labelState.color,
         color: labelState.color,
