@@ -61,6 +61,7 @@ async def read_items():
 
 @app.post("/messages")
 def get_messages(
+<<<<<<< HEAD
     message: Message, user: str = Depends(get_current_user)
 ) -> MessageResponse:
     if message.app.SLACK:
@@ -75,3 +76,25 @@ def get_messages(
         # @nakano1122
         return
 >>>>>>> b6f33f7 (feat: メッセージを取得できるエンドポイントを追加)
+=======
+    messages: list[Message], user: str = Depends(get_current_user)
+) -> list[MessageResponse]:
+    responses = []
+
+    for message in messages:
+        if message.app.SLACK:
+            responses.append(
+                get_slack_message(
+                    user_id=user,
+                    server_id=message.server_id,
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
+                )
+            )
+        if message.app.DISCORD:
+            # TODO: Discordのメッセージを取得する関数を呼び出す
+            # @nakano1122
+            pass
+
+    return responses
+>>>>>>> 0ebc1ef (feat: メッセージを複数取得できるようにする)
