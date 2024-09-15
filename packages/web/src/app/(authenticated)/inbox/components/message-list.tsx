@@ -15,7 +15,9 @@ export default function MessageList({
 }) {
   const [filter] = useQueryState('filter', parseAsString);
   const [sort] = useQueryState('sort', parseAsString);
-  const [groupedMessages, setGroupedMessages] = useState<[string, Message[]][] | [number, Message[]][]>([]);
+  const [groupedMessages, setGroupedMessages] = useState<
+    [string, Message[]][] | [number, Message[]][]
+  >([]);
 
   useEffect(() => {
     const sortMessages = async () => {
@@ -41,17 +43,19 @@ export default function MessageList({
       {groupedMessages.map(([date, messages]) => (
         <div key={date} className='flex'>
           <div
-          className={`w-4 flex-grow rounded-full ${
-            LabelsProps[Number(date)] ? '' : 'bg-muted'
-          }`}
-          style={{ backgroundColor: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '' }}
-        />
+            className={`w-4 flex-grow rounded-full ${LabelsProps[Number(date)] ? '' : 'bg-muted'}`}
+            style={{
+              backgroundColor: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '',
+            }}
+          />
           <div className='flex w-full flex-col gap-4 p-3'>
             <h2
               className={`font-bold text-xl`}
-              style={{ color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000' }}
+              style={{
+                color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000',
+              }}
             >
-              {LabelsProps[Number(date)] ? LabelsProps[Number(date)].text : date }
+              {LabelsProps[Number(date)] ? LabelsProps[Number(date)].text : date}
             </h2>
             {messages.map(message => (
               <MessageItem key={message.id} {...message} />
