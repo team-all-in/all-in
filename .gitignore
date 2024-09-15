@@ -90,7 +90,7 @@ pip-delete-this-directory.txt
 .env/
 .venv/
 venv/
-ENV/
+# ENV/
 env.bak/
 venv.bak/
 
