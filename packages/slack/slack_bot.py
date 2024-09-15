@@ -36,6 +36,7 @@ def get_priority_and_sentient(message_text):
 
 @app.event("message")
 def handle_message(event):
+    logger.info(event)
     message = event["text"]
     server_id = event["team"]
     channel_id = event["channel"]
@@ -60,18 +61,17 @@ def handle_message(event):
 
     # メンションをされたユーザーがsupabaseに登録されているユーザーかを調べる
     insert_data = []
-    for member_id in mention_member_ids:
-        user_id = (
-            supabase_client.table("all-in-relation")
-            .select("user_id")
-            .eq("slack_member_id", member_id)
-            .execute()
-        ).data[0]["user_id"]
+    user_ids = (
+        supabase_client.table("all-in-relation")
+        .select("user_id")
+        .in_("slack_member_id", mention_member_ids)
+        .execute()
+    ).data
 
-        if not user_id:
-            continue
+    sentiment, priority = get_priority_and_sentient(message)
 
-        sentiment, priority = get_priority_and_sentient(message)
+    for user in user_ids:
+        user_id = user["user_id"]
 
         insert_data.append(
             {

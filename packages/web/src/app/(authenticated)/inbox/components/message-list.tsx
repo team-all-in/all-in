@@ -15,7 +15,9 @@ export default function MessageList({
 }) {
   const [filter] = useQueryState('filter', parseAsString);
   const [sort] = useQueryState('sort', parseAsString);
-  const [groupedMessages, setGroupedMessages] = useState<[string, Message[]][] | [number, Message[]][]>([]);
+  const [groupedMessages, setGroupedMessages] = useState<
+    [string, Message[]][] | [number, Message[]][]
+  >([]);
 
   useEffect(() => {
     const sortMessages = async () => {
@@ -53,7 +55,7 @@ export default function MessageList({
               }`}
               style={{ color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '' }}
             >
-              {LabelsProps[Number(date)] ? LabelsProps[Number(date)].text : date }
+              {LabelsProps[Number(date)] ? LabelsProps[Number(date)].text : date}
             </h2>
             {messages.map(message => (
               <MessageItem key={message.id} {...message} />

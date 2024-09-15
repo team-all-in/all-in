@@ -1,24 +1,67 @@
 'use server';
 
-import { dummyMessages } from '~/__test__/message/fixutures';
+import { createClient } from '~/libs/supabase/server';
+import type { Database } from '~/libs/types/database';
 import type { Message } from '~/libs/types/message';
+import { getSession, getUser } from '~/server/auth/data';
 import { getGitHubNotifications } from '~/server/github/getNotifications';
 
 export const getMessages = async ({
   filter = 'all',
   offset = 0,
 }: {
-  filter?: Message['app'] | 'all';
+  filter?: string;
   offset?: number;
 } = {}): Promise<Message[] | undefined> => {
-  console.log('getMessages');
-  console.log('filter', filter);
-  console.log('offset', offset);
-
   const messages: Message[] = [];
 
-  // TODO: 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
-  messages.push(...dummyMessages);
+  const LIMIT = 20;
+
+  const user = await getUser();
+  if (!user) {
+    return;
+  }
+
+  // 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('messages')
+    .select('*')
+    .eq('user_id', user.id)
+    .range(offset, offset + LIMIT - 1);
+
+  if (error) {
+    console.error('error', error);
+    return;
+  }
+
+  console.log('data', data);
+
+  if (data) {
+    const transformedData = transformData(data);
+
+    console.log('transformattedData', transformedData);
+
+    const session = await getSession();
+    if (!session?.access_token) {
+      return;
+    }
+
+    const url = 'https://kctebirgsq.ap-northeast-1.awsapprunner.com/messages';
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify(transformedData),
+    });
+
+    console.log('response', response);
+  }
+
   // console.log('messages', messages);
 
   // TODO: Discord、SlackメッセージId含めたリクエストをバックエンドに送る。
@@ -40,3 +83,12 @@ export const getMessages = async ({
 
   return messages;
 };
+
+function transformData(data: Database['public']['Tables']['messages']['Row'][]) {
+  return data.map(item => ({
+    app: item.app,
+    server_id: item.server_id,
+    message_id: item.message_id,
+    channel_id: item.channel_id,
+  }));
+}

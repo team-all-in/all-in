@@ -3,7 +3,7 @@ import { LabelsProps, defaultLabelsProps } from './label-type';
 import { Badge } from '~/components/ui/badge';
 
 type Props = {
-  priority: 1 | 2 | 3 | 4 | 5
+  priority: 1 | 2 | 3 | 4 | 5;
 };
 
 const Label: NextPage<Props> = ({ priority }) => {
