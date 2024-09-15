@@ -1,19 +1,18 @@
+import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
+import { encryptToken } from '~/libs/encryptions/token';
 import { createClient } from '~/libs/supabase/server';
-import { getUser } from '~/server/auth/data';
 
-const clientId = process.env.SLACK_CLIENT_ID;
-const clientSecret = process.env.SLACK_CLIENT_SECRET;
-const redirectUri = process.env.SLACK_REDIRECT_URI;
+const clientId = process.env.NEXT_PUBLIC_SLACK_CLIENT_ID;
+const clientSecret = process.env.NEXT_PUBLIC_SLACK_CLIENT_SECRET;
+const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/oauth/slack`;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
-  const supabase = createClient();
-  const user = await getUser();
 
-  if (!user || !code) {
-    return NextResponse.redirect('/settings/slack?error=oauth_failed');
+  if (!code) {
+    return NextResponse.json({ error: 'No code provided' }, { status: 400 });
   }
 
   const tokenRes = await fetch('https://slack.com/api/oauth.v2.access', {
@@ -25,23 +24,48 @@ export async function GET(request: Request) {
       client_id: clientId || '',
       client_secret: clientSecret || '',
       grant_type: 'authorization_code',
-      code,
+      code: code,
       redirect_uri: redirectUri || '',
     }),
   });
 
-  console.log('Client ID:', process.env.SLACK_CLIENT_ID || '');
   const tokenData = await tokenRes.json();
 
-  if (tokenData.ok) {
-    // トークンとリフレッシュトークンをSupabaseに保存
-    await supabase.from('slack_settings').upsert({
-      user_id: user.id,
-      TOKEN: tokenData.access_token,
-      refresh_token: tokenData.refresh_token,
-    });
-
-    return NextResponse.redirect('/settings/slack?success=oauth_success');
+  if (!tokenRes.ok) {
+    console.error('Fetch error:', tokenRes.statusText); // エラーハンドリング
+    return NextResponse.json(
+      { error: 'Failed to fetch access token', details: tokenData },
+      { status: 500 },
+    );
   }
-  return NextResponse.redirect('/settings/slack?error=oauth_failed');
+
+  const encryptedAccessToken = encryptToken(tokenData.access_token);
+  const encryptedRefreshToken = encryptToken(tokenData.refresh_token);
+
+  const supabase = createClient();
+  const getUserRes = await supabase.auth.getUser();
+  const user_id = getUserRes.data?.user?.id;
+
+  if (!user_id) {
+    return NextResponse.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  const { error } = await supabase.from('slack_settings').upsert(
+    {
+      user_id,
+      access_token: encryptedAccessToken,
+      refresh_token: encryptedRefreshToken,
+    },
+    { onConflict: 'user_id' },
+  );
+
+  if (error) {
+    console.error('Failed to save tokens', error);
+    return NextResponse.json(
+      { error: 'Failed to save tokens', details: error.message },
+      { status: 500 },
+    );
+  }
+
+  redirect('/settings');
 }
