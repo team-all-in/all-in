@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 import { createClient } from '~/libs/supabase/server';
 
@@ -12,10 +13,6 @@ export async function GET(request: Request) {
   if (!code) {
     return NextResponse.json({ error: 'No code provided' }, { status: 400 });
   }
-
-  console.log('clientId', clientId);
-    console.log('clientSecret', clientSecret);
-    console.log('redirectUri', redirectUri);
 
   // アクセストークンを取得
   const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
@@ -35,7 +32,10 @@ export async function GET(request: Request) {
   const tokenData = await tokenResponse.json();
 
   if (!tokenResponse.ok) {
-    return NextResponse.json({ error: 'Failed to fetch access token', details: tokenData }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch access token', details: tokenData },
+      { status: 500 },
+    );
   }
 
   const accessToken = tokenData.access_token;
@@ -49,18 +49,22 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
 
-  // TODO supabaseにaccessToken, refreshTokenを保存
+  // supabaseにaccessToken, refreshTokenを保存
   const { error } = await supabase
     .from('discord_settings')
-    .insert({ user_id, access_token: accessToken, refresh_token: refreshToken });
+    .upsert(
+      { user_id, access_token: accessToken, refresh_token: refreshToken },
+      { onConflict: 'user_id' },
+    );
 
   if (error) {
-    return NextResponse.json({ error: 'Failed to save tokens', details: error.message }, { status: 500 });
+    console.error('Failed to save tokens', error);
+    return NextResponse.json(
+      { error: 'Failed to save tokens', details: error.message },
+      { status: 500 },
+    );
   }
-  
 
-  
-
-  // TODO アプリにリダイレクト
-  return NextResponse.json(accessToken, { status: 200 });
+  // アプリにリダイレクト
+  redirect('/settings');
 }
