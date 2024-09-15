@@ -16,9 +16,9 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         discord:
-          "bg-[#5563FF] bg-no-repeat bg-center bg-[url('/app-logo/discordwhite.svg')] bg-[length:40px_40px] hover:bg-accent",
+          "bg-[#5563FF] bg-no-repeat bg-center bg-[url('/app-logo/discordwhite.svg')] bg-[length:40px_40px] hover:opacity-70",
         github:
-          "bg-background bg-no-repeat bg-center bg-cover bg-[url('/app-logo/github.svg')] hover:bg-accent",
+          "bg-background bg-no-repeat bg-center bg-cover bg-[url('/app-logo/github.svg')] hover:opacity-70",
         slack:
           "border border-input bg-white bg-no-repeat bg-center bg-[url('/app-logo/slack.svg')] bg-[length:30px_30px] hover:bg-accent",
       },
