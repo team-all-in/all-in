@@ -53,8 +53,7 @@ priority_rule = {
 
 @app.post("/get_messages")
 def get_messages() -> dict:
-    # app = requests["app"]
-    app = "discord"
+    app = requests["app"]
     if app != "discord":
         return JSONResponse(status_code=400, content={"error": "app is not discord"})
     message_id = requests["message_id"]
