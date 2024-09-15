@@ -49,16 +49,23 @@ async def auth_check(
 
 @app.post("/messages")
 def get_messages(
-    message: Message, user: str = Depends(get_current_user)
-) -> MessageResponse:
-    if message.app.SLACK:
-        return get_slack_message(
-            user_id=user,
-            server_id=message.server_id,
-            channel_id=message.channel_id,
-            message_id=message.message_id,
-        )
-    if message.app.DISCORD:
-        # TODO: Discordのメッセージを取得する関数を呼び出す
-        # @nakano1122
-        return
+    messages: list[Message], user: str = Depends(get_current_user)
+) -> list[MessageResponse]:
+    responses = []
+
+    for message in messages:
+        if message.app.SLACK:
+            responses.append(
+                get_slack_message(
+                    user_id=user,
+                    server_id=message.server_id,
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
+                )
+            )
+        if message.app.DISCORD:
+            # TODO: Discordのメッセージを取得する関数を呼び出す
+            # @nakano1122
+            pass
+
+    return responses
