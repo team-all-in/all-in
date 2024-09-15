@@ -12,7 +12,7 @@ from slack_sdk.oauth.installation_store import FileInstallationStore
 from slack_sdk.oauth.state_store import FileOAuthStateStore
 
 from app_setting import supabase_client, get_current_user
-
+from decode import decrypt
 
 load_dotenv(find_dotenv())
 
@@ -142,10 +142,17 @@ channel_id = 'C07MELMF3TM'
 message_id = '1726380661.651149'
 
 def get_message(user_id, server_id, channel_id, message_id):
-    # token = supabase_client.table('slack_settings').select('access_token').eq('user_id', user_id).execute().data[0]['access_token']
+    # 暗号化されたトークンを取得
+    encrypted_token = (
+        supabase_client
+        .table('slack_settings')
+        .select('access_token')
+        .eq('user_id', user_id)
+        .execute()
+    ).data[0]['access_token']
     # 複合化する
-    # token = token
-    # client = WebClient(token=token)
+    slack_access_token = decrypt(encrypted_token)
+    client = WebClient(token=slack_access_token)
 
     # サーバー
     server_info = client.team_info(team=server_id)["team"]
