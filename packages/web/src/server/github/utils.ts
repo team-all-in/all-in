@@ -51,7 +51,5 @@ export const convertGitHubApiUrlToWebUrl = (apiUrl: string): string => {
 
   url.pathname = pathParts.join('/');
 
-  console.log('url', url.toString());
-
   return url.toString();
 };

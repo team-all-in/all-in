@@ -15,7 +15,7 @@ const Account: NextPage<Props> = ({ app, sender_image, sender_name }) => {
         <div className='flex aspect-square h-12 items-center justify-center overflow-hidden rounded-full border-2 border-gray-200 bg-white'>
           <Image src={sender_image} width={48} height={48} alt='tool-icon' />
         </div>
-        <div className='-right-2 -bottom-2 absolute flex aspect-square h-7 items-center justify-center overflow-hidden rounded-full border-2 border-gray-200 bg-white'>
+        <div className='-right-2 -bottom-2 absolute flex aspect-square h-7 items-center justify-center overflow-hidden rounded-full border-2 border-gray-200 bg-background'>
           <Image src={`app-logo/${app}.svg`} alt={`${app}のロゴ`} width='16' height='16' />
         </div>
       </div>
