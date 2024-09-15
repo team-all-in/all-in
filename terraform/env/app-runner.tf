@@ -68,8 +68,14 @@ data "aws_iam_policy_document" "access" {
     actions = [
       "ecr:DescribeImages",
       "ecr:GetAuthorizationToken",
+      "ssm:DescribeParameters",
     ]
     resources = ["*"]
+  }
+
+  statement {
+    actions   = ["ssm:GetParameters"]
+    resources = [data.aws_ssm_parameter.openai_api_key.arn]
   }
 }
 
