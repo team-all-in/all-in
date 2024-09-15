@@ -153,7 +153,7 @@ def get_message(user_id, server_id, channel_id, message_id):
         "content": context,
         "message_link": message_link,
         # '2024-09-14 05:45:02'
-        "send_at": datetime.fromtimestamp(float(message_id.split(".")[0])).strftime('%Y-%m-%d %H:%M:%S')
+        "send_at": datetime.fromtimestamp(float(message_id.split(".")[0])).strftime('%Y-%m-%dT%H:%M:%SZ')
     }
 
     return response
