@@ -6,6 +6,6 @@ export type Message = {
   content: string;
   message_link: string;
   sentiment?: string;
-  priority?: 'low' | 'medium' | 'high' | 'urgent' | 'critical';
+  priority?: 1 | 2 | 3 | 4 | 5;
   send_at: string;
 };
