@@ -10,7 +10,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # メッセージに基づき優先順位を決定する関数
-async def prioritize_message(input_text: str):
+def prioritize_message(input_text: str):
     prompt = f"""
     以下のメッセージに対して、適切な優先順位（low, medium, high, urgent, critical）をつけてください。
     メッセージ: {input_text}
