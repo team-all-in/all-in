@@ -89,9 +89,8 @@ pip-delete-this-directory.txt
 # Virtualenv
 .env/
 .venv/
-env/
 venv/
-ENV/
+# ENV/
 env.bak/
 venv.bak/
 
