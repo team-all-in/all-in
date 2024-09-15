@@ -1,3 +1,5 @@
+data "aws_partition" "current" {}
+
 resource "aws_apprunner_service" "all_in_api" {
   service_name = "all_in"
 
