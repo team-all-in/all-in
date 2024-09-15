@@ -51,7 +51,7 @@ priority_rule = {
 #             }
 #             supabase.table("message").insert(message).execute()
 
-# @app.post("/get_messages")
+@app.post("/get_messages")
 def get_messages() -> dict:
     # app = requests["app"]
     app = "discord"
@@ -74,9 +74,6 @@ def get_messages() -> dict:
     response["send_at"] = message["edited_timestamp"] if message["edited_timestamp"] else message["timestamp"]
     print(response)
     return JSONResponse(status_code=200, content=response)
-
-response = get_messages()
-print(response)
 
 # if __name__ == "__main__":
 #     client.run(os.getenv("DISCORD_ACCESSTOKEN"))
