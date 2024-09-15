@@ -1,15 +1,17 @@
-from src.app_setting import app, get_current_user
 from fastapi import Depends
+from src.app_setting import app, get_current_user
+from src.const.message import Message, MessageResponse
 from src.predict.emotion.emotion import analyze_emotion
 from src.predict.priority.priority import prioritize_message
-from src.sync_app.slack.slack import get_slack_message
 from src.sync_app.discord.discord import get_discord_message
-from src.const.message import Message, MessageResponse
+from src.sync_app.slack.slack import get_slack_message
+
 
 # ルートエンドポイント
 @app.get("/")
 async def read_root():
     return {"message": "hello_world!!"}
+
 
 @app.get("/auth-check")
 async def auth_check(
@@ -18,8 +20,9 @@ async def auth_check(
     print(user.id)
     return {"user": user}
 
+
 @app.post("/messages")
-def get_messages(
+async def get_messages(
     messages: list[Message], user: str = Depends(get_current_user)
 ) -> list[MessageResponse]:
     responses = []
@@ -43,6 +46,8 @@ def get_messages(
                 )
             )
 
+    return responses
+
 
 @app.get("/predict")
 async def predict(
@@ -51,7 +56,4 @@ async def predict(
     emoji = analyze_emotion(text)["emoji"]
     priority = prioritize_message(text)
 
-    return {
-        'sentiment': emoji,
-        'priority': priority
-    }
+    return {"sentiment": emoji, "priority": priority}
