@@ -27,7 +27,5 @@ export const generateMessageAction = async (_previousState: unknown, formData: F
     `,
   });
 
-  console.log('result', result);
-
   return result.object.message;
 };

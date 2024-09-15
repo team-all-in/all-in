@@ -1,13 +1,14 @@
 import dayjs from 'dayjs';
-import { Check, Sparkles } from 'lucide-react';
+import { Check } from 'lucide-react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { Button, buttonVariants } from '~/components/ui/button';
 import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
 import { markAsReadAction } from '../../actions/markAsRead';
+import { GenerateMessageDialog } from '../gen-message/dialog';
 import Account from './account';
-import { type AppProps, AppsProps, ButtonColorClasses, defaultAppProps } from './app-type';
+import { type AppProps, AppsProps, defaultAppProps } from './app-type';
 import Label from './label';
 
 const MessageItem: NextPage<Message> = ({
@@ -58,13 +59,7 @@ const MessageItem: NextPage<Message> = ({
               </Button>
             </form>
           ) : (
-            <Button
-              className={`w-fit ${ButtonColorClasses[appType.buttonBackgroundState]}`}
-              type='submit'
-            >
-              <Sparkles className='mr-2' />
-              <span>返信メッセージを生成する</span>
-            </Button>
+            <GenerateMessageDialog message={content} />
           )}
           <a
             href={message_link}

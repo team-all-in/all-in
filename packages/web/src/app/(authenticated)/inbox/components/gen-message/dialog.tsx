@@ -1,11 +1,11 @@
 'use client';
 
+import { Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -14,7 +14,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -31,7 +30,13 @@ export function GenerateMessageDialog({ message }: { message: string }) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant='outline'>返信メッセージを生成する</Button>
+          <Button
+            className='bg-white text-black hover:bg-gray-100 hover:text-black/70'
+            variant='outline'
+          >
+            <Sparkles className='mr-2' size={18} />
+            <span>返信メッセージを生成する</span>
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -46,7 +51,13 @@ export function GenerateMessageDialog({ message }: { message: string }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant='outline'>返信メッセージを生成する</Button>
+        <Button
+          className='bg-white text-black hover:bg-gray-100 hover:text-black/70'
+          variant='outline'
+        >
+          <Sparkles className='mr-2' size={18} />
+          <span>返信メッセージを生成する</span>
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='text-left'>

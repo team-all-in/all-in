@@ -26,10 +26,10 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"], 
+    allow_headers=["*"],
 )
 
-supabase_client:Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
+supabase_client: Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
 async def get_current_user(

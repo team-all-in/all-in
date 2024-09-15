@@ -24,26 +24,24 @@ export const saveGithubSettings = async (pat_token: string) => {
   }
   // 既に登録されている場合は更新
   if (github_settings.length > 0) {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('github_settings')
       .update({ encrypt_pat_token: encrypt_pat_token })
       .eq('user_id', user.id);
     if (error) {
       console.error('Error updating to Supabase:', error);
-    } else {
-      console.log('Token updated to Supabase:', data);
+      throw error;
     }
     return;
   }
   // 新規登録
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('github_settings')
     .insert([{ user_id: user.id, encrypt_pat_token: encrypt_pat_token }]);
 
   if (error) {
     console.error('Error saving to Supabase:', error);
-  } else {
-    console.log('Token saved to Supabase:', data);
+    throw error;
   }
 
   return;

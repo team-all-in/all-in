@@ -11,6 +11,7 @@ import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { generateMessageAction } from '../../actions/generateMessage';
 import loadingSrc from './assets/loading.gif';
+import { ShareButton } from './share-button';
 import { StyleRadio } from './style-radio';
 
 export const formSchema = z.object({
@@ -34,7 +35,7 @@ export default function GenerateForm({ message }: { message: string }) {
   return (
     <div className='relative'>
       {isPending && (
-        <div className='absolute inset-0 z-40 grid place-content-center bg-card'>
+        <div className='absolute inset-0 z-40 grid place-content-center rounded-md bg-white'>
           <Image src={loadingSrc} alt='Loading' width={120} height={120} />
         </div>
       )}
@@ -60,9 +61,11 @@ export default function GenerateForm({ message }: { message: string }) {
       ) : (
         <div className='space-y-3'>
           <AutosizeTextarea value={state} readOnly className='resize-none' maxHeight={300} />
-          <Button className='w-full' size='lg'>
-            コピーする
-          </Button>
+          <ShareButton
+            shareData={{
+              text: state,
+            }}
+          />
         </div>
       )}
     </div>
