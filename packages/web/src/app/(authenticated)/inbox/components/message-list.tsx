@@ -48,8 +48,10 @@ export default function MessageList({
         />
           <div className='flex w-full flex-col gap-4 p-3'>
             <h2
-              className={`font-bold text-xl`}
-              style={{ color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000' }}
+              className={`font-bold text-xl ${
+                LabelsProps[Number(date)] ? '' : 'text-primary'
+              }`}
+              style={{ color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '' }}
             >
               {LabelsProps[Number(date)] ? LabelsProps[Number(date)].text : date }
             </h2>
