@@ -25,7 +25,7 @@ const MessageItem: NextPage<Message> = ({
 
   return (
     <div
-      className={`relative flex h-80 w-full flex-col gap-5 overflow-hidden rounded-3xl border p-5 sm:h-56 sm:pr-8 ${appType.itemClass}`}
+      className={`relative flex h-80 w-full flex-col gap-5 overflow-hidden rounded-3xl border p-5 sm:h-48 sm:pr-8 ${appType.itemClass}`}
     >
       {appType.img && (
         <Image
@@ -47,7 +47,7 @@ const MessageItem: NextPage<Message> = ({
         </div>
       </div>
       <div className='z-10 flex flex-grow flex-col justify-between overflow-hidden text-ellipsis sm:ml-4'>
-        <p className='line-clamp-2 sm:line-clamp-3'>{content}</p>
+        <p className='line-clamp-2 sm:line-clamp-1'>{content}</p>
         <div className='flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-3'>
           {app === 'github' ? (
             <MarkAsReadButton id={id} />
