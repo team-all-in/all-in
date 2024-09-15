@@ -1,9 +1,3 @@
-data "aws_partition" "current" {}
-
-data "aws_ssm_parameter" "openai_api_key" {
-  name = "openai_api_key"
-}
-
 resource "aws_apprunner_service" "all_in_api" {
   service_name = "all_in"
 
@@ -20,6 +14,8 @@ resource "aws_apprunner_service" "all_in_api" {
         }
         runtime_environment_secrets = {
           OPENAI_API_KEY = data.aws_ssm_parameter.openai_api_key.arn
+          KEY            = data.aws_ssm_parameter.all_in_key.arn
+          IV             = data.aws_ssm_parameter.all_in_iv.arn
         }
       }
       image_identifier      = "${aws_ecr_repository.all_in_api.repository_url}:latest"
