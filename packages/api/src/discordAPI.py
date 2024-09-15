@@ -57,11 +57,8 @@ def get_messages() -> dict:
     app = "discord"
     if app != "discord":
         return JSONResponse(status_code=400, content={"error": "app is not discord"})
-    # guild_id = requests["server_id"]
-    # message_id = requests["message_id"]
-    # channel_id = requests["channel_id"]
-    channel_id = 1275808876750700640
-    message_id = 1284766126621982781
+    message_id = requests["message_id"]
+    channel_id = requests["channel_id"]
     url = f'https://discord.com/api/v10/channels/{channel_id}/messages/{message_id}'
     message = requests.get(url, headers=headers).json()
     response = {
