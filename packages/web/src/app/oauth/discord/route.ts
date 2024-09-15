@@ -4,7 +4,7 @@ import { createClient } from '~/libs/supabase/server';
 
 const clientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
 const clientSecret = process.env.DISCORD_CLIENT_SECRET;
-const redirectUri = process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI;
+const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/oauth/discord`;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
