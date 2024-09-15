@@ -3,34 +3,58 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
-      discord_settings: {
+      'all-in-relation': {
         Row: {
-          access_token: string | null;
           created_at: string;
+          discord_member_id: string | null;
           id: number;
-          refresh_token: string | null;
+          slack_member_id: string | null;
           user_id: string | null;
         };
         Insert: {
-          access_token?: string | null;
           created_at?: string;
+          discord_member_id?: string | null;
           id?: number;
-          refresh_token?: string | null;
+          slack_member_id?: string | null;
           user_id?: string | null;
         };
         Update: {
-          access_token?: string | null;
+          created_at?: string;
+          discord_member_id?: string | null;
+          id?: number;
+          slack_member_id?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      discord_settings: {
+        Row: {
+          access_token: string;
+          created_at: string;
+          id: number;
+          refresh_token: string;
+          user_id: string;
+        };
+        Insert: {
+          access_token: string;
           created_at?: string;
           id?: number;
-          refresh_token?: string | null;
-          user_id?: string | null;
+          refresh_token: string;
+          user_id: string;
+        };
+        Update: {
+          access_token?: string;
+          created_at?: string;
+          id?: number;
+          refresh_token?: string;
+          user_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'discord_settings_user_id_fkey';
+            foreignKeyName: 'discord_settings_user_id_fkey1';
             columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'messages';
+            isOneToOne: true;
+            referencedRelation: 'users';
             referencedColumns: ['id'];
           },
         ];
@@ -67,29 +91,35 @@ export type Database = {
       messages: {
         Row: {
           app: string;
+          channel_id: string | null;
           created_at: string;
           id: string;
           message_id: string;
-          priority: string | null;
+          priority: number | null;
           sentiment: string | null;
+          server_id: string | null;
           user_id: string;
         };
         Insert: {
           app: string;
+          channel_id?: string | null;
           created_at?: string;
           id?: string;
           message_id: string;
-          priority?: string | null;
+          priority?: number | null;
           sentiment?: string | null;
+          server_id?: string | null;
           user_id: string;
         };
         Update: {
           app?: string;
+          channel_id?: string | null;
           created_at?: string;
           id?: string;
           message_id?: string;
-          priority?: string | null;
+          priority?: number | null;
           sentiment?: string | null;
+          server_id?: string | null;
           user_id?: string;
         };
         Relationships: [
@@ -104,31 +134,31 @@ export type Database = {
       };
       slack_settings: {
         Row: {
-          access_token: string | null;
+          access_token: string;
           created_at: string;
           id: number;
-          refresh_token: string | null;
+          refresh_token: string;
           user_id: string;
         };
         Insert: {
-          access_token?: string | null;
+          access_token: string;
           created_at?: string;
           id?: number;
-          refresh_token?: string | null;
+          refresh_token: string;
           user_id: string;
         };
         Update: {
-          access_token?: string | null;
+          access_token?: string;
           created_at?: string;
           id?: number;
-          refresh_token?: string | null;
+          refresh_token?: string;
           user_id?: string;
         };
         Relationships: [
           {
             foreignKeyName: 'slack_settings_user_id_fkey';
             columns: ['user_id'];
-            isOneToOne: false;
+            isOneToOne: true;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
