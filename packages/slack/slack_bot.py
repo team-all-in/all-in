@@ -90,10 +90,9 @@ def handle_message(event):
         return
 
     try:
-        response = supabase_client.table("messages").insert(insert_data).execute()
+        supabase_client.table("messages").insert(insert_data).execute()
 
-        if response["status"] == 201:
-            logger.info("Inserted successfully")
+        logger.info("Inserted successfully")
     except Exception as e:
         logger.error(e)
 
@@ -101,4 +100,3 @@ def handle_message(event):
 # アプリを起動
 if __name__ == "__main__":
     SocketModeHandler(app=app, app_token=os.environ["SLACK_APP_TOKEN"]).start()
-    print("start")
