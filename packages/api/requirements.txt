@@ -34,6 +34,8 @@ frozenlist==1.4.1
     # via
     #   aiohttp
     #   aiosignal
+discord
+requests
 gotrue==2.8.1
     # via supabase
 h11==0.14.0
