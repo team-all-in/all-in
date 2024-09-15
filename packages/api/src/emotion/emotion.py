@@ -13,7 +13,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 emotions_emoji_dict = {
     "怒り": "😠",
     "嫌悪": "🤮",
-    "恐怖": "😨😱",
+    "恐怖": "😱",
     "幸せ": "🤗",
     "喜び": "😂",
     "中立": "😐",
@@ -25,25 +25,21 @@ emotions_emoji_dict = {
 # 感情を分析する関数
 async def analyze_emotion(input_text: str):
     try:
-        # ストリーミングでChatCompletionを使用
+        # ChatCompletionを使用して感情を分析
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # モデルを指定
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "あなたは感情分析を行うアシスタントです。"},
                 {"role": "user", "content": f"次のテキストの感情を一語で教えてください: {input_text}"}
-            ],
-            stream=True
+            ]
         )
         
-        emotion = ""
-        # ストリーミングで部分的に応答を受け取る
-        for chunk in response:
-            if "delta" in chunk["choices"][0]:
-                if "content" in chunk["choices"][0]["delta"]:
-                    emotion += chunk["choices"][0]["delta"]["content"]  # 部分的な応答を連結
-
-        emotion = emotion.strip()  # 最終的な感情テキストをトリム
-        emoji = emotions_emoji_dict.get(emotion, "😐")  # 絵文字の対応を取得
+        # レスポンスから感情を取得
+        emotion = response['choices'][0]['message']['content'].strip()
+        
+        # 絵文字の対応を取得
+        emoji = emotions_emoji_dict.get(emotion, "😐")
+        
         return {"emotion": emotion, "emoji": emoji}
 
     except Exception as e:

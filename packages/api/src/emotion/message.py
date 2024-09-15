@@ -3,12 +3,13 @@ from fastapi import HTTPException
 from dotenv import load_dotenv
 import os
 
+# .envファイルからAPIキーをロード
 load_dotenv()
 
 # OpenAI APIキーを設定
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# メッセージを生成する関数（ストリーミング対応）
+# メッセージを生成する関数
 async def generate_message(input_text: str, emotion: str, emoji: str):
     prompt = f"""
     元のメッセージ: {input_text}
@@ -22,7 +23,7 @@ async def generate_message(input_text: str, emotion: str, emoji: str):
     """
 
     try:
-        # ストリーミングを使ってChatCompletionを作成
+        # ストリーミングなしでChatCompletionを使用
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -30,17 +31,13 @@ async def generate_message(input_text: str, emotion: str, emoji: str):
                 {"role": "user", "content": prompt}
             ],
             max_tokens=100,
-            temperature=0.5,
-            stream=True
+            temperature=0.5
         )
 
-        # ストリームからのメッセージを部分的に結合して最終的なメッセージを生成
-        generated_message = ""
-        for chunk in response:
-            if 'choices' in chunk and chunk['choices'][0]['delta'].get('content'):
-                generated_message += chunk['choices'][0]['delta']['content']
+        # レスポンスから生成されたメッセージを取得
+        generated_message = response['choices'][0]['message']['content'].strip()
 
-        return generated_message.strip()
+        return generated_message
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"メッセージ生成中にエラーが発生しました: {str(e)}")
