@@ -4,3 +4,4 @@ openai==0.28
 fastapi==0.110.3
 uvicorn==0.29.0
 supabase==2.7.4
+pycryptodome==3.20.0
