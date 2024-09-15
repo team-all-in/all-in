@@ -15,7 +15,7 @@ const ButtonColorClasses: Record<ButtonState, string> = {
 
 type AppProps = {
   img: string | StaticImport | undefined;
-  iconBackgroundColorClass: string,
+  iconBackgroundColorClass: string;
   hasInvert: boolean;
   itemClass: string;
   buttonBackgroundState: ButtonState;
@@ -24,21 +24,21 @@ type AppProps = {
 const AppsProps: Record<string, AppProps> = {
   discord: {
     img: DiscordImg,
-    iconBackgroundColorClass: "white",
+    iconBackgroundColorClass: 'white',
     hasInvert: true,
     itemClass: ' text-white bg-blue-800',
     buttonBackgroundState: ButtonState.White,
   },
   slack: {
     img: SlackImg,
-    iconBackgroundColorClass: "white",
+    iconBackgroundColorClass: 'white',
     hasInvert: false,
     itemClass: ' text-black bg-white',
     buttonBackgroundState: ButtonState.Black,
   },
   github: {
     img: GitHub,
-    iconBackgroundColorClass: "background",
+    iconBackgroundColorClass: 'background',
     hasInvert: true,
     itemClass: ' text-white bg-black',
     buttonBackgroundState: ButtonState.White,
@@ -47,7 +47,7 @@ const AppsProps: Record<string, AppProps> = {
 
 const defaultAppProps: AppProps = {
   img: undefined,
-  iconBackgroundColorClass: "primary",
+  iconBackgroundColorClass: 'primary',
   hasInvert: false,
   itemClass: ' text-black bg-gray-400',
   buttonBackgroundState: ButtonState.Black,

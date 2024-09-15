@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function SettingsLink() {
   return (
     <Link href='/settings' className='fixed top-2 right-3 z-50'>
-      <Settings size={40} />
+      <Settings size={35} strokeWidth={1} />
     </Link>
   );
 }
