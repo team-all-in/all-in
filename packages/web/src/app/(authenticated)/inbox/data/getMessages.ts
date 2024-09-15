@@ -79,7 +79,7 @@ export const getMessages = async ({
     // TODO: GitHubの通知とDiscord、Slackメッセージの統合する。
     if (githubMessages) {
       messages.push(...githubMessages);
-      // messages.push(...dummyMessages);
+      messages.push(...dummyMessages);
     }
   }
 
