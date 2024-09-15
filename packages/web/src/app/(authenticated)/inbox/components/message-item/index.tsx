@@ -25,13 +25,13 @@ const MessageItem: NextPage<Message> = ({
 
   return (
     <div
-      className={`relative flex h-80 w-full flex-col gap-5 overflow-hidden rounded-3xl border p-5 sm:h-48 sm:pr-8 ${appType.itemClass}`}
+      className={`relative flex h-72 w-full flex-col gap-5 overflow-hidden rounded-2xl border p-3 sm:h-40 sm:pr-8 ${appType.itemClass}`}
     >
       {appType.img && (
         <Image
           src={appType.img}
           alt='tool-icon'
-          className={`-right-4 -bottom-4 absolute h-56 opacity-30 ${
+          className={`-right-4 -bottom-8 absolute h-56 opacity-30 ${
             appType.hasInvert ? ' invert filter ' : ''
           }`}
         />
