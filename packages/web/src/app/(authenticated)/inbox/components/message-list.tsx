@@ -7,6 +7,8 @@ import type { Message } from '~/libs/types/message';
 import { filterMessagesByApp } from '../data/filterMessageByApp';
 import { groupMessagesBy } from '../data/groupMessagesBy';
 import MessageItem from './message-item';
+import { LabelsProps } from './message-item/label-type';
+import { number } from 'zod';
 
 export default function MessageList({
   messages,
@@ -16,17 +18,14 @@ export default function MessageList({
   const [filter] = useQueryState('filter', parseAsString);
   const [sort] = useQueryState('sort', parseAsString);
   const [allMessages, setAllMessages] = useState<Message[]>(messages || []);
-  const [groupedMessages, setGroupedMessages] = useState<Record<string, Message[]>>({});
+  const [groupedMessages, setGroupedMessages] = useState<[string, Message[]][] | [number, Message[]][]>([]);
 
   useEffect(() => {
     const sortMessages = async () => {
       if (allMessages) {
-        const sorted = allMessages.sort(
-          (a, b) => dayjs(b.send_at).unix() - dayjs(a.send_at).unix(),
-        );
-        setAllMessages(sorted);
-        setGroupedMessages(groupMessagesBy(sort ?? 'time', sorted));
-        console.log(groupMessagesBy(sort ?? 'time', sorted));
+        setAllMessages(allMessages);
+        setGroupedMessages(groupMessagesBy(sort ?? 'time', allMessages));
+        console.log(groupMessagesBy(sort ?? 'time', allMessages));
       }
     };
 
@@ -40,15 +39,24 @@ export default function MessageList({
     } else {
       setGroupedMessages(groupMessagesBy(sort ?? 'time', allMessages));
     }
+    console.log(groupMessagesBy(sort ?? 'time', allMessages));
   }, [filter, allMessages, sort]);
 
   return (
     <>
-      {Object.entries(groupedMessages).map(([date, messages]) => (
+      {groupedMessages.map(([date, messages]) => (
         <div key={date} className='flex'>
-          <div className='w-4 flex-grow rounded-full bg-black' />
+          <div
+            className={`w-4 flex-grow rounded-full`}
+            style={{ backgroundColor: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000' }}
+          />
           <div className='flex w-full flex-col gap-4 p-3'>
-            <h2 className='font-bold text-xl'>{date}</h2>
+            <h2
+              className={`font-bold text-xl`}
+              style={{ color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000' }}
+            >
+              {LabelsProps[Number(date)] ? LabelsProps[Number(date)].text : date }
+            </h2>
             {messages.map(message => (
               <MessageItem key={message.id} {...message} />
             ))}
