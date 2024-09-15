@@ -1,15 +1,17 @@
+import dayjs from 'dayjs';
 import { Check, Sparkles } from 'lucide-react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { Button, buttonVariants } from '~/components/ui/button';
 import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
+import { markAsReadAction } from '../../actions/markAsRead';
 import Account from './account';
 import { type AppProps, AppsProps, ButtonColorClasses, defaultAppProps } from './app-type';
 import Label from './label';
-import dayjs from 'dayjs';
 
 const MessageItem: NextPage<Message> = ({
+  id,
   app,
   sender_image,
   sender_name,
@@ -23,7 +25,7 @@ const MessageItem: NextPage<Message> = ({
 
   return (
     <div
-      className={`relative flex h-80 w-full flex-col gap-3 overflow-hidden rounded-3xl border p-5 sm:h-56 sm:pr-8 ${appType.itemClass}`}
+      className={`relative flex h-80 w-full flex-col gap-5 overflow-hidden rounded-3xl border p-5 sm:h-56 sm:pr-8 ${appType.itemClass}`}
     >
       {appType.img && (
         <Image
@@ -41,9 +43,6 @@ const MessageItem: NextPage<Message> = ({
             {priority && <Label priority={priority} />}
             {sentiment && <span>{sentiment}</span>}
           </div>
-          {/*
-            //TODO: 時間の部分だけ表示する
-          */}
           <p>{dayjs(send_at).format('HH:mm')}</p>
         </div>
       </div>
@@ -51,7 +50,8 @@ const MessageItem: NextPage<Message> = ({
         <p className='line-clamp-2 sm:line-clamp-3'>{content}</p>
         <div className='flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-3'>
           {app === 'github' ? (
-            <form action=''>
+            <form action={markAsReadAction}>
+              <input type='hidden' value={id} name='id' />
               <Button variant='secondary'>
                 <Check className='mr-2' />
                 <span>既読にする</span>
