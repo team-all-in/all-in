@@ -99,7 +99,5 @@ def handle_message(event):
 
 # アプリを起動
 if __name__ == "__main__":
-    import uvicorn
     SocketModeHandler(app=app, app_token=os.environ["SLACK_APP_TOKEN"]).start()
-    uvicorn.run('slack_bot:app', host="0.0.0.0", port=8000, reload=True)
     print("start")
