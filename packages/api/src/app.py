@@ -38,13 +38,14 @@ async def read_root():
 
 
 # サンプル:ログインユーザーの取得
+
+
 @app.get("/auth-check")
 async def auth_check(
     user: str = Depends(get_current_user),
 ):
     print(user)
     return {"user": user}
-
 
 @app.post("/messages")
 def get_messages(

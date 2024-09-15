@@ -14,22 +14,20 @@ export default function MessageList({
   messages: Message[] | undefined;
 }) {
   const [filter] = useQueryState('filter', parseAsString);
-  const [allMessages, setAllMessages] = useState<Message[]>(messages || []);
+  const [allMessages, setAllMessages] = useState<Message[]>([]);
   const [groupedMessages, setGroupedMessages] = useState<Record<string, Message[]>>({});
 
   useEffect(() => {
     const sortMessages = async () => {
-      if (allMessages) {
-        const sorted = allMessages.sort(
-          (a, b) => dayjs(b.send_at).unix() - dayjs(a.send_at).unix(),
-        );
+      if (messages) {
+        const sorted = messages.sort((a, b) => dayjs(b.send_at).unix() - dayjs(a.send_at).unix());
         setAllMessages(sorted);
         setGroupedMessages(groupMessagesByDate(sorted));
       }
     };
 
     sortMessages();
-  }, [allMessages]);
+  }, [messages]);
 
   useEffect(() => {
     if (filter) {

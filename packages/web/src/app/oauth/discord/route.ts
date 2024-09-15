@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
+import { encryptToken } from '~/libs/encryptions/token';
 import { createClient } from '~/libs/supabase/server';
 
 const clientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
@@ -38,8 +39,9 @@ export async function GET(request: Request) {
     );
   }
 
-  const accessToken = tokenData.access_token;
-  const refreshToken = tokenData.refresh_token;
+  // トークンを暗号化
+  const encryptedAccessToken = encryptToken(tokenData.access_token);
+  const encryptedRefreshToken = encryptToken(tokenData.refresh_token);
 
   const supabase = createClient();
   const getUserRes = await supabase.auth.getUser();
@@ -50,12 +52,14 @@ export async function GET(request: Request) {
   }
 
   // supabaseにaccessToken, refreshTokenを保存
-  const { error } = await supabase
-    .from('discord_settings')
-    .upsert(
-      { user_id, access_token: accessToken, refresh_token: refreshToken },
-      { onConflict: 'user_id' },
-    );
+  const { error } = await supabase.from('discord_settings').upsert(
+    {
+      user_id,
+      access_token: encryptedAccessToken,
+      refresh_token: encryptedRefreshToken,
+    },
+    { onConflict: 'user_id' },
+  );
 
   if (error) {
     console.error('Failed to save tokens', error);
