@@ -50,7 +50,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
 
-  const { error } = await supabase.from('slack_settings').upsert(
+  const { error: upsertError } = await supabase.from('slack_settings').upsert(
     {
       user_id,
       access_token: encryptedAccessToken,
@@ -59,10 +59,26 @@ export async function GET(request: Request) {
     { onConflict: 'user_id' },
   );
 
-  if (error) {
-    console.error('Failed to save tokens', error);
+  if (upsertError) {
+    console.error('Failed to save tokens', upsertError);
     return NextResponse.json(
-      { error: 'Failed to save tokens', details: error.message },
+      { error: 'Failed to save tokens', details: upsertError.message },
+      { status: 500 },
+    );
+  }
+
+  let { error } = await supabase.from('all-in-relation').upsert(
+    {
+      user_id,
+      slack_member_id: tokenData.authed_user.id,
+    },
+    { onConflict: 'user_id' },
+  );
+
+  if (error) {
+    console.error('Failed to save slack_member_id', error);
+    return NextResponse.json(
+      { error: 'Failed to save slack_member_id', details: error.message },
       { status: 500 },
     );
   }
