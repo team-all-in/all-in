@@ -7,6 +7,7 @@ import type { Message } from '~/libs/types/message';
 import Account from './account';
 import { type AppProps, AppsProps, ButtonColorClasses, defaultAppProps } from './app-type';
 import Label from './label';
+import dayjs from 'dayjs';
 
 const MessageItem: NextPage<Message> = ({
   app,
@@ -22,7 +23,7 @@ const MessageItem: NextPage<Message> = ({
 
   return (
     <div
-      className={`relative flex h-72 w-full flex-col gap-3 overflow-hidden rounded-3xl border p-5 sm:h-56 sm:pr-8 ${appType.itemClass}`}
+      className={`relative flex h-80 w-full flex-col gap-3 overflow-hidden rounded-3xl border p-5 sm:h-56 sm:pr-8 ${appType.itemClass}`}
     >
       {appType.img && (
         <Image
@@ -43,7 +44,7 @@ const MessageItem: NextPage<Message> = ({
           {/*
             //TODO: 時間の部分だけ表示する
           */}
-          <p>{send_at}</p>
+          <p>{dayjs(send_at).format('HH:mm')}</p>
         </div>
       </div>
       <div className='z-10 flex flex-grow flex-col justify-between overflow-hidden text-ellipsis sm:ml-4'>
