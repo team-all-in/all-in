@@ -19,7 +19,7 @@ resource "aws_apprunner_service" "all_in_api" {
           SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhamptc29wanp2ZXlwbXljd3FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYyNDY5ODgsImV4cCI6MjA0MTgyMjk4OH0.JrXfH8vNCla4BzoWVbV6IUPOyrg5PoN239qslbb567Q"
         }
         runtime_environment_secrets = {
-          OPENAI_API_KEY = data.aws_ssm_parameter.openai_api_key.value
+          OPENAI_API_KEY = data.aws_ssm_parameter.openai_api_key.arn
         }
       }
       image_identifier      = "${aws_ecr_repository.all_in_api.repository_url}:latest"
@@ -29,9 +29,8 @@ resource "aws_apprunner_service" "all_in_api" {
   }
 
   instance_configuration {
-    cpu    = "0.5 vCPU"
-    memory = "1 GB"
-    # instance_role_arn = aws_iam_instance_profile.app_runner_instance_profile.arn
+    cpu               = "0.5 vCPU"
+    memory            = "1 GB"
     instance_role_arn = aws_iam_role.app_runner_ssm_role.arn
   }
 
@@ -91,6 +90,7 @@ resource "aws_iam_role" "access" {
   assume_role_policy = data.aws_iam_policy_document.access_assume_role.json
 }
 
+# for ssm parameter store
 resource "aws_iam_role" "app_runner_ssm_role" {
   name = "app_runner_ssm_role"
 
@@ -116,7 +116,7 @@ resource "aws_iam_policy" "ssm_get_parameters_policy" {
     Statement = [
       {
         Action = [
-          "ssm:GetParameter"
+          "ssm:GetParameters"
         ]
         Effect   = "Allow"
         Resource = "*"
@@ -129,9 +129,3 @@ resource "aws_iam_role_policy_attachment" "attach_ssm_policy" {
   role       = aws_iam_role.app_runner_ssm_role.name
   policy_arn = aws_iam_policy.ssm_get_parameters_policy.arn
 }
-
-resource "aws_iam_instance_profile" "app_runner_instance_profile" {
-  name = "app_runner_instance_profile"
-  role = aws_iam_role.app_runner_ssm_role.name
-}
-
