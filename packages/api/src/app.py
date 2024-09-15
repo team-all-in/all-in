@@ -13,9 +13,9 @@ async def read_root():
 
 @app.get("/auth-check")
 async def auth_check(
-    user: str = Depends(get_current_user),
+    user = Depends(get_current_user),
 ):
-    print(user)
+    print(user.id)
     return {"user": user}
 
 @app.post("/messages")
