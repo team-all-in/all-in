@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    template: 'ALL IN - %s',
+    template: '%s',
     default: 'ホーム'
   },
   description: 'すべての会話を、ひとつの場所に。',
