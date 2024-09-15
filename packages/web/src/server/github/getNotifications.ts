@@ -3,7 +3,7 @@
 import type { Message } from '~/libs/types/message';
 import { API_URL, header } from './configs';
 import type { GitHubNotificationsResponse } from './types';
-import { getToken } from './utils';
+import { convertGitHubApiUrlToWebUrl, getToken } from './utils';
 
 export const getGitHubNotifications = async (startDate: string): Promise<Message[] | undefined> => {
   // DBからトークン取得
@@ -34,18 +34,18 @@ export const getGitHubNotifications = async (startDate: string): Promise<Message
 
     const notifications = (await response.json()) as GitHubNotificationsResponse;
 
-    console.log('notifications', notifications);
-
     // 通知をメッセージに変換
-    const messages: Message[] = notifications.map(notification => ({
-      id: notification.id,
-      app: 'github',
-      sender_image: notification.repository.owner.avatar_url,
-      sender_name: notification.repository.full_name,
-      content: `${notification.subject.type}: ${notification.subject.title}`,
-      message_link: notification.subject.url,
-      send_at: notification.updated_at,
-    }));
+    const messages: Message[] = await Promise.all(
+      notifications.map(async notification => ({
+        id: notification.id,
+        app: 'github',
+        sender_image: notification.repository.owner.avatar_url,
+        sender_name: notification.repository.full_name,
+        content: `${notification.subject.type}: ${notification.subject.title}`,
+        message_link: await convertGitHubApiUrlToWebUrl(notification.subject.url),
+        send_at: notification.updated_at,
+      })),
+    );
 
     return messages;
   } catch (error) {

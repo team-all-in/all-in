@@ -1,5 +1,7 @@
+---
 name: ECR push
 on: 
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
@@ -30,6 +32,7 @@ jobs:
           REPO: "all_in_api"
           TAG: "latest"
 
+        working-directory: packages/api
         run: |
           ecr_path=${{ env.REGISTRY }}/${{ env.REPO }}:${{ env.TAG }}
           docker build . -t $ecr_path --platform linux/amd64
