@@ -1,4 +1,4 @@
-from src.app_setting import app, supabase_client, get_current_user
+from app_setting import app, supabase_client, get_current_user
 from fastapi import Depends, HTTPException
 
 # ルートエンドポイント
