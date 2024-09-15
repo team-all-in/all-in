@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 import os
 import uuid
@@ -98,7 +99,7 @@ def handle_message(event, say):
     sentiment = mock_sentiment(message)
 
     # メッセージを送信
-    say(f"Hello, <@{event['user']}>!")
+    say(f"Hello, <@{event['user']}>! You said: {message}. ts: {message_id}")
 
 
 def add_bot_to_all_channels():
@@ -109,11 +110,48 @@ def add_bot_to_all_channels():
         # 全チャンネルにbotを追加
         client.conversations_join(channel=channel_id)
 
-channel = 'C07MELMF3TM'
-ts = '1726314416.256329'
+# # クライアントからのリクエストとして受け取る
+# # 基本複数個
+user_id = ""
+server_id = 'T07N3HCA1S4'
+channel_id = 'C07MELMF3TM'
+message_id = '1726380661.651149'
 
-history = client.conversations_history(channel=channel, inclusive=True, latest=ts, limit=1)
-print(history['messages'][0]['text'])
+def get_message(user_id, server_id, channel_id, message_id):
+    # tokenをdbから取得する
+    token = ""
+    # 複合化する
+    token = token
+    # client WebClient(token=token)
+
+    server_info = client.team_info(team=server_id)["team"]
+    server_name = server_info['name']
+    server_image = server_info['icon']['image_34']
+
+    message = client.conversations_history(channel=channel_id, inclusive=True, latest=message_id, limit=1)
+    context = message['messages'][0]['text']
+    message_link = server_info['url'] + "archives/" + channel_id + "/p" + message_id.replace(".", "")
+
+    member_info = client.users_info(user=message['messages'][0]['user'])
+    sender_name = member_info['user']['profile']['display_name'] if member_info['user']['profile']['display_name'] != "" else member_info['user']['real_name']
+    sender_image = member_info['user']['profile']['image_48']
+
+    response = {
+        "id": message_id,
+        "server_name": server_name,
+        "server_image": server_image,
+        "sender_name": sender_name,
+        "sender_image": sender_image,
+        "content": context,
+        "message_link": message_link,
+        "send_at": float(message_id.split(".")[0]),
+    }
+
+    return response
+
+response = get_message(user_id, server_id, channel_id, message_id)
+print('-'*20 + 'response' + '-'*20)
+print(response)
 
 # アプリを起動します
 if __name__ == "__main__":
