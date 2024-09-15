@@ -3,8 +3,8 @@ from enum import Enum
 from fastapi import Depends
 from pydantic import BaseModel
 from src.app_setting import app, get_current_user
-from src.slack.slack import get_slack_message
 from src.discord.discord import get_discord_message
+from src.slack.slack import get_slack_message
 
 
 class App(Enum):
@@ -50,37 +50,9 @@ async def auth_check(
     print(user)
     return {"user": user}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# サンプル:subapaseのデータ取得
-
-
-@app.get("/items")
-async def read_items():
-    response = supabase_client.table("your_table_name").select("*").execute()
-    return response.data
-=======
-=======
->>>>>>> ad30e6c (feat: connect front)
 
 @app.post("/messages")
 def get_messages(
-<<<<<<< HEAD
-    message: Message, user: str = Depends(get_current_user)
-) -> MessageResponse:
-    if message.app.SLACK:
-        return get_slack_message(
-            user_id=user,
-            server_id=message.server_id,
-            channel_id=message.channel_id,
-            message_id=message.message_id,
-        )
-    if message.app.DISCORD:
-        # TODO: Discordのメッセージを取得する関数を呼び出す
-        # @nakano1122
-        return
->>>>>>> b6f33f7 (feat: メッセージを取得できるエンドポイントを追加)
-=======
     messages: list[Message], user: str = Depends(get_current_user)
 ) -> list[MessageResponse]:
     responses = []
@@ -105,4 +77,3 @@ def get_messages(
             )
 
     return responses
->>>>>>> 0ebc1ef (feat: メッセージを複数取得できるようにする)
