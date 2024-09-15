@@ -6,7 +6,7 @@ import { Drawer as DrawerPrimitive } from 'vaul';
 import { cn } from '~/libs/classes';
 
 const Drawer = ({
-  shouldScaleBackground = true,
+  shouldScaleBackground = false,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
@@ -96,5 +96,6 @@ export {
   DrawerOverlay,
   DrawerPortal,
   DrawerTitle,
-  DrawerTrigger,
+  DrawerTrigger
 };
+
