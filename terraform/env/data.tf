@@ -7,5 +7,5 @@ data "aws_ssm_parameter" "all_in_key" {
 }
 
 data "aws_ssm_parameter" "all_in_iv" {
-  name = "all-in-key"
+  name = "all-in-iv"
 }
