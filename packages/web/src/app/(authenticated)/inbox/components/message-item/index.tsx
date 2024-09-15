@@ -25,7 +25,7 @@ const MessageItem: NextPage<Message> = ({
 
   return (
     <div
-      className={`relative flex h-72 w-full flex-row gap-5 overflow-hidden rounded-2xl border p-3 sm:h-40 ${appType.itemClass}`}
+      className={`relative flex h-72 w-full flex-row gap-5 overflow-hidden border-2 rounded-2xl  p-3 sm:h-40 ${appType.itemClass}`}
     >
       {appType.img && (
         <Image
