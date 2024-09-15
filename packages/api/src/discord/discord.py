@@ -49,12 +49,9 @@ priority_rule = {
 #             supabase.table("message").insert(message).execute()
 
 
-def get_discord_messages() -> dict:
-    app = requests["app"]
-    if app != "discord":
-        return JSONResponse(status_code=400, content={"error": "app is not discord"})
-    message_id = requests["message_id"]
-    channel_id = requests["channel_id"]
+def get_discord_messages(
+    message_id: str, channel_id: str
+) -> dict:
     url = f'''https://discord.com/api/v10/channels/{
         channel_id}/messages/{message_id}'''
     message = requests.get(url, headers=headers).json()
