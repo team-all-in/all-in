@@ -89,18 +89,42 @@ def handle_message(event, say):
             mention_cnt += 1
     if mention_cnt == 0:
         pass
+
     # メンションをされたユーザーがsupabaseに登録されているユーザーかを調べる
-    print('-'*50)
-    print(event)
-    print(event['user'])
-    print('-'*50)
+    insert_data = []
+    for member_id in mention_member_ids:
+        user_id = (
+            supabase_client
+            .table('all-in-relation')
+            .select('slack_member_id')
+            .eq('slack_member_id', member_id)
+            .execute()
+        ).data[0]['user_id']
 
-    priority = mock_priority(message)
-    sentiment = mock_sentiment(message)
+        if not user_id:
+            continue
 
-    # メッセージを送信
-    say(f"Hello, <@{event['user']}>! You said: {message}. ts: {message_id}")
+        insert_data.append({
+            'id': str(uuid.uuid4()),
+            'user_id': user_id,
+            'app': 'slack',
+            'server_id': server_id,
+            'channel_id': channel_id,
+            'message_id': message_id,
+            'sentiment': mock_sentiment(message),
+            'priority': mock_priority(message),
+        })
 
+    if insert_data == []:
+        pass
+
+    try:
+        response = supabase_client.table('messages').insert(insert_data).execute()
+
+        if response['status'] == 201:
+            print('Inserted successfully')
+    except Exception as e:
+        print(e)
 
 def add_bot_to_all_channels():
     channels_list = client.conversations_list()
