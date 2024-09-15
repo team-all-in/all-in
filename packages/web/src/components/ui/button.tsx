@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default: 'bg-primary text-primary-foreground hover:bg-primary/60',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -18,7 +18,7 @@ const buttonVariants = cva(
         discord:
           "bg-[#5563FF] bg-no-repeat bg-center bg-[url('/app-logo/discordwhite.svg')] bg-[length:40px_40px] hover:bg-accent",
         github:
-          "bg-black bg-no-repeat bg-center bg-[url('/app-logo/github.svg')] bg-[length:40px_40px] hover:bg-accent",
+          "bg-background bg-no-repeat bg-center bg-cover bg-[url('/app-logo/github.svg')] hover:bg-accent",
         slack:
           "border border-input bg-white bg-no-repeat bg-center bg-[url('/app-logo/slack.svg')] bg-[length:30px_30px] hover:bg-accent",
       },
@@ -27,7 +27,6 @@ const buttonVariants = cva(
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
-        signout: 'h-11 w-full py-2',
         tools: 'h-16 w-16 rounded-full',
       },
     },

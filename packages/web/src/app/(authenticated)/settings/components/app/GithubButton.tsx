@@ -9,7 +9,7 @@ export default function GithubButton() {
           <Button variant='github' size='tools' />
         </Link>
       </div>
-      <div className='items-center text-center font-bold text-black text-sm'>github</div>
+      <div className='items-center text-center font-bold text-sm'>github</div>
     </div>
   );
 }

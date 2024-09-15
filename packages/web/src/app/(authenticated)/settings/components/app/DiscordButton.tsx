@@ -9,7 +9,7 @@ export default function DiscordButton() {
           <Button variant='discord' size='tools' />
         </Link>
       </div>
-      <div className='items-center text-center font-bold text-black text-sm'>discord</div>
+      <div className='items-center text-center font-bold text-sm'>discord</div>
     </div>
   );
 }

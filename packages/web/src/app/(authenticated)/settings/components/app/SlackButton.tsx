@@ -9,7 +9,7 @@ export default function SlackButton() {
           <Button variant='slack' size='tools' />
         </Link>
       </div>
-      <div className='items-center text-center font-bold text-black text-sm'>slack</div>
+      <div className='items-center text-center font-bold text-sm'>slack</div>
     </div>
   );
 }
