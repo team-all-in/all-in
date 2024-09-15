@@ -40,6 +40,12 @@ def handle_message(event):
     channel_id = event["channel"]
     message_id = event["ts"]
 
+    print('-'*10 + ' slack bot log ' + '-'*10)
+    print(message)
+    print(server_id)
+    print(channel_id)
+    print(message_id)
+
     mention_member_ids = []
 
     message_elements = event["blocks"][0]["elements"][0]["elements"]
@@ -94,3 +100,4 @@ def handle_message(event):
 # アプリを起動
 if __name__ == "__main__":
     SocketModeHandler(app=app, app_token=os.environ["SLACK_APP_TOKEN"]).start()
+    print("start")
