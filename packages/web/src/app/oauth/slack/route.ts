@@ -4,7 +4,7 @@ import { encryptToken } from '~/libs/encryptions/token';
 import { createClient } from '~/libs/supabase/server';
 
 const clientId = process.env.NEXT_PUBLIC_SLACK_CLIENT_ID;
-const clientSecret = process.env.NEXT_PUBLIC_SLACK_CLIENT_SECRET;
+const clientSecret = process.env.SLACK_CLIENT_SECRET;
 const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/oauth/slack`;
 
 export async function GET(request: Request) {
