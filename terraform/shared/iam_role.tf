@@ -44,8 +44,11 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:CompleteLayerUpload",
       "ecr:BatchCheckLayerAvailability"
     ]
-    effect    = "Allow"
-    resources = [data.terraform_remote_state.all_in_env.outputs.ecr_arn]
+    effect = "Allow"
+    resources = [
+      data.terraform_remote_state.all_in_env.outputs.ecr_arn,
+      data.terraform_remote_state.all_in_env.outputs.slack_ecr_arn
+    ]
   }
 }
 
