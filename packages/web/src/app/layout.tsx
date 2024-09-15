@@ -3,8 +3,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s',
-    default: 'ホーム'
+    template: '%s | ALL IN',
+    default: 'ALL IN'
   },
   description: 'すべての会話を、ひとつの場所に。',
   keywords: ['通知', '一覧', 'アプリケーション', '便利', 'メッセージ'],
