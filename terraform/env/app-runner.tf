@@ -29,8 +29,9 @@ resource "aws_apprunner_service" "all_in_api" {
   }
 
   instance_configuration {
-    cpu    = "0.5 vCPU"
-    memory = "1 GB"
+    cpu               = "0.5 vCPU"
+    memory            = "1 GB"
+    instance_role_arn = aws_iam_role.app_runner_ssm_role.arn
   }
 
   tags = {
@@ -68,14 +69,8 @@ data "aws_iam_policy_document" "access" {
     actions = [
       "ecr:DescribeImages",
       "ecr:GetAuthorizationToken",
-      "ssm:DescribeParameters",
     ]
     resources = ["*"]
-  }
-
-  statement {
-    actions   = ["ssm:GetParameters"]
-    resources = [data.aws_ssm_parameter.openai_api_key.arn]
   }
 }
 
@@ -93,3 +88,48 @@ resource "aws_iam_role" "access" {
   name               = "apprunner_access_role"
   assume_role_policy = data.aws_iam_policy_document.access_assume_role.json
 }
+
+resource "aws_iam_role" "app_runner_ssm_role" {
+  name = "app_runner_ssm_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "ssm_get_parameters_policy" {
+  name = "SSMGetParametersPolicy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ssm:GetParameter"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_ssm_policy" {
+  role       = aws_iam_role.app_runner_ssm_role.name
+  policy_arn = aws_iam_policy.ssm_get_parameters_policy.arn
+}
+
+# resource "aws_iam_instance_profile" "app_runner_instance_profile" {
+#   name = "app_runner_instance_profile"
+#   role = aws_iam_role.app_runner_ssm_role.name
+# }
+
