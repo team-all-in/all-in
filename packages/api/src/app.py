@@ -4,6 +4,7 @@ from fastapi import Depends
 from pydantic import BaseModel
 from src.app_setting import app, get_current_user
 from src.slack.slack import get_slack_message
+from src.discord.discord import get_discord_message
 
 
 class App(Enum):
@@ -50,6 +51,7 @@ async def auth_check(
     return {"user": user}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # サンプル:subapaseのデータ取得
 
 
@@ -58,6 +60,8 @@ async def read_items():
     response = supabase_client.table("your_table_name").select("*").execute()
     return response.data
 =======
+=======
+>>>>>>> ad30e6c (feat: connect front)
 
 @app.post("/messages")
 def get_messages(
@@ -92,9 +96,13 @@ def get_messages(
                 )
             )
         if message.app.DISCORD:
-            # TODO: Discordのメッセージを取得する関数を呼び出す
-            # @nakano1122
-            pass
+            responses.append(
+                get_discord_message(
+                    # discord はこれだけでよさそう？
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
+                )
+            )
 
     return responses
 >>>>>>> 0ebc1ef (feat: メッセージを複数取得できるようにする)
