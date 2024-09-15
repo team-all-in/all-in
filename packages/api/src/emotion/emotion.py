@@ -23,7 +23,7 @@ emotions_emoji_dict = {
 }
 
 # 感情を分析する関数
-async def analyze_emotion(input_text: str):
+def analyze_emotion(input_text: str):
     try:
         # ChatCompletionを使用して感情を分析
         response = openai.ChatCompletion.create(

@@ -10,7 +10,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # メッセージを生成する関数
-async def generate_message(input_text: str, emotion: str, emoji: str):
+def generate_message(input_text: str, emotion: str, emoji: str):
     prompt = f"""
     元のメッセージ: {input_text}
 
