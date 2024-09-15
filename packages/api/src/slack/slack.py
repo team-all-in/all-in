@@ -13,14 +13,19 @@ def get_slack_message(user_id, server_id, channel_id, message_id):
         .eq("user_id", user_id)
         .execute()
     ).data[0]["access_token"]
-    # 複合化する
+    # 複合化
     slack_access_token = decrypt(encrypted_token)
+
     client = WebClient(token=slack_access_token)
 
     # サーバー
     server_info = client.team_info(team=server_id)["team"]
     server_name = server_info["name"]
     server_image = server_info["icon"]["image_34"]
+
+    # チャンネル
+    channel_info = client.conversations_info(channel=channel_id)["channel"]
+    channel_name = channel_info["name"]
 
     # メッセージ
     message = client.conversations_history(
@@ -48,6 +53,7 @@ def get_slack_message(user_id, server_id, channel_id, message_id):
         "id": message_id,
         "server_name": server_name,
         "server_image": server_image,
+        "channel_name": channel_name,
         "sender_name": sender_name,
         "sender_image": sender_image,
         "content": context,
