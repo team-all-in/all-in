@@ -43,8 +43,19 @@ def prioritize_message(input_text: str):
         # 「優先順位: 」などの余分な部分が含まれている場合を削除
         if "優先順位:" in priority:
             priority = priority.replace("優先順位:", "").strip()
-
-        return priority
+            
+        priority_number_dict = {
+            "low": 0,
+            "medium": 1,
+            "high": 2,
+            "urgent": 3,
+            "critical": 4
+        }
+        
+        if priority in priority_number_dict.keys():
+            return priority_number_dict[priority]
+        else:
+            return priority_number_dict["medium"]
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"優先順位決定中にエラーが発生しました: {str(e)}")

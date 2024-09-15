@@ -1,15 +1,14 @@
 import dayjs from 'dayjs';
-import { Check } from 'lucide-react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { Button, buttonVariants } from '~/components/ui/button';
+import { buttonVariants } from '~/components/ui/button';
 import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
-import { markAsReadAction } from '../../actions/markAsRead';
 import { GenerateMessageDialog } from '../gen-message/dialog';
 import Account from './account';
 import { type AppProps, AppsProps, defaultAppProps } from './app-type';
 import Label from './label';
+import MarkAsReadButton from './mark-as-read-button';
 
 const MessageItem: NextPage<Message> = ({
   id,
@@ -51,13 +50,7 @@ const MessageItem: NextPage<Message> = ({
         <p className='line-clamp-2 sm:line-clamp-3'>{content}</p>
         <div className='flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-3'>
           {app === 'github' ? (
-            <form action={markAsReadAction}>
-              <input type='hidden' value={id} name='id' />
-              <Button variant='secondary'>
-                <Check className='mr-2' />
-                <span>既読にする</span>
-              </Button>
-            </form>
+            <MarkAsReadButton id={id} />
           ) : (
             <GenerateMessageDialog message={content} />
           )}

@@ -1,26 +1,59 @@
-from app_setting import app, supabase_client, get_current_user
-from fastapi import Depends, HTTPException
+from fastapi import Depends
+from src.app_setting import app, get_current_user
+from src.const.message import Message, MessageResponse
+from src.predict.emotion.emotion import analyze_emotion
+from src.predict.priority.priority import prioritize_message
+from src.sync_app.discord.discord import get_discord_message
+from src.sync_app.slack.slack import get_slack_message
+
 
 # ルートエンドポイント
 @app.get("/")
-async def read_root(
-):
+async def read_root():
     return {"message": "hello_world!!"}
-
-# サンプル:ログインユーザーの取得
 
 
 @app.get("/auth-check")
-async def read_root(
-    user: str = Depends(get_current_user),
+async def auth_check(
+    user = Depends(get_current_user),
 ):
-    print(user)
+    print(user.id)
     return {"user": user}
 
-# サンプル:subapaseのデータ取得
+
+@app.post("/messages")
+async def get_messages(
+    messages: list[Message], user: str = Depends(get_current_user)
+) -> list[MessageResponse]:
+    responses = []
+
+    for message in messages:
+        if message.app.SLACK:
+            responses.append(
+                get_slack_message(
+                    user_id=user,
+                    server_id=message.server_id,
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
+                )
+            )
+        if message.app.DISCORD:
+            responses.append(
+                get_discord_message(
+                    # discord はこれだけでよさそう？
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
+                )
+            )
+
+    return responses
 
 
-@app.get("/items")
-async def read_items():
-    response = supabase_client.table("your_table_name").select("*").execute()
-    return response.data
+@app.get("/predict")
+async def predict(
+    text: str,
+):
+    emoji = analyze_emotion(text)["emoji"]
+    priority = prioritize_message(text)
+
+    return {"sentiment": emoji, "priority": priority}
