@@ -1,3 +1,4 @@
+---
 name: ECR push
 on: 
   push:
