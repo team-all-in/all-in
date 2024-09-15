@@ -3,11 +3,11 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'ALL-IN',
-  description: '登録しているアプリケーションの通知が一覧で見れます',
+  description: 'すべての会話を、ひとつの場所に。',
   keywords: ['通知', '一覧', 'アプリケーション', '便利', 'メッセージ'],
   openGraph: {
     title: 'ALL-IN',
-    description: '登録しているアプリケーションの通知が一覧で見れます',
+    description: 'すべての会話を、ひとつの場所に。',
     url: 'https://all-in-henna.vercel.app/inbox',
     type: 'website',
   },
