@@ -6,17 +6,17 @@ import uuid
 from dotenv import find_dotenv, load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
-from slack_bolt.oauth.oauth_settings import OAuthSettings
+# from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_sdk import WebClient
-from slack_sdk.oauth.installation_store import FileInstallationStore
-from slack_sdk.oauth.state_store import FileOAuthStateStore
+# from slack_sdk.oauth.installation_store import FileInstallationStore
+# from slack_sdk.oauth.state_store import FileOAuthStateStore
 
-from app_setting import supabase_client, get_current_user
+from app_setting import supabase_client
 from decode import decrypt
 
 load_dotenv(find_dotenv())
 
-# logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 # oauth_settings = OAuthSettings(
 #     client_id=os.environ["SLACK_CLIENT_ID"],
@@ -46,34 +46,9 @@ def mock_sentiment(message_text):
 
 member_id = "U07MEPH4AUA"
 
-# @app.message(member_id)
-# def message_test(message):
-#     server_id = message['team']
-#     channel_id = message['channel']
-#     message_id = message['ts']
-
-
-
-#     message_text = message['text']
-
-#     priority = mock_priority(message_text)
-#     sentiment = mock_sentiment(message_text)
-
-    # supabase_client.table('messages').insert([
-    #     {
-    #         'id': str(uuid.uuid4()),
-    #         'user_id': "?????????????",
-    #         'app': 'slack',
-    #         'channel_id': channel_id,
-    #         'message_id': message_id,
-    #         'sentiment': sentiment,
-    #         'priority': priority,
-    #     }
-    # ]).execute()
-
 
 @app.event('message')
-def handle_message(event, say):
+def handle_message(event):
     message = event['text']
     server_id = event['team']
     channel_id = event['channel']
