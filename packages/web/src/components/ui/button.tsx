@@ -20,7 +20,7 @@ const buttonVariants = cva(
         github:
           "bg-background bg-no-repeat bg-center bg-cover bg-[url('/app-logo/github.svg')] hover:opacity-70",
         slack:
-          "border border-input bg-white bg-no-repeat bg-center bg-[url('/app-logo/slack.svg')] bg-[length:30px_30px] hover:bg-accent",
+          "border border-input bg-white bg-no-repeat bg-center bg-[url('/app-logo/slack.svg')] bg-[length:30px_30px] hover:opacity-70",
       },
       size: {
         default: 'h-10 px-4 py-2',

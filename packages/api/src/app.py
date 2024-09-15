@@ -4,6 +4,8 @@ from fastapi import Depends
 from pydantic import BaseModel
 from src.app_setting import app, get_current_user
 from src.discord.discord import get_discord_message
+from src.emotion.emotion import analyze_emotion
+from src.priority.priority import prioritize_message
 from src.slack.slack import get_slack_message
 
 
@@ -52,7 +54,7 @@ async def auth_check(
 
 
 @app.post("/messages")
-def get_messages(
+async def get_messages(
     messages: list[Message], user: str = Depends(get_current_user)
 ) -> list[MessageResponse]:
     responses = []
@@ -77,3 +79,13 @@ def get_messages(
             )
 
     return responses
+
+
+@app.get("/predict")
+async def predict(
+    text: str,
+):
+    emoji = analyze_emotion(text)["emoji"]
+    priority = prioritize_message(text)
+
+    return {"sentiment": emoji, "priority": priority}
