@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { markAsRead } from '~/server/github/notificationActions';
 
 export const markAsReadAction = async (formData: FormData) => {
@@ -7,6 +8,7 @@ export const markAsReadAction = async (formData: FormData) => {
 
   try {
     await markAsRead(id as string);
+    revalidatePath('/inbox', 'layout');
   } catch (error) {
     console.error('Error marking notification as done:', error);
   }

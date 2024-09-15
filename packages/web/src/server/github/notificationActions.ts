@@ -1,6 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { API_URL, header } from './configs';
 import { getToken } from './utils';
 
@@ -20,8 +19,6 @@ export const markAsRead = async (threadId: string): Promise<boolean> => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
-    revalidatePath('/inbox');
 
     return response.status === 205;
   } catch (error) {
@@ -46,8 +43,6 @@ export const markAsDone = async (threadId: string): Promise<boolean> => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
-    revalidatePath('/inbox');
 
     return response.status === 204;
   } catch (error) {
