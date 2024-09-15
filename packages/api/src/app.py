@@ -4,6 +4,7 @@ from fastapi import Depends
 from pydantic import BaseModel
 from src.app_setting import app, get_current_user
 from src.slack.slack import get_slack_message
+from src.discord.discord import get_discord_message
 
 
 class App(Enum):
@@ -49,6 +50,7 @@ async def auth_check(
     print(user)
     return {"user": user}
 
+
 @app.post("/messages")
 def get_messages(
     messages: list[Message], user: str = Depends(get_current_user)
@@ -66,8 +68,12 @@ def get_messages(
                 )
             )
         if message.app.DISCORD:
-            # TODO: Discordのメッセージを取得する関数を呼び出す
-            # @nakano1122
-            pass
+            responses.append(
+                get_discord_message(
+                    # discord はこれだけでよさそう？
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
+                )
+            )
 
     return responses
