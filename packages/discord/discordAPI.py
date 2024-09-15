@@ -12,17 +12,18 @@ client = discord.Client(intents=discord.Intents.all())
 @client.event
 async def on_message(message):
     # supabaseに入っているユーザの一覧を取得
-    
     supabase_users = (
         supabase_client.table("all-in-relation")
-        .select("user_id")
+        .select("discord_member_id")
         .execute()
     ).data
-    logger.info(f"{message.mentions}")
+    supabase_user_name_list = [user["discord_member_id"] for user in supabase_users]
+    # logger.info(f"{message.mentions}")
     # 取得したメッセージのmentionsがsupabaseに入っていればDBに格納する
     for mention in message.mentions:
-        if mention in supabase_users_name:
+        if mention.name in supabase_user_name_list:
             message = {
+                "user_id": mention.name,
                 "app": "discord",
                 "server_id": message.guild.id,
                 "message_id": message.id,
@@ -30,7 +31,7 @@ async def on_message(message):
                 "sentiment": "neutral",
                 "priority": "low",
             }
-            supabase_client.table("message").insert(message).execute()
+            supabase_client.table("messages").insert(message).execute()
 
 if __name__ == "__main__":
     client.run(os.getenv("DISCORD_BOT_TOKEN"))
