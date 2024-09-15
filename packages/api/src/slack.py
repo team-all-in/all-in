@@ -177,7 +177,8 @@ def get_message(user_id, server_id, channel_id, message_id):
         "sender_image": sender_image,
         "content": context,
         "message_link": message_link,
-        "send_at": float(message_id.split(".")[0]),
+        # '2024-09-14 05:45:02'
+        "send_at": datetime.fromtimestamp(float(message_id.split(".")[0])).strftime('%Y-%m-%d %H:%M:%S')
     }
 
     return response
