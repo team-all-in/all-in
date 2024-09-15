@@ -12,6 +12,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # 将来的にはOAuthSettingsを使ってアプリを認証する
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
@@ -40,11 +41,11 @@ def handle_message(event):
     channel_id = event["channel"]
     message_id = event["ts"]
 
-    print('-'*10 + ' slack bot log ' + '-'*10)
-    print(message)
-    print(server_id)
-    print(channel_id)
-    print(message_id)
+    logger.info('-'*10 + ' slack bot log ' + '-'*10)
+    logger.info(message)
+    logger.info(server_id)
+    logger.info(channel_id)
+    logger.info(message_id)
 
     mention_member_ids = []
 
@@ -92,9 +93,9 @@ def handle_message(event):
         response = supabase_client.table("messages").insert(insert_data).execute()
 
         if response["status"] == 201:
-            print("Inserted successfully")
+            logger.info("Inserted successfully")
     except Exception as e:
-        print(e)
+        logger.error(e)
 
 
 # アプリを起動
