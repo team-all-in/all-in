@@ -25,13 +25,13 @@ export default function SortPullDown() {
         onValueChange={(value) => setSort(value)}  // 選択が変わった際に setSort を呼び出す
       >
         <SelectTrigger className="w-[180px] h-10 bg-black rounded-xl">
-          <SelectValue placeholder="How to Sort" />
+          <SelectValue placeholder="並び替え" />
         </SelectTrigger>
         <SelectContent className="bg-black text-white">
           <SelectGroup>
-            <SelectLabel>Sort</SelectLabel>
-            <SelectItem value="time">Time</SelectItem>
-            <SelectItem value="priority">Priority</SelectItem>
+            <SelectLabel>並び替え</SelectLabel>
+            <SelectItem value="time">時間順</SelectItem>
+            <SelectItem value="priority">優先度順</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
