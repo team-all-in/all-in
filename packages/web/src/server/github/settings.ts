@@ -1,6 +1,6 @@
 'use server';
 
-import { encryptToken } from '~/libs/encryptions/token';
+import { decryptToken, encryptToken } from '~/libs/encryptions/token';
 import { createClient } from '~/libs/supabase/server';
 import { getUser } from '~/server/auth/data';
 
@@ -45,4 +45,36 @@ export const saveGithubSettings = async (pat_token: string) => {
   }
 
   return;
+};
+
+export const getGithubSettings = async () => {
+  const user = await getUser();
+  if (!user) {
+    console.error('user not found');
+    return '';
+  }
+
+  const supabase = createClient();
+  const { data: github_settings, error: github_settings_error } = await supabase
+    .from('github_settings')
+    .select('*')
+    .eq('user_id', user.id)
+    .single();
+  if (github_settings_error) {
+    console.error('Error fetching from Supabase:', github_settings_error);
+    return;
+  }
+
+  if (!github_settings.encrypt_pat_token) {
+    return;
+  }
+
+  const token = decryptToken(github_settings.encrypt_pat_token);
+  if (!token || typeof token !== 'string') {
+    return '';
+  }
+  if (token.length <= 6) {
+    return 'x'.repeat(token.length);
+  }
+  return token.slice(0, 6) + 'x'.repeat(token.length - 6);
 };
