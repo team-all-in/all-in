@@ -1,12 +1,12 @@
 'use client';
 
-import dayjs from 'dayjs';
 import { parseAsString, useQueryState } from 'nuqs';
 import { useEffect, useState } from 'react';
 import type { Message } from '~/libs/types/message';
 import { filterMessagesByApp } from '../data/filterMessageByApp';
-import { groupMessagesByDate } from '../data/groupMessagesByDate';
+import { groupMessagesBy } from '../data/groupMessagesBy';
 import MessageItem from './message-item';
+import { LabelsProps } from './message-item/label-type';
 
 export default function MessageList({
   messages,
@@ -14,15 +14,13 @@ export default function MessageList({
   messages: Message[] | undefined;
 }) {
   const [filter] = useQueryState('filter', parseAsString);
-  const [allMessages, setAllMessages] = useState<Message[]>([]);
-  const [groupedMessages, setGroupedMessages] = useState<Record<string, Message[]>>({});
+  const [sort] = useQueryState('sort', parseAsString);
+  const [groupedMessages, setGroupedMessages] = useState<[string, Message[]][] | [number, Message[]][]>([]);
 
   useEffect(() => {
     const sortMessages = async () => {
       if (messages) {
-        const sorted = messages.sort((a, b) => dayjs(b.send_at).unix() - dayjs(a.send_at).unix());
-        setAllMessages(sorted);
-        setGroupedMessages(groupMessagesByDate(sorted));
+        setGroupedMessages(groupMessagesBy(sort ?? 'time', messages));
       }
     };
 
@@ -31,20 +29,28 @@ export default function MessageList({
 
   useEffect(() => {
     if (filter) {
-      const filteredMessages = filterMessagesByApp(allMessages, filter);
-      setGroupedMessages(groupMessagesByDate(filteredMessages));
+      const filteredMessages = filterMessagesByApp(messages || [], filter);
+      setGroupedMessages(groupMessagesBy(sort ?? 'time', filteredMessages));
     } else {
-      setGroupedMessages(groupMessagesByDate(allMessages));
+      setGroupedMessages(groupMessagesBy(sort ?? 'time', messages || []));
     }
-  }, [filter, allMessages]);
+  }, [filter, messages, sort]);
 
   return (
     <>
-      {Object.entries(groupedMessages).map(([date, messages]) => (
+      {groupedMessages.map(([date, messages]) => (
         <div key={date} className='flex'>
-          <div className='w-4 flex-grow rounded-full bg-muted' />
+          <div
+            className={`w-4 flex-grow rounded-full`}
+            style={{ backgroundColor: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000' }}
+          />
           <div className='flex w-full flex-col gap-4 p-3'>
-            <h2 className='font-bold text-xl'>{date}</h2>
+            <h2
+              className={`font-bold text-xl`}
+              style={{ color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000' }}
+            >
+              {LabelsProps[Number(date)] ? LabelsProps[Number(date)].text : date }
+            </h2>
             {messages.map(message => (
               <MessageItem key={message.id} {...message} />
             ))}

@@ -1,25 +1,33 @@
 type LabelProps = {
-  class: string;
+  color: string;
   text: string;
 };
 
-const LabelsProps: Record<string, LabelProps> = {
-  high: {
-    class: 'border-red-500 text-red-500',
-    text: 'High',
+const LabelsProps: Record<number, LabelProps> = {
+  1: {
+    color: '#22c55e',
+    text: 'Row',
   },
-  medium: {
-    class: 'border-yellow-500 text-yellow-500',
+  2: {
+    color: '#3b82f6',
     text: 'Medium',
   },
-  low: {
-    class: 'border-blue-500 text-blue-500',
-    text: 'Low',
+  3: {
+    color: '#eab308',
+    text: 'High',
+  },
+  4: {
+    color: '#f97316',
+    text: 'Urgent',
+  },
+  5: {
+    color: '#ef4444',
+    text: 'Critical',
   },
 };
 
 const defaultLabelsProps: LabelProps = {
-  class: 'border-red-500 text-red-500',
+  color: 'yellow-500',
   text: 'High',
 };
 
