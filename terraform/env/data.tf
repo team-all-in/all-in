@@ -21,3 +21,7 @@ data "aws_ssm_parameter" "slack_bot_token" {
 data "aws_ssm_parameter" "slack_refresh_token" {
   name = "slack_refresh_token"
 }
+
+data "aws_ssm_parameter" "discord_secret_id" {
+  name = "discord_secret_id"
+}

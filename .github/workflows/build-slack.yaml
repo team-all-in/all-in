@@ -9,7 +9,7 @@ on:
       - "packages/slack/**"
 
 jobs:
-  push:
+  build:
     runs-on: ubuntu-latest
 
     permissions:
