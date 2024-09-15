@@ -1,6 +1,5 @@
 'use client';
 
-import dayjs from 'dayjs';
 import { parseAsString, useQueryState } from 'nuqs';
 import { useEffect, useState } from 'react';
 import type { Message } from '~/libs/types/message';
@@ -8,7 +7,6 @@ import { filterMessagesByApp } from '../data/filterMessageByApp';
 import { groupMessagesBy } from '../data/groupMessagesBy';
 import MessageItem from './message-item';
 import { LabelsProps } from './message-item/label-type';
-import { number } from 'zod';
 
 export default function MessageList({
   messages,
@@ -17,30 +15,28 @@ export default function MessageList({
 }) {
   const [filter] = useQueryState('filter', parseAsString);
   const [sort] = useQueryState('sort', parseAsString);
-  const [allMessages, setAllMessages] = useState<Message[]>(messages || []);
   const [groupedMessages, setGroupedMessages] = useState<[string, Message[]][] | [number, Message[]][]>([]);
 
   useEffect(() => {
     const sortMessages = async () => {
-      if (allMessages) {
-        setAllMessages(allMessages);
-        setGroupedMessages(groupMessagesBy(sort ?? 'time', allMessages));
-        console.log(groupMessagesBy(sort ?? 'time', allMessages));
+      if (messages) {
+        setGroupedMessages(groupMessagesBy(sort ?? 'time', messages));
+        console.log(groupMessagesBy(sort ?? 'time', messages));
       }
     };
 
     sortMessages();
-  }, [allMessages]);
+  }, [messages]);
 
   useEffect(() => {
     if (filter) {
-      const filteredMessages = filterMessagesByApp(allMessages, filter);
+      const filteredMessages = filterMessagesByApp(messages || [], filter);
       setGroupedMessages(groupMessagesBy(sort ?? 'time', filteredMessages));
     } else {
-      setGroupedMessages(groupMessagesBy(sort ?? 'time', allMessages));
+      setGroupedMessages(groupMessagesBy(sort ?? 'time', messages || []));
     }
-    console.log(groupMessagesBy(sort ?? 'time', allMessages));
-  }, [filter, allMessages, sort]);
+    console.log(groupMessagesBy(sort ?? 'time', messages || []));
+  }, [filter, messages, sort]);
 
   return (
     <>
