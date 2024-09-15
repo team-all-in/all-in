@@ -21,7 +21,6 @@ export default function MessageList({
     const sortMessages = async () => {
       if (messages) {
         setGroupedMessages(groupMessagesBy(sort ?? 'time', messages));
-        console.log(groupMessagesBy(sort ?? 'time', messages));
       }
     };
 
@@ -35,7 +34,6 @@ export default function MessageList({
     } else {
       setGroupedMessages(groupMessagesBy(sort ?? 'time', messages || []));
     }
-    console.log(groupMessagesBy(sort ?? 'time', messages || []));
   }, [filter, messages, sort]);
 
   return (
