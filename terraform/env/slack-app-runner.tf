@@ -3,7 +3,7 @@ resource "aws_apprunner_service" "all_in_api_slack" {
 
   source_configuration {
     authentication_configuration {
-      access_role_arn = aws_iam_role.slack-access.arn
+      access_role_arn = aws_iam_role.slack_access.arn
     }
     image_repository {
       image_configuration {
@@ -28,7 +28,7 @@ resource "aws_apprunner_service" "all_in_api_slack" {
   instance_configuration {
     cpu               = "0.5 vCPU"
     memory            = "1 GB"
-    instance_role_arn = aws_iam_role.slack-app_runner_ssm_role.arn
+    instance_role_arn = aws_iam_role.slack_app_runner_ssm_role.arn
   }
 
   tags = {
@@ -36,7 +36,7 @@ resource "aws_apprunner_service" "all_in_api_slack" {
   }
 }
 
-data "aws_iam_policy_document" "slack-access" {
+data "aws_iam_policy_document" "slack_access" {
   statement {
     sid = "ReadPrivateEcr"
     actions = [
@@ -59,23 +59,23 @@ data "aws_iam_policy_document" "slack-access" {
   }
 }
 
-resource "aws_iam_policy" "slack-access" {
+resource "aws_iam_policy" "slack_access" {
   name   = "apprunner-access-ecr"
-  policy = data.aws_iam_policy_document.slack-access.json
+  policy = data.aws_iam_policy_document.slack_access.json
 }
 
-resource "aws_iam_role_policy_attachment" "slack-access" {
-  policy_arn = aws_iam_policy.slack-access.arn
-  role       = aws_iam_role.slack-access.name
+resource "aws_iam_role_policy_attachment" "slack_access" {
+  policy_arn = aws_iam_policy.slack_access.arn
+  role       = aws_iam_role.slack_access.name
 }
 
-resource "aws_iam_role" "slack-access" {
+resource "aws_iam_role" "slack_access" {
   name               = "slack-apprunner_access_role"
   assume_role_policy = data.aws_iam_policy_document.access_assume_role.json
 }
 
 # for ssm parameter store
-resource "aws_iam_role" "slack-app_runner_ssm_role" {
+resource "aws_iam_role" "slack_app_runner_ssm_role" {
   name = "slack-app_runner_ssm_role"
 
   assume_role_policy = jsonencode({
@@ -92,7 +92,7 @@ resource "aws_iam_role" "slack-app_runner_ssm_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "slack-attach_ssm_policy" {
-  role       = aws_iam_role.slack-app_runner_ssm_role.name
+resource "aws_iam_role_policy_attachment" "slack_attach_ssm_policy" {
+  role       = aws_iam_role.slack_app_runner_ssm_role.name
   policy_arn = aws_iam_policy.ssm_get_parameters_policy.arn
 }
