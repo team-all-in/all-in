@@ -1,5 +1,6 @@
 'use server';
 
+import { encryptToken } from '~/libs/encryptions/token';
 import { createClient } from '~/libs/supabase/server';
 import { getUser } from '~/server/auth/data';
 
@@ -10,12 +11,7 @@ export const saveGithubSettings = async (pat_token: string) => {
     return;
   }
 
-  const crypto = require('node:crypto');
-  const key = Buffer.from(process.env.KEY || '', 'hex');
-  const iv = Buffer.from(process.env.IV || '', 'hex');
-  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-  let encrypt_pat_token = cipher.update(pat_token, 'utf8', 'hex');
-  encrypt_pat_token += cipher.final('hex');
+  const encrypt_pat_token = encryptToken(pat_token);
 
   const supabase = createClient();
   const { data: github_settings, error: github_settings_error } = await supabase
