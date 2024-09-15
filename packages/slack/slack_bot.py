@@ -2,6 +2,7 @@ import logging
 import os
 import uuid
 
+from fastapi import FastAPI
 import requests
 from app_setting import supabase_client
 from dotenv import load_dotenv
@@ -15,8 +16,16 @@ logging.basicConfig(level=logging.INFO)
 # 将来的にはOAuthSettingsを使ってアプリを認証する
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
+api = FastAPI()
+
+
+@api.get("/")
+async def health():
+    return {"health": "ok"}
 
 # 感情分析と優先度
+
+
 def get_priority_and_sentient(message_text):
     response = requests.get(
         f"https://kctebirgsq.ap-northeast-1.awsapprunner.com/predict?text={message_text}"
