@@ -36,7 +36,7 @@ async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> str:
     token = credentials.credentials
-    user = supabase_client.auth.api.get_user(token.access_token)
-    if 'error' in user:
+    data = supabase_client.auth.get_user(token)
+    if 'error' in data:
         raise Exception('Token verification failed.')
-    return user
+    return data.user
