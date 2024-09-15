@@ -49,7 +49,7 @@ priority_rule = {
 #             supabase.table("message").insert(message).execute()
 
 
-def get_discord_messages(
+def get_discord_message(
     message_id: str, channel_id: str
 ) -> dict:
     url = f'''https://discord.com/api/v10/channels/{

@@ -1,48 +1,16 @@
-from enum import Enum
-
 from fastapi import Depends
-from pydantic import BaseModel
 from src.app_setting import app, get_current_user
-from src.discord.discord import get_discord_message
-from src.emotion.emotion import analyze_emotion
-from src.priority.priority import prioritize_message
-from src.slack.slack import get_slack_message
-
-
-class App(Enum):
-    SLACK = "slack"
-    DISCORD = "discord"
-
-
-class Message(BaseModel):
-    app: App
-    server_id: str
-    channel_id: str
-    message_id: str
-
-
-class MessageResponse(BaseModel):
-    id: str
-    app: App
-    server_name: str
-    server_image: str
-    channel_name: str
-    sender_name: str
-    sender_image: str
-    content: str
-    message_link: str
-    send_at: str
+from src.const.message import Message, MessageResponse
+from src.predict.emotion.emotion import analyze_emotion
+from src.predict.priority.priority import prioritize_message
+from src.sync_app.discord.discord import get_discord_message
+from src.sync_app.slack.slack import get_slack_message
 
 
 # ルートエンドポイント
-
-
 @app.get("/")
 async def read_root():
     return {"message": "hello_world!!"}
-
-
-# サンプル:ログインユーザーの取得
 
 
 @app.get("/auth-check")

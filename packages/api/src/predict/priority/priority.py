@@ -44,11 +44,18 @@ def prioritize_message(input_text: str):
         if "優先順位:" in priority:
             priority = priority.replace("優先順位:", "").strip()
             
-        priority_list = ["low", "medium", "high", "urgent", "critical"]
-        if priority in priority_list:
-            return priority
+        priority_number_dict = {
+            "low": 0,
+            "medium": 1,
+            "high": 2,
+            "urgent": 3,
+            "critical": 4
+        }
+        
+        if priority in priority_number_dict.keys():
+            return priority_number_dict[priority]
         else:
-            return "medium"
+            return priority_number_dict["medium"]
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"優先順位決定中にエラーが発生しました: {str(e)}")
