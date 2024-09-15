@@ -6,7 +6,7 @@ type LabelProps = {
 const LabelsProps: Record<number, LabelProps> = {
   1: {
     color: '#22c55e',
-    text: 'Row',
+    text: 'Low',
   },
   2: {
     color: '#3b82f6',
