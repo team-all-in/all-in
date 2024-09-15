@@ -41,9 +41,11 @@ export default function MessageList({
       {groupedMessages.map(([date, messages]) => (
         <div key={date} className='flex'>
           <div
-            className={`w-4 flex-grow rounded-full`}
-            style={{ backgroundColor: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '#000' }}
-          />
+          className={`w-4 flex-grow rounded-full ${
+            LabelsProps[Number(date)] ? '' : 'bg-muted'
+          }`}
+          style={{ backgroundColor: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '' }}
+        />
           <div className='flex w-full flex-col gap-4 p-3'>
             <h2
               className={`font-bold text-xl`}
