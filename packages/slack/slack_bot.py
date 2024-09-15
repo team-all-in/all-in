@@ -50,13 +50,13 @@ def handle_message(event):
     mention_member_ids = []
 
     message_elements = event["blocks"][0]["elements"][0]["elements"]
-    mention_cnt = 0
+
     for element in message_elements:
         if element["type"] == "user":
             mention_member_ids.append(element["user_id"])
-            mention_cnt += 1
-    if mention_cnt == 0:
-        pass
+
+    if len(mention_member_ids) == 0:
+        return
 
     # メンションをされたユーザーがsupabaseに登録されているユーザーかを調べる
     insert_data = []
@@ -87,7 +87,7 @@ def handle_message(event):
         )
 
     if insert_data == []:
-        pass
+        return
 
     try:
         response = supabase_client.table("messages").insert(insert_data).execute()
