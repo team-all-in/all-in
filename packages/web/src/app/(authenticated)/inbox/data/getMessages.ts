@@ -49,7 +49,7 @@ export const getMessages = async ({
       return;
     }
 
-    const url = 'https://kctebirgsq.ap-northeast-1.awsapprunner.com/messages';
+    const url = 'http://localhost:8000/messages';
 
     const response = await fetch(url, {
       method: 'POST',
@@ -60,7 +60,26 @@ export const getMessages = async ({
       body: JSON.stringify(transformedData),
     });
 
-    console.log('response', response);
+    // console.log(await response.json());
+
+    if (response.ok) {
+      const responseData = await response.json() as Message[];
+      for (const item of responseData) {
+        messages.push({
+          id: item.id,
+          app: item.app,
+          sender_image: item.sender_image,
+          sender_name: item.sender_name,
+          content: item.content,
+          message_link: item.message_link,
+          sentiment: data.find(d => d.id === item.id)?.sentiment ?? '',
+          priority: (data.find(d => d.id === item.id)?.priority as 1 | 2 | 3 | 4 | 5) ?? 1,
+          send_at: item.send_at,
+        });
+      }
+    } else {
+      console.error('Failed to fetch messages from backend:', response.statusText);
+    }
   }
 
   // console.log('messages', messages);
