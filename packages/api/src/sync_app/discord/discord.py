@@ -56,7 +56,7 @@ def get_discord_message(
         channel_id}/messages/{message_id}'''
     message = requests.get(url, headers=headers).json()
     response = {
-        "id": message["id"],
+        "id": message_id,
         "app": "discord",
         "sender_image": message["author"]["avatar"],
         "sender_name": message["author"].get("username"),

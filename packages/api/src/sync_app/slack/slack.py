@@ -54,6 +54,7 @@ def get_slack_message(
 
     return {
         "id": message_id,
+        "app": "slack",
         "server_name": server_name,
         "server_image": server_image,
         "channel_name": channel_name,

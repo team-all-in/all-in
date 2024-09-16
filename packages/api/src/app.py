@@ -49,16 +49,18 @@ async def get_messages(
             except Exception as e:
                 logger.error(e)
 
-        # if message.app.DISCORD:
-        #     try:
-        #         responses.append(
-        #             get_discord_message(
-        #                 channel_id=message.channel_id,
-        #                 message_id=message.message_id,
-        #             )
-        #         )
-        #     except Exception as e:
-        #         logger.error(e)
+        if message.app.DISCORD:
+            try:
+                responses.append(
+                    get_discord_message(
+                        channel_id=message.channel_id,
+                        message_id=message.message_id,
+                    )
+                )
+            except Exception as e:
+                # TODO: 直す
+                # 絶対エラーでる
+                logger.error(e)
 
     return responses
 
