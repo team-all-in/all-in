@@ -5,10 +5,10 @@ import { buttonVariants } from '~/components/ui/button';
 import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
 import { GenerateMessageDialog } from '../gen-message/dialog';
+import AccountIcon from './account-icon';
 import { type AppProps, AppsProps, defaultAppProps } from './app-type';
 import Label from './label';
 import MarkAsReadButton from './mark-as-read-button';
-import AccountIcon from './account-icon';
 
 const MessageItem: NextPage<Message> = ({
   id,
@@ -25,7 +25,7 @@ const MessageItem: NextPage<Message> = ({
 
   return (
     <div
-      className={`relative flex h-72 w-full flex-row gap-5 overflow-hidden border-2 rounded-2xl p-3 sm:h-40 ${appType.itemClass}`}
+      className={`relative flex h-72 w-full flex-row gap-5 overflow-hidden rounded-2xl border-2 p-3 sm:h-40 ${appType.itemClass}`}
     >
       {appType.img && (
         <Image
@@ -36,11 +36,21 @@ const MessageItem: NextPage<Message> = ({
           }`}
         />
       )}
-      <AccountIcon app={app} sender_image={sender_image} className='hidden sm:block' iconBackgroundColor={appType.iconBackgroundColorClass} />
-      <div className='flex flex-col gap-3 h-full w-full'>
+      <AccountIcon
+        app={app}
+        sender_image={sender_image}
+        className='hidden sm:block'
+        iconBackgroundColor={appType.iconBackgroundColorClass}
+      />
+      <div className='flex h-full w-full flex-col gap-3'>
         <div className='flex flex-col gap-4 sm:flex-row sm:items-center'>
           <div className='flex items-center gap-4'>
-            <AccountIcon app={app} sender_image={sender_image} className='sm:hidden' iconBackgroundColor={appType.iconBackgroundColorClass} />
+            <AccountIcon
+              app={app}
+              sender_image={sender_image}
+              className='sm:hidden'
+              iconBackgroundColor={appType.iconBackgroundColorClass}
+            />
             <p className='whitespace-nowrap'>{sender_name}</p>
           </div>
           <div className='flex w-full items-center justify-between'>
@@ -61,7 +71,11 @@ const MessageItem: NextPage<Message> = ({
             )}
             <a
               href={message_link}
-              className={cn(buttonVariants({ variant: 'link' }), appType.itemClass, 'bg-transparent')}
+              className={cn(
+                buttonVariants({ variant: 'link' }),
+                appType.itemClass,
+                'bg-transparent',
+              )}
               target='_blank'
               rel='noreferrer'
             >

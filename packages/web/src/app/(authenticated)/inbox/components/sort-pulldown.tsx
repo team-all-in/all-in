@@ -19,19 +19,19 @@ export default function SortPullDown() {
   const defaultSortValue = sort ?? 'time';
 
   return (
-    <div className='fixed top-2 right-16 text-white z-50'>
+    <div className='fixed top-2 right-16 z-50 text-white'>
       <Select
         defaultValue={defaultSortValue}
         onValueChange={value => setSort(value)} // 選択が変わった際に setSort を呼び出す
       >
-        <SelectTrigger className="w-[180px] h-10 bg-black rounded-xl">
-          <SelectValue placeholder="並び替え" />
+        <SelectTrigger className='h-10 w-[180px] rounded-xl bg-black'>
+          <SelectValue placeholder='並び替え' />
         </SelectTrigger>
         <SelectContent className='bg-black text-white'>
           <SelectGroup>
             <SelectLabel>並び替え</SelectLabel>
-            <SelectItem value="time">時間順</SelectItem>
-            <SelectItem value="priority">優先度順</SelectItem>
+            <SelectItem value='time'>時間順</SelectItem>
+            <SelectItem value='priority'>優先度順</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

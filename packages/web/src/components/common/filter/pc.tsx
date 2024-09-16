@@ -2,7 +2,7 @@ import { FilterItems } from './items';
 
 export default function PcFilter() {
   return (
-    <aside className='mt-[40] hidden flex-col gap-2 border-r p-2 pt-16 sm:flex z-10'>
+    <aside className='z-10 mt-[40] hidden flex-col gap-2 border-r p-2 pt-16 sm:flex'>
       <FilterItems />
     </aside>
   );

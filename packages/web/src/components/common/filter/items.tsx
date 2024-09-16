@@ -32,7 +32,7 @@ const FilterItem = ({ item }: { item: string }) => {
         src={`/app-logo/${item}.svg`}
         width='35'
         height='35'
-        className='aspect-square size-8 sm:size-8'
+        className='aspect-square size-9 sm:size-8'
       />
     </button>
   );

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import { LabelsProps, defaultLabelsProps } from './label-type';
 import { Badge } from '~/components/ui/badge';
+import { LabelsProps, defaultLabelsProps } from './label-type';
 
 type Props = {
   priority: 1 | 2 | 3 | 4 | 5;
@@ -11,7 +11,7 @@ const Label: NextPage<Props> = ({ priority }) => {
 
   return (
     <Badge
-      variant="outline"
+      variant='outline'
       className='bg-white'
       style={{
         borderColor: labelState.color,

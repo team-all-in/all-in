@@ -67,7 +67,7 @@ export async function GET(request: Request) {
     );
   }
 
-  let { error } = await supabase.from('all-in-relation').upsert(
+  const { error } = await supabase.from('all-in-relation').upsert(
     {
       user_id,
       slack_member_id: tokenData.authed_user.id,

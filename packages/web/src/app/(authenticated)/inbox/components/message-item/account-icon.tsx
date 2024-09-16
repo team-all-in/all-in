@@ -5,8 +5,8 @@ import Image from 'next/image';
 type Props = {
   app: string;
   sender_image: string | StaticImport;
-  className: string,
-  iconBackgroundColor: string
+  className: string;
+  iconBackgroundColor: string;
 };
 
 const AccountIcon: NextPage<Props> = ({ app, sender_image, className, iconBackgroundColor }) => {
@@ -16,7 +16,9 @@ const AccountIcon: NextPage<Props> = ({ app, sender_image, className, iconBackgr
         <div className='flex aspect-square h-10 items-center justify-center overflow-hidden rounded-full bg-white'>
           <Image src={sender_image} width={40} height={40} alt='tool-icon' />
         </div>
-        <div className={`-right-2 -bottom-2 absolute flex aspect-square h-6 items-center justify-center overflow-hidden bg-${iconBackgroundColor} rounded-full`}>
+        <div
+          className={`-right-2 -bottom-2 absolute flex aspect-square h-6 items-center justify-center overflow-hidden bg-${iconBackgroundColor} rounded-full`}
+        >
           <Image src={`app-logo/${app}.svg`} alt={`${app}のロゴ`} width={20} height={20} />
         </div>
       </div>

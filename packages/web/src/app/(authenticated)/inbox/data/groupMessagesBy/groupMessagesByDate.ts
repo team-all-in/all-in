@@ -1,5 +1,5 @@
-import type { Message } from '~/libs/types/message';
 import dayjs from 'dayjs';
+import type { Message } from '~/libs/types/message';
 
 export const groupMessagesByDate = (messages: Message[]) => {
   const grouped = messages.reduce(

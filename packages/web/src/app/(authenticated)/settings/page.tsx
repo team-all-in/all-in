@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import AppSettings from './components/app';
 import BackLink from './components/back-link';
 import UserSettings from './components/user';
