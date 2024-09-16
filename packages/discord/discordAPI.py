@@ -1,9 +1,11 @@
 from app_setting import supabase_client
 import discord
 import os
+import uvicorn
 import logging
 import requests
 from fastapi import FastAPI
+from threading import Thread
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -14,11 +16,20 @@ api = FastAPI()
 def health():
     return {"health": "ok"}
 
+def run():
+    uvicorn.run(api, host='0.0.0.0', port=8000)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.daemon = True
+    t.start()
+
 client = discord.Client(intents=discord.Intents.all())
 
 headers = {
     'Authorization': f'Bot {os.getenv("DISCORD_BOT_TOKEN")}',
 }
+
 
 def get_priority_and_sentient(message_text):
     response = requests.get(
@@ -59,4 +70,5 @@ async def on_message(message):
     supabase_client.table("messages").insert(messages).execute()
 
 if __name__ == "__main__":
+    keep_alive()
     client.run(os.getenv("DISCORD_BOT_TOKEN"))

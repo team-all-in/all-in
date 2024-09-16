@@ -3,6 +3,8 @@ import os
 import uuid
 
 from fastapi import FastAPI
+from threading import Thread
+import uvicorn
 import requests
 from app_setting import supabase_client
 from dotenv import load_dotenv
@@ -24,7 +26,13 @@ api = FastAPI()
 def health():
     return {"health": "ok"}
 
-# 感情分析と優先度
+def run():
+    uvicorn.run(api, host='0.0.0.0', port=8000)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.daemon = True
+    t.start()
 
 
 def get_priority_and_sentient(message_text):
@@ -99,4 +107,5 @@ def handle_message(event):
 
 # アプリを起動
 if __name__ == "__main__":
+    keep_alive()
     SocketModeHandler(app=app, app_token=os.environ["SLACK_APP_TOKEN"]).start()
