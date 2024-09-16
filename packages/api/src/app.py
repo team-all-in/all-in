@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import Depends
 from src.app_setting import app, get_current_user
 from src.const.message import Message, MessageResponse
@@ -6,6 +8,9 @@ from src.predict.priority.priority import prioritize_message
 from src.sync_app.discord.discord import get_discord_message
 from src.sync_app.slack.slack import get_slack_message
 
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # ルートエンドポイント
 @app.get("/")
@@ -27,24 +32,33 @@ async def get_messages(
 ) -> list[MessageResponse]:
     responses = []
 
+    logger.info(f"get_messages: {messages}")
+    logger.info(f"user: {user}")
+
     for message in messages:
         if message.app.SLACK:
-            responses.append(
-                get_slack_message(
-                    user_id=user.id,
-                    server_id=message.server_id,
-                    channel_id=message.channel_id,
-                    message_id=message.message_id,
+            try:
+                responses.append(
+                    get_slack_message(
+                        user_id=user.id,
+                        server_id=message.server_id,
+                        channel_id=message.channel_id,
+                        message_id=message.message_id,
+                    )
                 )
-            )
-        if message.app.DISCORD:
-            responses.append(
-                get_discord_message(
-                    # discord はこれだけでよさそう？
-                    channel_id=message.channel_id,
-                    message_id=message.message_id,
-                )
-            )
+            except Exception as e:
+                logger.error(e)
+
+        # if message.app.DISCORD:
+        #     try:
+        #         responses.append(
+        #             get_discord_message(
+        #                 channel_id=message.channel_id,
+        #                 message_id=message.message_id,
+        #             )
+        #         )
+        #     except Exception as e:
+        #         logger.error(e)
 
     return responses
 
