@@ -42,5 +42,5 @@
 
 <div align="center">
   <h2>Architecture</h2>
-  <img src="./assets/archtecture.png">
+  <img src="./assets/architecture.png">
 </div>
