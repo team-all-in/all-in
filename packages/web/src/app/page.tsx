@@ -4,7 +4,7 @@ import LoginForm from './components/get-starded/login-form';
 
 export default function Home() {
   return (
-    <div className='grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20'>
+    <div className='grid min-h-dvh grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20'>
       <header className='flex flex-col items-center gap-4'>
         <h1>
           <Logo />
