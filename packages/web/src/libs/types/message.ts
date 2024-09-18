@@ -3,6 +3,9 @@ export type Message = {
   app: 'discord' | 'slack' | 'github';
   sender_image: string;
   sender_name: string;
+  server_image: string;
+  server_name: string;
+  channel_name: string;
   content: string;
   message_link: string;
   sentiment?: string;
