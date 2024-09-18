@@ -44,6 +44,11 @@ export const getGitHubNotifications = async (startDate: string): Promise<Message
         content: `${notification.subject.type}: ${notification.subject.title}`,
         message_link: await convertGitHubApiUrlToWebUrl(notification.subject.url),
         send_at: notification.updated_at,
+        server_image: '',
+        server_name: '',
+        channel_name: '',
+        sentiment: '',
+        priority: 2,
       })),
     );
 
