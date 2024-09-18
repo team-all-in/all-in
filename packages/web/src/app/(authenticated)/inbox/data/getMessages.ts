@@ -56,7 +56,7 @@ export const getMessages = async ({
           return;
         }
 
-        const url = 'http://localhost:8000/messages';
+        const url = 'https://kctebirgsq.ap-northeast-1.awsapprunner.com/messages';
 
         // Discord、SlackメッセージId含めたリクエストをバックエンドに送る。
         const response = await fetch(url, {
@@ -81,7 +81,7 @@ export const getMessages = async ({
 
     // Databaseから取得したメッセージとバックエンドから取得したメッセージを統合する。
     const messages: Message[] = databaseMessages.map((dbMessage): Message => {
-      const responseMessage = responseMessages.find(msg => msg.id === dbMessage.id);
+      const responseMessage = responseMessages.find(msg => msg.id === dbMessage.message_id);
 
       if (responseMessage) {
         return {
