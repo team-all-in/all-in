@@ -263,7 +263,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 2
   {
     id: '123e4567-e89b-12d3-a456-426614174001',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
@@ -323,7 +323,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 6
   {
     id: '123e4567-e89b-12d3-a456-426614174005',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
@@ -353,7 +353,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 8
   {
     id: '123e4567-e89b-12d3-a456-426614174007',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
@@ -368,7 +368,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 9
   {
     id: '123e4567-e89b-12d3-a456-426614174008',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
@@ -428,7 +428,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 13
   {
     id: '123e4567-e89b-12d3-a456-426614174012',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
@@ -443,7 +443,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 14
   {
     id: '123e4567-e89b-12d3-a456-426614174013',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
@@ -473,7 +473,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 16
   {
     id: '123e4567-e89b-12d3-a456-426614174015',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
@@ -518,7 +518,7 @@ export const dummyMessageResponse: Message[] = [
   // Entry 19
   {
     id: '123e4567-e89b-12d3-a456-426614174018',
-    app: 'slack',
+    app: 'discord',
     sender_image:
       'https://avatars.slack-edge.com/2024-09-14/7714248711079_47e40940231bd2c246df_48.jpg',
     sender_name: '山下竜之介',
