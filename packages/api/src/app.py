@@ -22,7 +22,6 @@ async def read_root():
 async def auth_check(
     user = Depends(get_current_user),
 ):
-    print(user.id)
     return {"user": user}
 
 
