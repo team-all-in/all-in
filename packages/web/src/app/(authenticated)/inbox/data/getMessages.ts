@@ -1,6 +1,6 @@
 'use server';
 
-import { dummyMessages } from '~/__test__/message/fixutures';
+import { dummyDatabaseMessages, dummyMessageResponse } from '~/__test__/message/fixutures';
 import { createClient } from '~/libs/supabase/server';
 import type { Database } from '~/libs/types/database';
 import type { Message } from '~/libs/types/message';
@@ -14,91 +14,123 @@ export const getMessages = async ({
   filter?: string;
   offset?: number;
 } = {}): Promise<Message[] | undefined> => {
-  const messages: Message[] = [];
-
   const LIMIT = 20;
+  const isDummy = process.env.IS_DUMMY?.toLowerCase() === 'true';
 
   const user = await getUser();
   if (!user) {
     return;
   }
 
-  // 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
-  const supabase = createClient();
+  const databaseMessages: Database['public']['Tables']['messages']['Row'][] = [];
+  if (!isDummy) {
+    // 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
+    const supabase = createClient();
 
-  const { data, error } = await supabase
-    .from('messages')
-    .select('*')
-    .eq('user_id', user.id)
-    .range(offset, offset + LIMIT - 1);
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .eq('user_id', user.id)
+      .range(offset, offset + LIMIT - 1);
 
-  if (error) {
-    console.error('error', error);
-    return;
-  }
-
-  console.log('data', data);
-
-  if (data) {
-    const transformedData = transformData(data);
-
-    console.log('transformattedData', transformedData);
-
-    const session = await getSession();
-    if (!session?.access_token) {
+    if (error) {
+      console.error('error', error);
       return;
     }
 
-    const url = 'http://localhost:8000/messages';
+    if (data) {
+      databaseMessages.push(...data);
+    }
+  } else {
+    databaseMessages.push(...dummyDatabaseMessages);
+  }
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify(transformedData),
-    });
+  const responseMessages: Omit<Message, 'sentiment' | 'priority'>[] = [];
+  if (databaseMessages) {
+    const transformedData = transformData(databaseMessages);
 
-    // console.log(await response.json());
+    if (!isDummy) {
+      const session = await getSession();
+      if (!session?.access_token) {
+        return;
+      }
 
-    if (response.ok) {
-      const responseData = await response.json() as Message[];
-      for (const item of responseData) {
-        messages.push({
-          id: item.id,
-          app: item.app,
-          sender_image: item.sender_image,
-          sender_name: item.sender_name,
-          content: item.content,
-          message_link: item.message_link,
-          sentiment: data.find(d => d.id === item.id)?.sentiment ?? '',
-          priority: (data.find(d => d.id === item.id)?.priority as 1 | 2 | 3 | 4 | 5) ?? 1,
-          send_at: item.send_at,
-        });
+      const url = 'http://localhost:8000/messages';
+
+      // Discord、SlackメッセージId含めたリクエストをバックエンドに送る。
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify(transformedData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        responseMessages.push(...data);
+      } else {
+        console.error('Failed to fetch messages from backend:', response.statusText);
       }
     } else {
-      console.error('Failed to fetch messages from backend:', response.statusText);
+      responseMessages.push(...dummyMessageResponse);
     }
   }
 
-  // console.log('messages', messages);
+  // Databaseから取得したメッセージとバックエンドから取得したメッセージを統合する。
+  const messages: Message[] = databaseMessages.map((dbMessage): Message => {
+    const responseMessage = responseMessages.find(msg => msg.id === dbMessage.id);
 
-  // TODO: Discord、SlackメッセージId含めたリクエストをバックエンドに送る。
+    if (responseMessage) {
+      return {
+        ...responseMessage,
+        sentiment: dbMessage.sentiment ?? '',
+        priority: (dbMessage.priority as 1 | 2 | 3 | 4 | 5) ?? 1,
+      };
+    }
 
-  // TODO: Discord、Slackメッセージの内容をバックエンドから受け取る。
+    return {
+      id: dbMessage.id,
+      app: dbMessage.app as 'discord' | 'slack' | 'github',
+      sender_image: '',
+      sender_name: '',
+      server_image: '',
+      server_name: '',
+      channel_name: '',
+      content: '',
+      message_link: '',
+      send_at: dbMessage.created_at,
+      sentiment: dbMessage.sentiment ?? '',
+      priority: (dbMessage.priority as 1 | 2 | 3 | 4 | 5) ?? 1,
+    };
+  });
 
-  // TODO: Discord、Slackメッセージの最遅日の日付を取得する。
+  // DiscordとSlackのメッセージの中で最も古い日付を取得する。
+  let earliestMessageDate = new Date(); // 今日の日付
+  for (const msg of messages) {
+    if (msg.app === 'discord' || msg.app === 'slack') {
+      const msgDate = new Date(msg.send_at);
+      if (msgDate < earliestMessageDate) {
+        earliestMessageDate = msgDate;
+      }
+    }
+  }
 
-  // TODO: 最遅日の日付と今日から+5日の日付を比較して、大きい方の日付から今日までのGitHubの通知を取得する。
+  const todayMinusFive = new Date();
+  todayMinusFive.setDate(todayMinusFive.getDate() - 5);
+
+  // 5日前の日付と最も古いメッセージの日付を比較して、より古い日付を取得する。
+  const startDate = earliestMessageDate < todayMinusFive ? earliestMessageDate : todayMinusFive;
+
+  console.log('startDate', startDate.toISOString());
 
   if (filter === 'all' || filter === 'github') {
-    const githubMessages = await getGitHubNotifications('2024-09-14T00:00:00Z');
+    const githubMessages = await getGitHubNotifications(startDate.toISOString());
 
-    // TODO: GitHubの通知とDiscord、Slackメッセージの統合する。
+    // GitHubの通知をメッセージに追加する
     if (githubMessages) {
       messages.push(...githubMessages);
-      messages.push(...dummyMessages);
     }
   }
 
