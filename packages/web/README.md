@@ -16,3 +16,5 @@ pnpm install
 pnpm dev
 ```
 
+**ダミーデータの切り替え**
+`packages/web/.env.development`の`IS_DUMMY`を`true`にすると、ダミーデータが使われます。
