@@ -47,19 +47,20 @@ async def get_messages(
                     )
                 )
             except Exception as e:
+                logger.error('slack server error')
                 logger.error(e)
 
         if message.app.DISCORD:
             try:
                 responses.append(
                     get_discord_message(
+                        server_id=message.server_id,
                         channel_id=message.channel_id,
                         message_id=message.message_id,
                     )
                 )
             except Exception as e:
-                # TODO: 直す
-                # 絶対エラーでる
+                logger.error('discord server error')
                 logger.error(e)
 
     return responses
