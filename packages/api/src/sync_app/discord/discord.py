@@ -1,9 +1,10 @@
-from fastapi.responses import JSONResponse
-import discord
-from dotenv import load_dotenv, find_dotenv
 import os
-from supabase import create_client, Client
+
+import discord
 import requests
+from dotenv import find_dotenv, load_dotenv
+from fastapi.responses import JSONResponse
+from supabase import Client, create_client
 
 load_dotenv(find_dotenv())
 
@@ -26,48 +27,25 @@ priority_rule = {
     "critical": 0
 }
 
-# 自分がメンションされたメッセージを取得してDBに格納する関数
-# @client.event
-# async def on_message(message):
-#     # supabaseに入っているユーザの一覧を取得
-#     supabase_users_name = (
-#         supabase.table("user")
-#         .select("name")
-#         .execute()
-#     )
-#     # 取得したメッセージのmentionsがsupabaseに入っていればDBに格納する
-#     for mention in message.mentions:
-#         if mention in supabase_users_name:
-#             message = {
-#                 "app": "discord",
-#                 "server_id": message.guild.id,
-#                 "message_id": message.id,
-#                 "channel_id": message.channel.id,
-#                 "sentiment": "neutral",
-#                 "priority": "low",
-#             }
-#             supabase.table("message").insert(message).execute()
-
 
 def get_discord_message(
-    message_id: str, channel_id: str
+    server_id: str, channel_id: str, message_id: str
 ) -> dict:
     url = f'''https://discord.com/api/v10/channels/{
         channel_id}/messages/{message_id}'''
     message = requests.get(url, headers=headers).json()
+
     response = {
         "id": message_id,
         "app": "discord",
-        "sender_image": message["author"]["avatar"],
-        "sender_name": message["author"].get("username"),
-        # "server_name": message["guild_id"],
+        "sender_image": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}",
+        "sender_name": message["author"]["global_name"],
+        "server_image": "",  # 後で実装. 別のAPIで取得する
+        "server_name": "",  # 後で実装. 別のAPIで取得する
+        "channel_name": "",  # 後で実装. 別のAPIで取得する
         "content": message["content"],
-        "message_link": message["attachments"],
-        "send_at": message["edited_timestamp"],
+        "message_link": f"https://discord.com/channels/{server_id}/{channel_id}/{message_id}",
+        "send_at": message["timestamp"],
     }
-    response["send_at"] = message["edited_timestamp"] if message["edited_timestamp"] else message["timestamp"]
-    print(response)
-    return JSONResponse(status_code=200, content=response)
 
-# if __name__ == "__main__":
-#     client.run(os.getenv("DISCORD_ACCESSTOKEN"))
+    return response
