@@ -31,10 +31,8 @@ async def get_messages(
 ) -> list[MessageResponse]:
     responses = []
 
-    logger.info(f"get_messages: {messages}")
-    logger.info(f"user: {user}")
-
     for message in messages:
+        logger.info(f"get_message: {message}")
         if message.app.SLACK:
             try:
                 responses.append(
