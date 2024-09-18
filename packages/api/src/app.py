@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 # ルートエンドポイント
 @app.get("/")
 async def read_root():
-    return {"message": "hello_world!!"}
+    return {"health": "ok"}
 
 
 @app.get("/auth-check")
