@@ -83,5 +83,5 @@ export async function GET(request: Request) {
     );
   }
 
-  redirect('/settings');
+  redirect('/settings/success?appName=slack');
 }
