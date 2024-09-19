@@ -33,14 +33,15 @@ export default function Success() {
           place="設定"
           textColor={app.textColor}
         />
-        <div className="flex flex-col items-center w-fit absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="flex flex-col items-center w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Image
             src={app.img}
             alt="appIcon"
             height={320}
+            className="h-56 sm:h-80"
           />
           <p
-            className={`text-5xl mb-8 text-${app.textColor}`}
+            className={`text-xl sm:text-5xl mb-8 text-${app.textColor}`}
           >
             {app.name}との連携が完了しました
           </p>
