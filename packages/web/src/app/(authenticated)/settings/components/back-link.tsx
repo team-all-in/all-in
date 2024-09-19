@@ -13,13 +13,9 @@ export default function BackLink({
   textColor?: string;
 }) {
   return (
-    <Link href={href} className={buttonVariants({ variant: 'link' })}>
-      <ArrowLeftIcon className='mr-2' size={18} color={textColor} />
-      <span
-        style={{
-          color: textColor
-        }}
-      >
+    <Link href={href} className={buttonVariants({ variant: 'link' }) + ` text-${textColor}`}>
+      <ArrowLeftIcon className='mr-2' size={18} />
+      <span>
         {place ? `${place}に` : ''}もどる
       </span>
     </Link>
