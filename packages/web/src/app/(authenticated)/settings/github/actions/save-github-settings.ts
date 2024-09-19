@@ -8,7 +8,7 @@ export const saveGitHubSettingsAction = async (_previousState: unknown, formData
 
   await saveGithubSettings(token as string);
 
-  redirect('/settings');
+  redirect('/settings/success?appName=github');
 
   return '';
 };
