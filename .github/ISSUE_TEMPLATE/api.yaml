@@ -3,7 +3,7 @@ name: New API Issue
 description: APIのIssueの作成
 title: "[API]: "
 labels: ["api"]
-projects: ["develop"]
+projects: ["team-all-in/1"]
 body:
   - type: dropdown
     id: api-type
