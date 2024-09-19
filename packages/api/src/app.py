@@ -20,14 +20,14 @@ async def read_root():
 
 @app.get("/auth-check")
 async def auth_check(
-    user = Depends(get_current_user),
+    user=Depends(get_current_user),
 ):
     return {"user": user}
 
 
 @app.post("/messages")
 async def get_messages(
-    messages: list[Message], user = Depends(get_current_user)
+    messages: list[Message], user=Depends(get_current_user)
 ) -> list[MessageResponse]:
     responses = []
 
@@ -48,17 +48,13 @@ async def get_messages(
                 logger.error(e)
 
         if message.app.DISCORD:
-            try:
-                responses.append(
-                    get_discord_message(
-                        server_id=message.server_id,
-                        channel_id=message.channel_id,
-                        message_id=message.message_id,
-                    )
+            responses.append(
+                get_discord_message(
+                    server_id=message.server_id,
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
                 )
-            except Exception as e:
-                logger.error('discord server error')
-                logger.error(e)
+            )
 
     return responses
 
