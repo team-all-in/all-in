@@ -5,7 +5,7 @@ title: "[Web]: "
 labels: ["web"]
 projects: ["develop"]
 body:
-  - type: checkbox
+  - type: dropdown
     id: page
     attributes:
       label: ページ
@@ -13,11 +13,14 @@ body:
         - /
         - /inbox
         - /settings
-        - other
+        - その他
     validations:
       required: true
-
-  - type: markdown
+    
+  - type: textarea
     id: about
     attributes:
       label: 詳細
+      placeholder: どんなことが必要か
+    validations:
+      required: true
