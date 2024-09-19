@@ -1,0 +1,23 @@
+# syntax docs: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
+name: New Web Issue
+description: WebのIssueの作成
+title: "[Web]: "
+labels: ["web"]
+projects: ["develop"]
+body:
+  - type: checkbox
+    id: page
+    attributes:
+      label: ページ
+      options:
+        - /
+        - /inbox
+        - /settings
+        - other
+    validations:
+      required: true
+
+  - type: markdown
+    id: about
+    attributes:
+      label: 詳細
