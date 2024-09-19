@@ -3,7 +3,7 @@ name: New Web Issue
 description: WebのIssueの作成
 title: "[Web]: "
 labels: ["web"]
-projects: ["develop"]
+projects: ["team-all-in/1"]
 body:
   - type: dropdown
     id: page
