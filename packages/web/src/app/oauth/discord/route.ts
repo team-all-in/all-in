@@ -70,5 +70,5 @@ export async function GET(request: Request) {
   }
 
   // アプリにリダイレクト
-  redirect('/settings');
+  redirect('/settings/success');
 }
