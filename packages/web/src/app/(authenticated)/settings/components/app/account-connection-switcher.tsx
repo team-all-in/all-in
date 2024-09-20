@@ -14,7 +14,7 @@ const AccountConnectionSwitcher = ({app, isEnabled}: Props) => {
         (
           <div className='w-full flex flex-col sm:flex-row items-end sm:items-start gap-2'>
             <Button className='w-fit'>
-              <Link href={""} className='flex items-center gap-1'>
+              <Link href={`/settings/${app}`} className='flex items-center gap-1'>
                 <RotateCw />
                 再連携
               </Link>
