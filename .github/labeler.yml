@@ -1,0 +1,30 @@
+# Directory pattern
+🌐 API:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/api/**'
+
+🕸️ Web:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/web/**'
+
+🤖 Discord:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/discord/**'
+
+🤖 Slack:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/slack/**'
+
+🏗️ Infra:
+  - changed-files:
+      - any-glob-to-any-file: ['terraform/**', 'templates/**', 'policy/**', 'aws/**', 'aqua/**']
+
+# Branch pattern
+🚀 Feature:
+  - head-branch: ['^feature/', '^feat/']
+🛠️ Fix:
+  - head-branch: ['^fix/']
+🚨 Hot Fix:
+  - head-branch: ['^hotfix/']
+🔄 Refactor:
+  - head-branch: ['^refactor/']
