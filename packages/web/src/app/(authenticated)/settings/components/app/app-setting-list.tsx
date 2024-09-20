@@ -6,6 +6,7 @@ import AppSettingItem from './app-setting-item';
 import { useActionState } from 'react';
 import { useEffect, useState } from 'react';
 import deleteSettingsAction from '../../actions/deleteSettings';
+import { Skeleton } from '~/components/ui/skeleton';
 
 const buttonList = [
   {
@@ -51,7 +52,7 @@ export default function AppSettingList() {
 
   return (
     <div className='border border-neutral rounded-xl px-2'>
-      {appSettings ? (
+      {appSettings && !isPending ? (
         <Accordion type="single" collapsible className="w-full">
           {buttonList.map(button => {
             const isEnabled = appSettings[button.app as keyof typeof appSettings];
@@ -68,7 +69,11 @@ export default function AppSettingList() {
           })}
         </Accordion>
       ) : (
-        <p>Loading...</p>
+        <div className='flex flex-col gap-2 py-2'>
+          <Skeleton className="w-full h-16" />
+          <Skeleton className="w-full h-16" />
+          <Skeleton className="w-full h-16" />
+        </div>
       )}
     </div>
   );
