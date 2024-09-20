@@ -124,8 +124,6 @@ export const getMessages = async ({
     // 5日前の日付と最も古いメッセージの日付を比較して、より古い日付を取得する。
     const startDate = earliestMessageDate < todayMinusFive ? earliestMessageDate : todayMinusFive;
 
-    console.log('startDate', startDate.toISOString());
-
     if (filter === 'all' || filter === 'github') {
       const githubMessages = await getGitHubNotifications(startDate.toISOString());
 
