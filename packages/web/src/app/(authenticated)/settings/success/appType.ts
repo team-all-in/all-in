@@ -1,29 +1,29 @@
-import DiscordImg from "./assets/discord.svg"
-import SlackImg from "./assets/slack.svg"
-import GitHubLightImg from "./assets/github.svg"
+import DiscordImg from './assets/discord.svg';
+import GitHubLightImg from './assets/github.svg';
+import SlackImg from './assets/slack.svg';
 
 const AppType = [
   {
-    type: "discord",
-    name: "Discrod",
+    type: 'discord',
+    name: 'Discrod',
     img: DiscordImg,
-    backgroundColorClass: "bg-indigo-600",
-    textColor: "white"
+    backgroundColorClass: 'bg-indigo-600',
+    textColor: 'white',
   },
   {
-    type: "slack",
-    name: "Slack",
+    type: 'slack',
+    name: 'Slack',
     img: SlackImg,
-    backgroundColorClass: "bg-background",
-    textColor: "primary"
+    backgroundColorClass: 'bg-white',
+    textColor: 'primary',
   },
   {
-    type: "github",
-    name: "GitHub",
+    type: 'github',
+    name: 'GitHub',
     img: GitHubLightImg,
-    backgroundColorClass: "bg-background",
-    textColor: "black"
+    backgroundColorClass: 'bg-background',
+    textColor: 'black',
   },
-]
+];
 
-export default AppType
+export default AppType;
