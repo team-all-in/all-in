@@ -1,6 +1,6 @@
+import { text } from 'node:stream/consumers';
 import { ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
-import { text } from 'stream/consumers';
 import { buttonVariants } from '~/components/ui/button';
 
 export default function BackLink({
@@ -13,11 +13,9 @@ export default function BackLink({
   textColor?: string;
 }) {
   return (
-    <Link href={href} className={buttonVariants({ variant: 'link' }) + ` text-${textColor}`}>
+    <Link href={href} className={`${buttonVariants({ variant: 'link' })}text-${textColor}`}>
       <ArrowLeftIcon className='mr-2' size={18} />
-      <span>
-        {place ? `${place}に` : ''}もどる
-      </span>
+      <span>{place ? `${place}に` : ''}もどる</span>
     </Link>
   );
 }

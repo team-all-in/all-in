@@ -15,4 +15,4 @@ const useWindowSize = (): number[] => {
   return size;
 };
 
-export default useWindowSize
+export default useWindowSize;
