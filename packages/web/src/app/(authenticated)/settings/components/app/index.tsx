@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
-import ButtonList from './button-list';
+import AppSettingList from './app-setting-list';
 
 export default async function AppSettings() {
   return (
@@ -8,7 +8,7 @@ export default async function AppSettings() {
         <CardTitle>連携設定</CardTitle>
       </CardHeader>
       <CardContent className='space-y-10'>
-        <ButtonList />
+        <AppSettingList />
       </CardContent>
     </Card>
   );

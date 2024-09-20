@@ -11,7 +11,7 @@ interface Props {
   isEnabled: boolean;
 }
 
-export default function ButtonItem({ app, image, label, className, isEnabled }: Props) {
+export default function AppSettingItem({ app, image, label, className, isEnabled }: Props) {
   return (
     <div className='flex flex-col items-center'>
       <Link

@@ -1,5 +1,5 @@
 import { getAppSettings } from '../../data/get-app-settings';
-import ButtonItem from './button-item';
+import AppSettingItem from './app-setting-item';
 
 const buttonList = [
   {
@@ -22,7 +22,7 @@ const buttonList = [
   },
 ];
 
-export default async function ButtonList() {
+export default async function AppSettingList() {
   const appSettings = await getAppSettings();
 
   return (
@@ -30,7 +30,7 @@ export default async function ButtonList() {
       {buttonList.map(button => {
         const isEnabled = appSettings[button.app as keyof typeof appSettings];
 
-        return <ButtonItem key={button.app} {...button} isEnabled={isEnabled} />;
+        return <AppSettingItem key={button.app} {...button} isEnabled={isEnabled} />;
       })}
     </div>
   );
