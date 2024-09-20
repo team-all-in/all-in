@@ -1,3 +1,4 @@
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '~/components/ui/accordion';
 import { getAppSettings } from '../../data/get-app-settings';
 import AppSettingItem from './app-setting-item';
 
@@ -26,12 +27,14 @@ export default async function AppSettingList() {
   const appSettings = await getAppSettings();
 
   return (
-    <div className='flex flex-wrap justify-center gap-6'>
-      {buttonList.map(button => {
-        const isEnabled = appSettings[button.app as keyof typeof appSettings];
+    <div className='border border-neutral rounded-xl px-2'>
+      <Accordion type="single" collapsible className="w-full">
+        {buttonList.map(button => {
+          const isEnabled = appSettings[button.app as keyof typeof appSettings];
 
-        return <AppSettingItem key={button.app} {...button} isEnabled={isEnabled} />;
-      })}
+          return <AppSettingItem key={button.app} {...button} isEnabled={isEnabled} />;
+        })}
+      </Accordion>
     </div>
   );
 }

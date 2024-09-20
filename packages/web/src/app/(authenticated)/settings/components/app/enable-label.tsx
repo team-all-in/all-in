@@ -1,10 +1,27 @@
-import { Check } from 'lucide-react';
+import { Check, CircleDashed } from 'lucide-react';
 import { Badge } from '~/components/ui/badge';
 
-export default function EnableLabel() {
+type Props = {
+  isEnabled?: boolean
+}
+
+export default function EnableLabel({isEnabled}: Props) {
   return (
-    <Badge className='-top-1 -right-1 absolute border-green-500 bg-card p-1 text-green-500 hover:bg-card'>
-      <Check strokeWidth={2.5} size={16} />
-    </Badge>
+    <>
+      {isEnabled ?
+        (
+          <Badge className='bg-green-400 border-white px-2 py-1.5 text-white flex gap-1'>
+            <Check strokeWidth={2.5} size={16} />
+            連携済み
+          </Badge>
+        ):(
+          <Badge className='bg-gray-400 border-white px-2 py-1.5 text-white flex gap-1'>
+            <CircleDashed strokeWidth={2.5} size={16} />
+            未連携
+          </Badge>
+        )
+      }
+    </>
+
   );
 }
