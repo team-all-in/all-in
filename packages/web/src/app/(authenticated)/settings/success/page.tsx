@@ -1,64 +1,46 @@
-"use client"
+'use client';
 
-import BackLink from "../components/back-link"
-import Image from "next/image"
-import { Button, buttonVariants } from "~/components/ui/button"
-import Link from "next/link"
-import { ArrowRightIcon } from "lucide-react"
-import { useSearchParams } from "next/navigation"
-import AppType from "./appType"
-import Confetti from 'react-confetti'
-import useWindowSize from "~/hooks/use-get-window-size"
-
+import { ArrowRightIcon } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import Confetti from 'react-confetti';
+import { Button, buttonVariants } from '~/components/ui/button';
+import useWindowSize from '~/hooks/use-get-window-size';
+import BackLink from '../components/back-link';
+import AppType from './appType';
 
 export default function Success() {
-  const [ width, height ] = useWindowSize()
+  const [width, height] = useWindowSize();
   const searchParams = useSearchParams();
-  const getAppNameParams = searchParams.get("appName")
-  const app = AppType.find((app) => app.type == getAppNameParams)
+  const getAppNameParams = searchParams.get('appName');
+  const app = AppType.find(app => app.type === getAppNameParams);
 
-  return (
-    app ?
-    <div
-      className={`h-screen -mt-14 ${app.backgroundColorClass}`}
-    >
-      <Confetti
-        width={width}
-        height={height}
-        recycle={true}
-      />
-      <div className="pt-14 h-full relative">
-        <BackLink
-          href="/settings"
-          place="設定"
-          textColor={app.textColor}
-        />
-        <div className="flex flex-col items-center w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Image
-            src={app.img}
-            alt="appIcon"
-            height={320}
-            className="h-56 sm:h-80"
-          />
-          <p
-            className={`text-xl sm:text-5xl mb-8 text-${app.textColor}`}
-          >
+  return app ? (
+    <div className={`-mt-14 h-screen ${app.backgroundColorClass}`}>
+      <Confetti width={width} height={height} recycle={true} />
+      <div className='relative h-full pt-14'>
+        <BackLink href='/settings' place='設定' textColor={app.textColor} />
+        <div className='-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 flex w-full flex-col items-center'>
+          <Image src={app.img} alt='appIcon' height={320} className='h-56 sm:h-80' />
+          <p className={`mb-8 text-xl sm:text-5xl text-${app.textColor}`}>
             {app.name}との連携が完了しました
           </p>
-          <Button variant={"outline"} className="bg-white hover:bg-gray-200">
-            <Link href={"/"} className={buttonVariants({ variant: 'link' }) + ' hover:no-underline'}>
-              <span className="text-black">
-                メッセージ一覧を見る
-              </span>
-              <ArrowRightIcon color="black" />
+          <Button variant={'outline'} className='bg-white hover:bg-gray-200'>
+            <Link
+              href={'/inbox'}
+              className={`${buttonVariants({ variant: 'link' })} hover:no-underline`}
+            >
+              <span className='text-black'>メッセージ一覧を見る</span>
+              <ArrowRightIcon color='black' />
             </Link>
           </Button>
         </div>
       </div>
     </div>
-    :
+  ) : (
     <div>
       <h1>認証されたアプリが見つかりません</h1>
     </div>
-  )
+  );
 }
