@@ -1,9 +1,6 @@
 import { AccordionContent, AccordionItem, AccordionTrigger } from '~/components/ui/accordion';
 import Image from 'next/image';
 import EnableLabel from './enable-label';
-import { Button } from '~/components/ui/button';
-import { RotateCw, Trash } from 'lucide-react';
-import Link from 'next/link';
 import AccountConnectionSwitcher from './account-connection-switcher';
 
 interface Props {
@@ -12,9 +9,11 @@ interface Props {
   label: string;
   className: string;
   isEnabled: boolean;
+  deleteAction: (payload: FormData) => void;
+  isPending: boolean;
 }
 
-export default function AppSettingItem({ app, image, label, className, isEnabled }: Props) {
+export default function AppSettingItem({ app, image, label, className, isEnabled, deleteAction, isPending}: Props) {
   return (
     <AccordionItem value={app}>
       <AccordionTrigger className='hover:no-underline'>
@@ -28,7 +27,7 @@ export default function AppSettingItem({ app, image, label, className, isEnabled
       </AccordionTrigger>
       <AccordionContent className='sm:pl-6 flex flex-col gap-6'>
         <p>{isEnabled ? "連携したチャンネルでメンションされたメッセージを取得します。" : "未読の通知を取得します。"} <br/> ALL INが通知の内容を保存することはありませんでご安心ください。</p>
-        <AccountConnectionSwitcher app={app} isEnabled={isEnabled}/>
+        <AccountConnectionSwitcher app={app} isEnabled={isEnabled} deleteAction={deleteAction} isPending={isPending}/>
       </AccordionContent>
     </AccordionItem>
   );

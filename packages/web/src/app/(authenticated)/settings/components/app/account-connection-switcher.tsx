@@ -5,9 +5,12 @@ import { Button } from "~/components/ui/button"
 type Props = {
   app: string
   isEnabled: boolean
+  deleteAction: (payload: FormData) => void,
+  isPending: boolean
 }
 
-const AccountConnectionSwitcher = ({app, isEnabled}: Props) => {
+const AccountConnectionSwitcher = ({app, isEnabled, deleteAction, isPending}: Props) => {
+
   return (
     <>
       {isEnabled ?
@@ -19,12 +22,13 @@ const AccountConnectionSwitcher = ({app, isEnabled}: Props) => {
                 再連携
               </Link>
             </Button>
-            <Button variant={"destructive"} className='w-fit'>
-              <Link href={`/settings/delete?app=${app}`} className='flex items-center gap-1'>
+            <form action={deleteAction}>
+              <input type="hidden" value={app} name="app" />
+              <Button variant={"destructive"} className='w-fit flex items-center gap-1' disabled={isPending}>
                 <Trash/>
                 連携を削除する
-              </Link>
-            </Button>
+              </Button>
+            </form>
           </div>
         ):
         (
