@@ -5,7 +5,7 @@ import { useActionState } from 'react';
 import { z } from 'zod';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
-import { markAsReadAction } from '../../actions/markAsRead';
+import { markAsReadAction } from '../../../actions/markAsRead';
 
 export const formSchema = z.object({
   id: z.string(),
