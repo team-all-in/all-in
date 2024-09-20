@@ -20,7 +20,7 @@ const AccountConnectionSwitcher = ({app, isEnabled}: Props) => {
               </Link>
             </Button>
             <Button variant={"destructive"} className='w-fit'>
-              <Link href={""} className='flex items-center gap-1'>
+              <Link href={`/settings/delete?app=${app}`} className='flex items-center gap-1'>
                 <Trash/>
                 連携を削除する
               </Link>
