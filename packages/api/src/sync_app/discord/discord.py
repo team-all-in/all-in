@@ -11,9 +11,16 @@ load_dotenv()
 
 logger = newLogger('discord')
 
-def get_headers() -> dict:
+def get_env_variable(key: str) -> str:
+    value = os.getenv(key)
+    if value is None:
+        logger.error(f"{key} is not found in environment variable")
+        raise Exception(f"{key} is not found in environment variable")
+    return value
+
+def get_headers(token: str) -> dict:
     return {
-        'Authorization': f'Bot {os.getenv("DISCORD_BOT_TOKEN")}',
+        'Authorization': f'Bot {token}',
     }
 
 def fetch_message(url: str, headers: dict) -> dict:
@@ -44,8 +51,9 @@ def create_message_response(message: dict, server_id: str, channel_id: str) -> M
 def get_discord_message(
     server_id: str, channel_id: str, message_id: str
 ) -> MessageResponse:
+    token = get_env_variable('DISCORD_BOT_TOKEN')
     url = f"{discord_api_url}/channels/{channel_id}/messages/{message_id}"
-    headers = get_headers()
+    headers = get_headers(token)
 
     message = fetch_message(url, headers)
 
