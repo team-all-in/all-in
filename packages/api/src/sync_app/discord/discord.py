@@ -20,12 +20,14 @@ def get_discord_message(
 ) -> MessageResponse:
     url = f"{discord_api_url}/channels/{channel_id}/messages/{message_id}"
     try:
-        message = requests.get(url, headers=headers).json()
+        response = requests.get(url, headers=headers)
         # raise exception when response code in 4XX, 5XX
-        message.raise_for_status()
+        response.raise_for_status()
     except HTTPError as e:
         logger.error(f"failed to get message: {e}")
         raise e
+
+    message = response.json()
 
     return {
         "id": message["id"],
