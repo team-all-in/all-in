@@ -55,7 +55,3 @@ def get_discord_message(
 
     return response
 
-server_id = "1275808876750700637"
-channel_id = "1275808876750700640"
-message_id = "1284710314314563737"
-response = get_discord_message(server_id, channel_id, message_id)
