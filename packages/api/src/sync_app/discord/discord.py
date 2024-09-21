@@ -30,7 +30,7 @@ def get_discord_message(
     message = response.json()
 
     return {
-        "id": message["id"],
+        "id": message_id,
         "app": "discord",
         "sender_image": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}",
         "sender_name": message["author"]["global_name"],
