@@ -1,36 +1,19 @@
-import discord
 from src.logger import newLogger
 from src.sync_app.discord.discord_api import discord_api_url
 from src.const.message import MessageResponse
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 import os
 
 import requests
-from supabase import Client, create_client
 from requests.exceptions import HTTPError
 
-load_dotenv(find_dotenv())
+load_dotenv()
+
 logger = newLogger('discord')
-
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_ANON_KEY")
-
-supabase: Client = create_client(url, key)
-
-client = discord.Client(intents=discord.Intents.all())
 
 headers = {
     'Authorization': f'Bot {os.getenv("DISCORD_BOT_TOKEN")}',
 }
-
-priority_rule = {
-    "low": 30,
-    "medium": 10,
-    "high": 5,
-    "urgent": 1,
-    "critical": 0
-}
-
 
 def get_discord_message(
     server_id: str, channel_id: str, message_id: str
