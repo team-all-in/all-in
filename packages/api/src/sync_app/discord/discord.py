@@ -29,18 +29,19 @@ def fetch_message(url: str, headers: dict) -> dict:
 
 
 def create_message_response(
-    message: dict, server_id: str, channel_id: str
+    message: dict, server_id: str, channel_id: str, message_id: str
 ) -> MessageResponse:
+    sender = message["author"]
     return {
-        "id": message["id"],
+        "id": message_id,
         "app": "discord",
-        "sender_image": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}",
-        "sender_name": message["author"]["global_name"],
+        "sender_image": f"https://cdn.discordapp.com/avatars/{sender['id']}/{sender['avatar']}",
+        "sender_name": sender["global_name"],
         "server_image": "",  # 後で実装. 別のAPIで取得する
         "server_name": "",  # 後で実装. 別のAPIで取得する
         "channel_name": "",  # 後で実装. 別のAPIで取得する
         "content": message["content"],
-        "message_link": f"https://discord.com/channels/{server_id}/{channel_id}/{message['id']}",
+        "message_link": f"https://discord.com/channels/{server_id}/{channel_id}/{message_id}",
         "send_at": message["timestamp"],
     }
 
@@ -58,4 +59,4 @@ def get_discord_message(
 
     message = fetch_message(url, headers)
 
-    return create_message_response(message, server_id, channel_id)
+    return create_message_response(message, server_id, channel_id, message_id)
