@@ -2,7 +2,7 @@ import logging
 
 from fastapi import Depends
 from src.app_setting import app, get_current_user
-from src.const.message import Message, MessageResponse
+from src.const.message import Message, MessageResponse, App
 from src.predict.emotion.emotion import analyze_emotion
 from src.predict.priority.priority import prioritize_message
 from src.sync_app.discord.discord import get_discord_message
@@ -49,7 +49,7 @@ async def get_messages(
 
     responses = []
     for message in messages:
-        if message.app.SLACK:
+        if message.app == App.SLACK:
             try:
                 responses.append(
                     get_slack_message(
@@ -63,7 +63,7 @@ async def get_messages(
                 logger.error('slack server error')
                 logger.error(e)
 
-        if message.app.DISCORD:
+        if message.app == App.DISCORD:
             try:
                 responses.append(
                     get_discord_message(
