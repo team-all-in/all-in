@@ -1,4 +1,3 @@
-from fastapi.responses import JSONResponse
 import discord
 from src.logger import newLogger
 from src.sync_app.discord.discord_api import discord_api_url
@@ -44,13 +43,6 @@ def get_discord_message(
         logger.error(f"failed to get message: {e}")
         raise e
 
-    response = new_response(message, server_id, channel_id, message_id)
-    response["send_at"] = message["edited_timestamp"] if message["edited_timestamp"] else message["timestamp"]
-
-    return JSONResponse(status_code=200, content=response)
-
-
-def new_response(message: dict, server_id, channel_id, message_id: str) -> dict:
     return {
         "id": message["id"],
         "app": "discord",
