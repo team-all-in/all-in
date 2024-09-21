@@ -19,13 +19,11 @@ def get_headers(token: str) -> dict:
 def fetch_message(url: str, headers: dict) -> dict:
     try:
         response = requests.get(url, headers=headers)
-        # raise exception when response code in 4XX, 5XX
         response.raise_for_status()
+        return response.json()
     except HTTPError as e:
         logger.error(f"failed to fetch message: {e}")
-        raise e
-
-    return response.json()
+        raise
 
 def create_message_response(message: dict, server_id: str, channel_id: str) -> MessageResponse:
     return {
