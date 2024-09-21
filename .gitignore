@@ -124,8 +124,6 @@ dmypy.json
 # Pytest Cache
 .pytest_cache/
 
-# VSCode
-.vscode/
 
 # Local environment settings
 *.env
