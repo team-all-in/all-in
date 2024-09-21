@@ -29,23 +29,33 @@ priority_rule = {
 
 
 def get_discord_message(
-    server_id: str, channel_id: str, message_id: str
+    server_id: int, channel_id: int, message_id: int
 ) -> dict:
-    url = f'''https://discord.com/api/v10/channels/{
-        channel_id}/messages/{message_id}'''
-    message = requests.get(url, headers=headers).json()
+    message = requests.get(
+        f'https://discord.com/api/v10/channels/{channel_id}/messages/{message_id}', headers=headers).json()
+    guild = requests.get(
+        f"https://discord.com/api/v10/guilds/{server_id}", headers=headers).json()
+    channel_name = requests.get(
+        f"https://discord.com/api/v10/channels/{channel_id}", headers=headers).json()["name"]
 
     response = {
         "id": message_id,
         "app": "discord",
         "sender_image": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}",
         "sender_name": message["author"]["global_name"],
-        "server_image": "",  # 後で実装. 別のAPIで取得する
-        "server_name": "",  # 後で実装. 別のAPIで取得する
-        "channel_name": "",  # 後で実装. 別のAPIで取得する
+        "server_image": f"https://cdn.discordapp.com/icons/{guild['id']}/{guild['icon']}.png",  # 後で実装. 別のAPIで取得する（済）
+        "server_name": guild['name'],  # 後で実装. 別のAPIで取得する（済）
+        "channel_name": channel_name,  # 後で実装. 別のAPIで取得する（済？）
         "content": message["content"],
         "message_link": f"https://discord.com/channels/{server_id}/{channel_id}/{message_id}",
         "send_at": message["timestamp"],
     }
+    print("response: ", response)
+    # sender_imageがNoneのときはデフォルト画像を設定したい
 
     return response
+
+server_id = "1275808876750700637"
+channel_id = "1275808876750700640"
+message_id = "1284710314314563737"
+response = get_discord_message(server_id, channel_id, message_id)
