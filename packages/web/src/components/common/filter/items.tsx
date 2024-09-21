@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import { cn } from '~/libs/classes';
 
-export const filterItems: string[] = ['discord', 'slack', 'github'];
+export const filterItems: string[] = ['discord=', 'slack', 'github'];
 
 const FilterItem = ({ item }: { item: string }) => {
   const [name, setName] = useQueryState('filter');
