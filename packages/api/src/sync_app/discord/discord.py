@@ -35,7 +35,7 @@ def create_message_response(
     return {
         "id": message_id,
         "app": "discord",
-        "sender_image": f"https://cdn.discordapp.com/avatars/{sender["id"]}/{sender["avatar"]}",
+        "sender_image": f"https://cdn.discordapp.com/avatars/{sender['id']}/{sender['avatar']}",
         "sender_name": sender["global_name"],
         "server_image": "",  # 後で実装. 別のAPIで取得する
         "server_name": "",  # 後で実装. 別のAPIで取得する
