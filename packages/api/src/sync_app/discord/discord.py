@@ -1,20 +1,22 @@
-from src.logger import newLogger
-from src.sync_app.discord.discord_api import discord_api_url
-from src.const.message import MessageResponse
-from dotenv import load_dotenv
 import os
 
 import requests
+from dotenv import load_dotenv
 from requests.exceptions import HTTPError
+from src.const.message import MessageResponse
+from src.logger import newLogger
+from src.sync_app.discord.discord_api import discord_api_url
 
 load_dotenv()
 
-logger = newLogger('discord')
+logger = newLogger("discord")
+
 
 def get_headers(token: str) -> dict:
     return {
-        'Authorization': f'Bot {token}',
+        "Authorization": f"Bot {token}",
     }
+
 
 def fetch_message(url: str, headers: dict) -> dict:
     try:
@@ -25,7 +27,10 @@ def fetch_message(url: str, headers: dict) -> dict:
         logger.error(f"failed to fetch message: {e}")
         raise
 
-def create_message_response(message: dict, server_id: str, channel_id: str) -> MessageResponse:
+
+def create_message_response(
+    message: dict, server_id: str, channel_id: str
+) -> MessageResponse:
     return {
         "id": message["id"],
         "app": "discord",
@@ -39,10 +44,11 @@ def create_message_response(message: dict, server_id: str, channel_id: str) -> M
         "send_at": message["timestamp"],
     }
 
+
 def get_discord_message(
     server_id: str, channel_id: str, message_id: str
 ) -> MessageResponse:
-    token = os.getenv('DISCORD_BOT_TOKEN')
+    token = os.getenv("DISCORD_BOT_TOKEN")
     if token is None:
         logger.error("DISCORD_BOT_TOKEN is not set")
         raise EnvironmentError("DISCORD_BOT_TOKEN is not set")
