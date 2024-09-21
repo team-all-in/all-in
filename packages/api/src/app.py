@@ -7,6 +7,8 @@ from src.predict.emotion.emotion import analyze_emotion
 from src.predict.priority.priority import prioritize_message
 from src.sync_app.discord.discord import get_discord_message
 from src.sync_app.slack.slack import get_slack_message
+from src.app_setting import supabase_client
+from src.decode import decrypt
 
 
 logging.basicConfig(level=logging.INFO)
@@ -30,17 +32,28 @@ async def auth_check(
 async def get_messages(
     messages: list[Message], user = Depends(get_current_user)
 ) -> list[MessageResponse]:
-    responses = []
+    slack_access_token = ''
+
+    if has_slack(messages):
+        encrypted_token = (
+            supabase_client.table("slack_settings")
+            .select("access_token")
+            .eq("user_id", user.id)
+            .execute()
+        ).data[0]["access_token"]
+        # 複合化
+        slack_access_token = decrypt(encrypted_token)
 
     logger.info(f"get_messages: {messages}")
     logger.info(f"user: {user}")
 
+    responses = []
     for message in messages:
         if message.app.SLACK:
             try:
                 responses.append(
                     get_slack_message(
-                        user_id=user.id,
+                        slack_access_token=slack_access_token,
                         server_id=message.server_id,
                         channel_id=message.channel_id,
                         message_id=message.message_id,
@@ -74,3 +87,10 @@ async def predict(
     priority = prioritize_message(text)
 
     return {"sentiment": emoji, "priority": priority}
+
+
+def has_slack(messages: list[Message]) -> bool:
+    for message in messages:
+        if message.app.SLACK:
+            return True
+    return False

@@ -1,23 +1,12 @@
 from datetime import datetime
 
-from src.decode import decrypt
 from slack_sdk import WebClient
 from src.const.message import MessageResponse
-from src.app_setting import supabase_client
 
 
 def get_slack_message(
-    user_id: str, server_id: str, channel_id: str, message_id: str
+    slack_access_token: str, server_id: str, channel_id: str, message_id: str
 ) -> MessageResponse:
-    # 暗号化されたトークンを取得
-    encrypted_token = (
-        supabase_client.table("slack_settings")
-        .select("access_token")
-        .eq("user_id", user_id)
-        .execute()
-    ).data[0]["access_token"]
-    # 複合化
-    slack_access_token = decrypt(encrypted_token)
 
     client = WebClient(token=slack_access_token)
 
