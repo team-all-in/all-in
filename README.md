@@ -1,8 +1,16 @@
+<br />
 <div align="center">
-  <img alt="GitHub Repo stars" src="./assets/all-in.svg">
+  <img alt="ALL IN" src="./assets/all-in.svg" width="200px" />
   <p>すべての会話を、ひとつの場所に。</p>
 </div>
 
+<br />
+<div align="center" >
+  <a href="https://x.com/tech_summercamp/status/1835584588443451458" target="_blank">
+    <img src="./assets/trophy.png" width="100px" />
+    <p>Tech.SummerCamp 2024 <br />最優秀賞 受賞</p>
+  </a>
+</div>
 <br />
 
 <p align="center">
@@ -10,7 +18,7 @@
   <img src="https://img.shields.io/github/last-commit/team-all-in/all-in" />
   <img src="https://img.shields.io/github/issues/team-all-in/all-in" />
   <img src="https://img.shields.io/github/repo-size/team-all-in/all-in" />
-  <img src="https://img.shields.io/github/stars/team-all-in/all-in">
+  <img src="https://img.shields.io/github/stars/team-all-in/all-in" />
 </p>
 
 <p align="center">
@@ -42,5 +50,5 @@
 
 <div align="center">
   <h2>Architecture</h2>
-  <img src="./assets/architecture.png">
+  <img src="./assets/architecture.png" />
 </div>

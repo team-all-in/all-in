@@ -4,9 +4,10 @@ import Image from 'next/image';
 import { buttonVariants } from '~/components/ui/button';
 import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
-import { GenerateMessageDialog } from '../gen-message/dialog';
+import { GenerateMessageDialog } from '../../gen-message/dialog';
 import AccountIcon from './account-icon';
 import { type AppProps, AppsProps, defaultAppProps } from './app-type';
+import DeleteButton from './delete-button';
 import Label from './label';
 import MarkAsReadButton from './mark-as-read-button';
 
@@ -81,6 +82,7 @@ const MessageItem: NextPage<Message> = ({
             >
               元のメッセージを見る
             </a>
+            {app !== 'github' && <DeleteButton id={id} />}
           </div>
         </div>
       </div>

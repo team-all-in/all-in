@@ -1,19 +1,21 @@
 # syntax docs: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
-name: New API Issue
-description: APIのIssueの作成
-title: "[API]: "
-labels: ["api"]
+name: New Web Issue
+description: WebのIssueの作成
+title: "[Web]: "
+labels: ["web"]
 projects: ["team-all-in/1"]
 body:
   - type: dropdown
-    id: api-type
+    id: page
     attributes:
-      label: 作成するAPIのタイプ
+      label: ページ
       options:
-        - slack
-        - discord
-        - github-api
-        - other
+        - /
+        - /inbox
+        - /settings
+        - その他
+    validations:
+      required: true
     
   - type: textarea
     id: about

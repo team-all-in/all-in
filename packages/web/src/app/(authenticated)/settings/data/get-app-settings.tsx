@@ -3,6 +3,18 @@
 import { createClient } from '~/libs/supabase/server';
 import { getUser } from '~/server/auth/data';
 
+export const getAppSettings = async () => {
+  const discord = await checkDiscordSettings();
+  const slack = await checkSlackSettings();
+  const github = await checkGithubSettings();
+
+  return {
+    discord,
+    slack,
+    github,
+  };
+};
+
 export const checkDiscordSettings = async () => {
   const supabase = createClient();
 
