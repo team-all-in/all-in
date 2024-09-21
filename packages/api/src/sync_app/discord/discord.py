@@ -1,6 +1,7 @@
 import discord
 from src.logger import newLogger
 from src.sync_app.discord.discord_api import discord_api_url
+from src.const.message import MessageResponse
 from dotenv import load_dotenv, find_dotenv
 import os
 
@@ -11,8 +12,8 @@ from requests.exceptions import HTTPError
 load_dotenv(find_dotenv())
 logger = newLogger('discord')
 
-url: str = os.getenv("SUPABASE_URL")
-key: str = os.getenv("SUPABASE_ANON_KEY")
+url = os.getenv("SUPABASE_URL")
+key = os.getenv("SUPABASE_ANON_KEY")
 
 supabase: Client = create_client(url, key)
 
@@ -32,8 +33,8 @@ priority_rule = {
 
 
 def get_discord_message(
-    server_id: str, channel_id, message_id: str
-) -> dict:
+    server_id: str, channel_id: str, message_id: str
+) -> MessageResponse:
     url = f"{discord_api_url}/channels/{channel_id}/messages/{message_id}"
     try:
         message = requests.get(url, headers=headers).json()
