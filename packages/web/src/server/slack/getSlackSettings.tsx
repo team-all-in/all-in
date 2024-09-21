@@ -2,7 +2,6 @@
 
 import { createClient } from '~/libs/supabase/server';
 import { getUser } from '../auth/data';
-
 // 連携してるか確認するためにSlack連携情報を取得する
 export const getSlackSettings = async () => {
   const user = await getUser();
