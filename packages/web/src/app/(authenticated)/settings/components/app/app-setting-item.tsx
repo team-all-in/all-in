@@ -26,7 +26,7 @@ export default function AppSettingItem({ app, image, label, className, isEnabled
         </div>
       </AccordionTrigger>
       <AccordionContent className='sm:pl-6 flex flex-col gap-6'>
-        <p>{isEnabled ? "連携したチャンネルでメンションされたメッセージを取得します。" : "未読の通知を取得します。"} <br/> ALL INが通知の内容を保存することはありませんでご安心ください。</p>
+        <p>{app === 'github' ? "未読の通知を取得します。": "連携したチャンネルでメンションされたメッセージを取得します。"} <br/> ALL INが通知の内容を保存することはありませんでご安心ください。</p>
         <AccountConnectionSwitcher app={app} isEnabled={isEnabled} deleteAction={deleteAction} isPending={isPending}/>
       </AccordionContent>
     </AccordionItem>
