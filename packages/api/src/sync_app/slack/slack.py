@@ -7,7 +7,6 @@ from src.const.message import MessageResponse
 def get_slack_message(
     slack_access_token: str, server_id: str, channel_id: str, message_id: str
 ) -> MessageResponse:
-
     client = WebClient(token=slack_access_token)
 
     # サーバー
