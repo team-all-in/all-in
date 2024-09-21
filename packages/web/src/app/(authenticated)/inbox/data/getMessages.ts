@@ -37,6 +37,7 @@ export const getMessages = async ({
       if (error) {
         console.error('error', error);
         return;
+        // test
       }
 
       if (data) {
