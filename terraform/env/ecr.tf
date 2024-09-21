@@ -1,6 +1,9 @@
 resource "aws_ecr_repository" "all_in_api" {
   name                 = "all_in_api"
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "all_in_api" {
@@ -29,7 +32,10 @@ EOF
 
 resource "aws_ecr_repository" "all_in_api_slack" {
   name                 = "all_in_api_slack"
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "all_in_api_slack" {
@@ -58,7 +64,10 @@ EOF
 
 resource "aws_ecr_repository" "all_in_api_discord" {
   name                 = "all_in_api_discord"
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "all_in_api_discord" {
