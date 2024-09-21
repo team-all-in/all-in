@@ -15,7 +15,7 @@ const AppType = [
     name: 'Slack',
     img: SlackImg,
     backgroundColorClass: 'bg-white',
-    textColor: 'primary',
+    textColor: 'black',
   },
   {
     type: 'github',
