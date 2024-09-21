@@ -21,10 +21,10 @@
 
 # Branch pattern
 🚀 Feature:
-  - head-branch: ['^feature/', '^feat/']
+  - head-branch: ['.*feature.*', '.*feat.*']
 🛠️ Fix:
-  - head-branch: ['^fix/']
+  - head-branch: ['.*fix.*']
 🚨 Hot Fix:
-  - head-branch: ['^hotfix/']
+  - head-branch: ['.*hotfix.*']
 🔄 Refactor:
-  - head-branch: ['^refactor/']
+  - head-branch: ['.*refactor.*']
