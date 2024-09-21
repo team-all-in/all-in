@@ -1,5 +1,7 @@
 import logging
+from typing import Annotated
 
+from gotrue.types import User
 from fastapi import Depends
 from src.app_setting import app, get_current_user
 from src.const.message import Message, MessageResponse
@@ -7,7 +9,6 @@ from src.predict.emotion.emotion import analyze_emotion
 from src.predict.priority.priority import prioritize_message
 from src.sync_app.discord.discord import get_discord_message
 from src.sync_app.slack.slack import get_slack_message
-
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -27,7 +28,7 @@ async def auth_check(
 
 @app.post("/messages")
 async def get_messages(
-    messages: list[Message], user=Depends(get_current_user)
+    messages: list[Message], user: Annotated[User, Depends(get_current_user)]
 ) -> list[MessageResponse]:
     responses = []
 
@@ -47,14 +48,14 @@ async def get_messages(
                 logger.error('slack server error')
                 logger.error(e)
 
-        if message.app.DISCORD:
-            responses.append(
-                get_discord_message(
-                    server_id=message.server_id,
-                    channel_id=message.channel_id,
-                    message_id=message.message_id,
-                )
-            )
+        # if message.app.DISCORD:
+        #     responses.append(
+        #         get_discord_message(
+        #             server_id=message.server_id,
+        #             channel_id=message.channel_id,
+        #             message_id=message.message_id,
+        #         )
+        #     )
 
     return responses
 
