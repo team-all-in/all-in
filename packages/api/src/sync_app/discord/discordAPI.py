@@ -43,15 +43,12 @@ def get_discord_message(
         "app": "discord",
         "sender_image": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}",
         "sender_name": message["author"]["global_name"],
-        "server_image": f"https://cdn.discordapp.com/icons/{guild['id']}/{guild['icon']}.png",  # 後で実装. 別のAPIで取得する（済）
-        "server_name": guild['name'],  # 後で実装. 別のAPIで取得する（済）
-        "channel_name": channel_name,  # 後で実装. 別のAPIで取得する（済？）
+        "server_image": f"https://cdn.discordapp.com/icons/{guild['id']}/{guild['icon']}.png",
+        "server_name": guild['name'],
+        "channel_name": channel_name,
         "content": message["content"],
         "message_link": f"https://discord.com/channels/{server_id}/{channel_id}/{message_id}",
         "send_at": message["timestamp"],
     }
-    print("response: ", response)
-    # sender_imageがNoneのときはデフォルト画像を設定したい
-
     return response
 
