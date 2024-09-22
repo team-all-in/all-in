@@ -29,7 +29,7 @@ priority_rule = {
 
 
 def get_discord_message(
-    server_id: int, channel_id: int, message_id: int
+    server_id: str, channel_id: str, message_id: str
 ) -> dict:
     message = requests.get(
         f'https://discord.com/api/v10/channels/{channel_id}/messages/{message_id}', headers=headers).json()
@@ -51,4 +51,3 @@ def get_discord_message(
         "send_at": message["timestamp"],
     }
     return response
-
