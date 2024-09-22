@@ -5,7 +5,7 @@ from src.app_setting import app, get_current_user
 from src.const.message import Message, MessageResponse
 from src.predict.emotion.emotion import analyze_emotion
 from src.predict.priority.priority import prioritize_message
-from packages.api.src.sync_app.discord.discordAPI import get_discord_message
+from src.sync_app.discord.discordAPI import get_discord_message
 from src.sync_app.slack.slack import get_slack_message
 
 
