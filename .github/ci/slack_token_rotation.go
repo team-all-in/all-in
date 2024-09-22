@@ -68,7 +68,6 @@ func refreshToken(refreshToken string) (slackResponse slackTokenResponse, err er
 	}
 
 	err = json.Unmarshal(body, &slackResponse)
-	fmt.Println(slackResponse)
 	if err != nil {
 		return slackResponse, fmt.Errorf("marshal slack response. %s", err)
 	}
