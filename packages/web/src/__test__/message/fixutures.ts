@@ -1,5 +1,5 @@
 import type { Database } from '~/libs/types/database';
-import type { Message } from '~/libs/types/message';
+import type { MessageResponse } from '~/libs/types/message';
 
 export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Row'][] = [
   // Entry 1
@@ -13,6 +13,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '😊',
     server_id: 'T07N3HCA1S1',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-15T01:30:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543210',
   },
   // Entry 2
   {
@@ -25,6 +27,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '😱',
     server_id: 'T07N3HCA1S2',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-15T05:45:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543211',
   },
   // Entry 3
   {
@@ -37,6 +41,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🎉',
     server_id: 'T07N3HCA1S3',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-16T00:15:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543212',
   },
   // Entry 4
   {
@@ -49,6 +55,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🔧',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-16T07:20:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543213',
   },
   // Entry 5
   {
@@ -61,6 +69,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '📈',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-17T02:00:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543214',
   },
   // Entry 6
   {
@@ -73,6 +83,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🔒',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-17T09:30:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543215',
   },
   // Entry 7
   {
@@ -85,6 +97,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '💡',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-17T23:45:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543216',
   },
   // Entry 8
   {
@@ -97,6 +111,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🚀',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-19T00:00:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543217',
   },
   // Entry 9
   {
@@ -109,6 +125,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '📅',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-20T01:00:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543218',
   },
   // Entry 10
   {
@@ -121,6 +139,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🐛',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-23T02:15:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543219',
   },
   // Entry 11
   {
@@ -133,6 +153,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '👍',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-24T00:30:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543220',
   },
   // Entry 12
   {
@@ -145,6 +167,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🔥',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-24T05:00:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543221',
   },
   // Entry 13
   {
@@ -157,6 +181,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '✨',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-25T01:15:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543222',
   },
   // Entry 14
   {
@@ -169,6 +195,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '📢',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-25T06:45:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543223',
   },
   // Entry 15
   {
@@ -181,6 +209,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '💭',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-26T00:00:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543224',
   },
   // Entry 16
   {
@@ -193,6 +223,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🚨',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-26T08:30:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543225',
   },
   // Entry 17
   {
@@ -205,6 +237,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '📎',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-27T23:15:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543226',
   },
   // Entry 18
   {
@@ -217,6 +251,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🍀',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-28T03:00:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543227',
   },
   // Entry 19
   {
@@ -229,6 +265,8 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '❗',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-29T07:45:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543228',
   },
   // Entry 20
   {
@@ -241,10 +279,12 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
     sentiment: '🔔',
     server_id: 'T07N3HCA1S4',
     user_id: '4c898773-8d48-4408-a6b8-d28e0eea4b69',
+    send_at: '2024-09-30T00:00:00Z',
+    message_link: 'https://slack.com/archives/C01234ABCD/p9876543229',
   },
 ];
 
-export const dummyMessageResponse: Message[] = [
+export const dummyMessageResponse: MessageResponse[] = [
   // Entry 1
   {
     id: '1726422356.158001',
@@ -255,8 +295,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: 'SlackのOAuthどうなってんだ',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543210',
-    send_at: '2024-09-15T01:30:00Z',
   },
   // Entry 2
   {
@@ -268,8 +306,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'みんな早起きだな〜',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543211',
-    send_at: '2024-09-15T05:45:00Z',
   },
   // Entry 3
   {
@@ -281,8 +317,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: 'はや！',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543212',
-    send_at: '2024-09-16T00:15:00Z',
   },
   // Entry 4
   {
@@ -294,8 +328,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: 'メッセージ一覧できたよー',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543213',
-    send_at: '2024-09-16T07:20:00Z',
   },
   // Entry 5
   {
@@ -307,8 +339,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: '感情分析できた！',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543214',
-    send_at: '2024-09-17T02:00:00Z',
   },
   // Entry 6
   {
@@ -320,8 +350,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: 'インフラできたぜ😎',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543215',
-    send_at: '2024-09-17T09:30:00Z',
   },
   // Entry 7
   {
@@ -333,8 +361,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'random',
     content: 'Discordどうなってんだあ',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543216',
-    send_at: '2024-09-17T23:45:00Z',
   },
   // Entry 8
   {
@@ -346,8 +372,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'フロントとバックつなぎますよー',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543217',
-    send_at: '2024-09-19T00:00:00Z',
   },
   // Entry 9
   {
@@ -359,8 +383,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: 'メッセージ取得できたあ！いろんな情報とれるなあ',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543218',
-    send_at: '2024-09-20T01:00:00Z',
   },
   // Entry 10
   {
@@ -372,8 +394,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'あれ、SlackのOAuth権限エラーでできない。。チームも選べない。。。',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543219',
-    send_at: '2024-09-23T02:15:00Z',
   },
   // Entry 11
   {
@@ -385,8 +405,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: '設定わかりづらずぎるーー',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543220',
-    send_at: '2024-09-24T00:30:00Z',
   },
   // Entry 12
   {
@@ -398,8 +416,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'dev',
     content: 'Slackのチーム選べるようになったあああ',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543221',
-    send_at: '2024-09-24T05:00:00Z',
   },
   // Entry 13
   {
@@ -411,8 +427,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'できてますねー',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543222',
-    send_at: '2024-09-25T01:15:00Z',
   },
   // Entry 14
   {
@@ -424,8 +438,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'Slackちゃんとできてそう！',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543223',
-    send_at: '2024-09-25T06:45:00Z',
   },
   // Entry 15
   {
@@ -437,8 +449,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'メッセージ取得できてるねー',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543224',
-    send_at: '2024-09-26T00:00:00Z',
   },
   // Entry 16
   {
@@ -450,8 +460,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'Discordもできてる！',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543225',
-    send_at: '2024-09-26T08:30:00Z',
   },
   // Entry 17
   {
@@ -463,8 +471,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: '発表がんばってー！',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543226',
-    send_at: '2024-09-26T23:15:00Z',
   },
   // Entry 18
   {
@@ -476,8 +482,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'がんばるぞー',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543227',
-    send_at: '2024-09-28T03:00:00Z',
   },
   // Entry 19
   {
@@ -489,8 +493,6 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: '緊張するー',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543228',
-    send_at: '2024-09-29T07:45:00Z',
   },
   // Entry 20
   {
@@ -502,7 +504,5 @@ export const dummyMessageResponse: Message[] = [
     server_name: 'ALL IN',
     channel_name: 'rondom',
     content: 'この後の打ち上げ楽しみ',
-    message_link: 'https://slack.com/archives/C01234ABCD/p9876543229',
-    send_at: '2024-09-30T00:00:00Z',
   },
 ];
