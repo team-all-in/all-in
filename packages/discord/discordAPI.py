@@ -64,11 +64,14 @@ async def on_message(message):
                 "channel_id": message.channel.id,
                 "sentiment": sentiment,
                 "priority": priority,
-                "send_at": message.created_at,
-                "message_link": 'https://discord.com/channels/{message.guild.id}/{message.channel.id}/{message.id}'
+                "send_at": message.created_at.strftime(
+                    "%Y-%m-%dT%H:%M:%SZ"
+                ),
+                "message_link": f'https://discord.com/channels/{message.guild.id}/{message.channel.id}/{message.id}'
             })
         else:
             continue
+
     supabase_client.table("messages").insert(messages).execute()
 
 if __name__ == "__main__":
