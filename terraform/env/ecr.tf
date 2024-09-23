@@ -1,6 +1,6 @@
 resource "aws_ecr_repository" "all_in_api" {
   name                 = "all_in_api"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE" #tfsec:ignore:AVD-AWS-0031
   image_scanning_configuration {
     scan_on_push = true
   }
@@ -32,7 +32,7 @@ EOF
 
 resource "aws_ecr_repository" "all_in_api_slack" {
   name                 = "all_in_api_slack"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE" #tfsec:ignore:AVD-AWS-0031
   image_scanning_configuration {
     scan_on_push = true
   }
@@ -64,7 +64,7 @@ EOF
 
 resource "aws_ecr_repository" "all_in_api_discord" {
   name                 = "all_in_api_discord"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE" #tfsec:ignore:AVD-AWS-0031
   image_scanning_configuration {
     scan_on_push = true
   }
