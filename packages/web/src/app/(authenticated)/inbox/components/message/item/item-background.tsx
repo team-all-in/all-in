@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React, { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
 import { AppsProps } from './app-type';
 
@@ -10,15 +11,13 @@ export default function ItemBackground({
   children: ReactNode;
   app: Message['app'];
 }) {
-  const appVarient = AppsProps[app];
+  const appVariant = AppsProps[app];
   return (
-    <div
-      className={`relative flex gap-4 overflow-hidden rounded-xl border p-4 ${appVarient.itemClass}`}
-    >
-      {children}
+    <div className={cn('relative overflow-hidden rounded-xl border p-4', appVariant.itemClass)}>
+      <div className='relative z-10 flex gap-4'>{children}</div>
       <Image
-        className='-bottom-3 absolute right-12 z-0 opacity-50'
-        src={appVarient.img}
+        className='-bottom-3 absolute right-12 opacity-50'
+        src={appVariant.img}
         width={160}
         height={160}
         alt=''
