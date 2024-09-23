@@ -43,8 +43,11 @@ const Mobile = ({ message }: { message: Message }) => {
 
 const Desktop = ({ message }: { message: Message }) => {
   return (
-    <div className='hidden sm:block'>
+    <div className='group relative hidden sm:block'>
       <Item message={message} />
+      <div className='-top-2 absolute right-16 z-30 border bg-white p-2 text-black opacity-0 transition-opacity duration-200 group-hover:opacity-100'>
+        action
+      </div>
     </div>
   );
 };
