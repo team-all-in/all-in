@@ -16,10 +16,10 @@ export default function ItemBackground({
     <div className={cn('relative overflow-hidden rounded-xl border p-4', appVariant.itemClass)}>
       <div className='relative z-10 flex gap-4'>{children}</div>
       <Image
-        className='-bottom-3 absolute right-12 opacity-50'
+        className='-bottom-8 absolute right-12 aspect-square opacity-50'
         src={appVariant.img}
-        width={160}
-        height={160}
+        width={150}
+        height={150}
         alt=''
       />
     </div>
