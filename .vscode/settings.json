@@ -7,5 +7,16 @@
   },
   "editor.quickSuggestions": {
     "strings": "on"
+  },
+
+  "ruff.lint.args": [
+    "--ignore=E201,E202,E225,E226,E501",
+  ],
+  "[python]": {
+      "editor.defaultFormatter": "charliermarsh.ruff",
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit",
+      }
   }
 }
