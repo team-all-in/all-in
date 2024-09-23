@@ -18,15 +18,17 @@ const AccountIcon: NextPage<Props> = ({ sender_image, server_image }) => {
           'flex aspect-square items-center justify-center overflow-hidden rounded-full bg-white'
         }
       />
-      <Image
-        src={server_image}
-        width={20}
-        height={20}
-        alt=''
-        className={
-          '-right-1 -bottom-2 absolute aspect-square rounded-sm border-none bg-background shadow-none'
-        }
-      />
+      {server_image && (
+        <Image
+          src={server_image}
+          width={20}
+          height={20}
+          alt=''
+          className={
+            '-bottom-1 absolute right-0 aspect-square rounded-sm border-none bg-background shadow-none'
+          }
+        />
+      )}
     </div>
   );
 };
