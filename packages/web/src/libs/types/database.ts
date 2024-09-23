@@ -9,23 +9,31 @@ export type Database = {
           discord_member_id: string | null;
           id: number;
           slack_member_id: string | null;
-          user_id: string | null;
+          user_id: string;
         };
         Insert: {
           created_at?: string;
           discord_member_id?: string | null;
           id?: number;
           slack_member_id?: string | null;
-          user_id?: string | null;
+          user_id: string;
         };
         Update: {
           created_at?: string;
           discord_member_id?: string | null;
           id?: number;
           slack_member_id?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'all-in-relation_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: true;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       discord_settings: {
         Row: {
@@ -95,7 +103,9 @@ export type Database = {
           created_at: string;
           id: string;
           message_id: string;
+          message_link: string | null;
           priority: number | null;
+          send_at: string | null;
           sentiment: string | null;
           server_id: string | null;
           user_id: string;
@@ -106,7 +116,9 @@ export type Database = {
           created_at?: string;
           id?: string;
           message_id: string;
+          message_link?: string | null;
           priority?: number | null;
+          send_at?: string | null;
           sentiment?: string | null;
           server_id?: string | null;
           user_id: string;
@@ -117,7 +129,9 @@ export type Database = {
           created_at?: string;
           id?: string;
           message_id?: string;
+          message_link?: string | null;
           priority?: number | null;
+          send_at?: string | null;
           sentiment?: string | null;
           server_id?: string | null;
           user_id?: string;
