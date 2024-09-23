@@ -42,13 +42,18 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:PutImage",
       "ecr:InitiateLayerUpload",
       "ecr:CompleteLayerUpload",
-      "ecr:BatchCheckLayerAvailability"
+      "ecr:BatchCheckLayerAvailability",
+      "ssm:DescribeParameters",
+      "ssm:GetParameter",
+      "ssm:PutParameter",
     ]
     effect = "Allow"
     resources = [
       data.terraform_remote_state.all_in_env.outputs.ecr_arn,
       data.terraform_remote_state.all_in_env.outputs.slack_ecr_arn,
       data.terraform_remote_state.all_in_env.outputs.discord_ecr_arn,
+      data.aws_ssm_parameter.slack_bot_token.arn,
+      data.aws_ssm_parameter.slack_refresh_token.arn,
     ]
   }
 }

@@ -14,5 +14,5 @@ cp .env.sample .env
 # How to Run
 ```
 docker build -t all-in-api .
-docker run -v .:/app -p 8080:8080 all-in-api
+docker run -v .:/app -p 8000:8000 all-in-api
 ```
