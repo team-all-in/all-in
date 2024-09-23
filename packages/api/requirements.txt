@@ -35,6 +35,7 @@ frozenlist==1.4.1
     #   aiohttp
     #   aiosignal
 discord
+pyyaml
 requests
 gotrue==2.8.1
     # via supabase

@@ -1,5 +1,7 @@
 import logging
+from typing import Annotated
 
+from gotrue.types import User
 from fastapi import Depends
 from src.app_setting import app, get_current_user
 from src.const.message import Message, MessageResponse, App
@@ -10,27 +12,25 @@ from src.sync_app.slack.slack import get_slack_message
 from src.app_setting import supabase_client
 from src.decode import decrypt
 
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ルートエンドポイント
 @app.get("/")
 async def read_root():
-    return {"message": "hello_world!!"}
+    return {"health": "ok"}
 
 
 @app.get("/auth-check")
 async def auth_check(
-    user = Depends(get_current_user),
+    user=Depends(get_current_user),
 ):
-    print(user.id)
     return {"user": user}
 
 
 @app.post("/messages")
 async def get_messages(
-    messages: list[Message], user = Depends(get_current_user)
+    messages: list[Message], user: Annotated[User, Depends(get_current_user)]
 ) -> list[MessageResponse]:
     slack_access_token = ''
 
@@ -44,11 +44,9 @@ async def get_messages(
         # 複合化
         slack_access_token = decrypt(encrypted_token)
 
-    logger.info(f"get_messages: {messages}")
-    logger.info(f"user: {user}")
-
     responses = []
     for message in messages:
+        logger.info(f"get_message: {message}")
         if message.app == App.SLACK:
             try:
                 responses.append(
@@ -63,18 +61,15 @@ async def get_messages(
                 logger.error('slack server error')
                 logger.error(e)
 
+
         if message.app == App.DISCORD:
-            try:
-                responses.append(
-                    get_discord_message(
-                        server_id=message.server_id,
-                        channel_id=message.channel_id,
-                        message_id=message.message_id,
-                    )
+            responses.append(
+                get_discord_message(
+                    server_id=message.server_id,
+                    channel_id=message.channel_id,
+                    message_id=message.message_id,
                 )
-            except Exception as e:
-                logger.error('discord server error')
-                logger.error(e)
+            )
 
     return responses
 
@@ -91,6 +86,6 @@ async def predict(
 
 def has_slack(messages: list[Message]) -> bool:
     for message in messages:
-        if message.app.SLACK:
+        if message.app == App.SLACK:
             return True
     return False
