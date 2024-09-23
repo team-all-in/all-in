@@ -45,7 +45,7 @@ export default function MessageList({
           />
           <div className='flex w-full flex-col gap-2 p-3'>
             <h2
-              className={`font-bold text-lg ${LabelsProps[Number(date)] ? '' : 'text-primary'}`}
+              className={`font-bold text-sm ${LabelsProps[Number(date)] ? '' : 'text-muted-foreground'}`}
               style={{
                 color: LabelsProps[Number(date)] ? LabelsProps[Number(date)].color : '',
               }}
