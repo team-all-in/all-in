@@ -46,6 +46,7 @@ data "aws_iam_policy_document" "ecr" {
       "ssm:DescribeParameters",
       "ssm:GetParameter",
       "ssm:PutParameter",
+      "apprunner:StartDeployment",
     ]
     effect = "Allow"
     resources = [
@@ -54,6 +55,7 @@ data "aws_iam_policy_document" "ecr" {
       data.terraform_remote_state.all_in_env.outputs.discord_ecr_arn,
       data.aws_ssm_parameter.slack_bot_token.arn,
       data.aws_ssm_parameter.slack_refresh_token.arn,
+      "arn:aws:apprunner:ap-northeast-1:451153100141:service/all_in_slack/a1d29e5b95024ae9bd54357249909875", #all_in_slack data resourceないから直指定
     ]
   }
 }
