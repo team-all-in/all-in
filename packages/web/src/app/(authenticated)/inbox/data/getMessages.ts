@@ -3,7 +3,7 @@
 import { dummyDatabaseMessages, dummyMessageResponse } from '~/__test__/message/fixutures';
 import { createClient } from '~/libs/supabase/server';
 import type { Database } from '~/libs/types/database';
-import type { Message } from '~/libs/types/message';
+import type { Message, MessageResponse } from '~/libs/types/message';
 import { getSession, getUser } from '~/server/auth/data';
 import { getGitHubNotifications } from '~/server/github/getNotifications';
 
@@ -46,7 +46,7 @@ export const getMessages = async ({
       databaseMessages.push(...dummyDatabaseMessages);
     }
 
-    const responseMessages: Omit<Message, 'sentiment' | 'priority'>[] = [];
+    const responseMessages: MessageResponse[] = [];
     if (databaseMessages) {
       const transformedData = transformData(databaseMessages);
 
@@ -86,6 +86,8 @@ export const getMessages = async ({
       if (responseMessage) {
         return {
           ...responseMessage,
+          send_at: dbMessage.created_at ?? '',
+          message_link: dbMessage.message_link ?? '',
           sentiment: dbMessage.sentiment ?? '',
           priority: (dbMessage.priority as 1 | 2 | 3 | 4 | 5) ?? 1,
         };
