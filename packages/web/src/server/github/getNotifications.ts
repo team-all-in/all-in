@@ -43,8 +43,6 @@ export const getGitHubNotifications = async (startDate: string): Promise<Message
         server_image: '',
         server_name: '',
         channel_name: '',
-        sentiment: '',
-        priority: 2,
       })),
     );
 
