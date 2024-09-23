@@ -1,12 +1,11 @@
-"use client"
+'use client';
 
+import { useActionState, useEffect, useState } from 'react';
 import { Accordion } from '~/components/ui/accordion';
+import { Skeleton } from '~/components/ui/skeleton';
+import deleteSettingsAction from '../../actions/deleteSettings';
 import { getAppSettings } from '../../data/get-app-settings';
 import AppSettingItem from './app-setting-item';
-import { useActionState } from 'react';
-import { useEffect, useState } from 'react';
-import deleteSettingsAction from '../../actions/deleteSettings';
-import { Skeleton } from '~/components/ui/skeleton';
 
 const buttonList = [
   {
@@ -48,12 +47,12 @@ export default function AppSettingList() {
     };
 
     fetchAppSettings();
-  }, [isPending]);
+  }, []);
 
   return (
-    <div className='border border-neutral rounded-xl px-2'>
+    <div className='rounded-xl border border-neutral px-2'>
       {appSettings && !isPending ? (
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type='single' collapsible className='w-full'>
           {buttonList.map(button => {
             const isEnabled = appSettings[button.app as keyof typeof appSettings];
 
@@ -70,9 +69,9 @@ export default function AppSettingList() {
         </Accordion>
       ) : (
         <div className='flex flex-col gap-2 py-2'>
-          <Skeleton className="w-full h-16" />
-          <Skeleton className="w-full h-16" />
-          <Skeleton className="w-full h-16" />
+          <Skeleton className='h-16 w-full' />
+          <Skeleton className='h-16 w-full' />
+          <Skeleton className='h-16 w-full' />
         </div>
       )}
     </div>
