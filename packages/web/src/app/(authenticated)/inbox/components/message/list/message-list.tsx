@@ -6,7 +6,7 @@ import type { Message } from '~/libs/types/message';
 import { filterMessagesByApp } from '../../../data/filterMessageByApp';
 import { groupMessagesBy } from '../../../data/groupMessagesBy';
 import MessageItem from '../item';
-import { LabelsProps } from '../item/label-type';
+import { LabelsProps } from '../item/header/label-type';
 
 export default function MessageList({
   messages,
