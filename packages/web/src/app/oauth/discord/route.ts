@@ -53,7 +53,7 @@ export async function GET(request: Request) {
   }
 
   // supabaseにaccessToken, refreshTokenを保存
-  const { error } = await supabase.from('discord_settings').upsert(
+  const { error: upsertError } = await supabase.from('discord_settings').upsert(
     {
       user_id,
       access_token: encryptedAccessToken,
@@ -61,11 +61,41 @@ export async function GET(request: Request) {
     },
     { onConflict: 'user_id' },
   );
+  if (upsertError) {
+    console.error('Failed to save tokens', upsertError);
+    return NextResponse.json(
+      { error: 'Failed to save tokens', details: upsertError.message },
+      { status: 500 },
+    );
+  }
+
+  const userResponse = await fetch('https://discord.com/api/users/@me', {
+    headers: {
+      Authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+    },
+  });
+
+  const userData = await userResponse.json();
+
+  if (!userResponse.ok) {
+    return NextResponse.json(
+      { error: 'Failed to fetch user data', details: userData },
+      { status: 500 },
+    );
+  }
+
+  const { error } = await supabase.from('all-in-relation').upsert(
+    {
+      user_id,
+      discord_member_id: userData.username,
+    },
+    { onConflict: 'user_id' },
+  );
 
   if (error) {
-    console.error('Failed to save tokens', error);
+    console.error('Failed to save slack_member_id', error);
     return NextResponse.json(
-      { error: 'Failed to save tokens', details: error.message },
+      { error: 'Failed to save slack_member_id', details: error.message },
       { status: 500 },
     );
   }
