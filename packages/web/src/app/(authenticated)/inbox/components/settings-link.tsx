@@ -1,6 +1,5 @@
-import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import Link from 'next/link';
-import { Avatar } from '~/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { getSession } from '~/server/auth/data';
 
 export default async function SettingsLink() {
