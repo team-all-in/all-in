@@ -1,7 +1,7 @@
 import logging
 import os
 import uuid
-import datetime
+from datetime import datetime
 
 from fastapi import FastAPI
 from threading import Thread
