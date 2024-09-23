@@ -64,6 +64,8 @@ async def on_message(message):
                 "channel_id": message.channel.id,
                 "sentiment": sentiment,
                 "priority": priority,
+                "send_at": message.created_at,
+                "message_link": 'https://discord.com/channels/{message.guild.id}/{message.channel.id}/{message.id}'
             })
         else:
             continue
