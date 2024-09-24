@@ -71,8 +71,3 @@ def get_discord_message(
     message = fetch_message(url, headers)
 
     return create_message_response(message, server_id, channel_id, message_id)
-
-
-# message_id = "1284710314314563737"  # noqa: W292
-# channel_id = "1275808876750700640"  # noqa: W292
-# server_id = "1275808876750700637"  # noqa: W292
