@@ -1,19 +1,19 @@
 import logging
 from typing import Annotated
 
-from gotrue.types import User
 from fastapi import Depends
-from src.app_setting import app, get_current_user
-from src.const.message import Message, MessageResponse, App
+from gotrue.types import User
+from src.app_setting import app, get_current_user, supabase_client
+from src.const.message import App, Message, MessageResponse
+from src.decode import decrypt
 from src.predict.emotion.emotion import analyze_emotion
 from src.predict.priority.priority import prioritize_message
-from src.sync_app.discord.discord import get_discord_message
+from src.sync_app.discord.discordAPI import get_discord_message
 from src.sync_app.slack.slack import get_slack_message
-from src.app_setting import supabase_client
-from src.decode import decrypt
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 # ルートエンドポイント
 @app.get("/")
@@ -32,7 +32,7 @@ async def auth_check(
 async def get_messages(
     messages: list[Message], user: Annotated[User, Depends(get_current_user)]
 ) -> list[MessageResponse]:
-    slack_access_token = ''
+    slack_access_token = ""
 
     if has_slack(messages):
         encrypted_token = (
@@ -58,9 +58,8 @@ async def get_messages(
                     )
                 )
             except Exception as e:
-                logger.error('slack server error')
+                logger.error("slack server error")
                 logger.error(e)
-
 
         if message.app == App.DISCORD:
             responses.append(
