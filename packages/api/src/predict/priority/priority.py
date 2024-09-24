@@ -28,7 +28,7 @@ def prioritize_message(input_text: str):
     try:
         # ChatCompletionを使用して優先順位を生成
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "あなたはメッセージの優先順位を決めるアシスタントです。"},
                 {"role": "user", "content": prompt}
