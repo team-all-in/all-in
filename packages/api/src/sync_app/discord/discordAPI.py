@@ -38,9 +38,7 @@ def create_message_response(
 ) -> MessageResponse:
     channel_name = channel["name"]
     sender = message["author"]
-    sender_name = (
-        sender["global_name"] if sender["global_name"] else sender["username"]
-    )
+    sender_name = sender["global_name"] if sender["global_name"] else sender["username"]
     return {
         "id": message_id,
         "app": "discord",
@@ -55,9 +53,7 @@ def create_message_response(
     }
 
 
-def get_discord_message(
-    server_id: str, channel_id: str, message_id: str
-) -> MessageResponse:
+def get_discord_message(server_id: str, channel_id: str, message_id: str) -> MessageResponse:
     token = os.getenv("DISCORD_BOT_TOKEN")
     if token is None:
         logger.error("DISCORD_BOT_TOKEN is not set")
@@ -66,14 +62,10 @@ def get_discord_message(
     headers = get_headers(token)
     guild_url = f"{discord_api_url}/guilds/{server_id}"
     channel_url = f"{discord_api_url}/channels/{channel_id}"
-    message_url = (
-        f"{discord_api_url}/channels/{channel_id}/messages/{message_id}"
-    )
+    message_url = f"{discord_api_url}/channels/{channel_id}/messages/{message_id}"
 
     guild = fetch_api_response(guild_url, headers)
     channel = fetch_api_response(channel_url, headers)
     message = fetch_api_response(message_url, headers)
 
-    return create_message_response(
-        guild, channel, message, server_id, channel_id, message_id
-    )
+    return create_message_response(guild, channel, message, server_id, channel_id, message_id)
