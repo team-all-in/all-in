@@ -13,7 +13,7 @@ export function mergeMessages(
         return {
           ...responseMessage,
           id: dbMessage.id,
-          send_at: dbMessage.created_at ?? '',
+          send_at: dbMessage.send_at ?? '',
           message_link: dbMessage.message_link ?? '',
           sentiment: dbMessage.sentiment ?? '',
           priority: (dbMessage.priority as Message['priority']) ?? 1,
