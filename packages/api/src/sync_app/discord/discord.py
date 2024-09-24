@@ -41,8 +41,6 @@ def create_message_response(
         "server_name": "",  # 後で実装. 別のAPIで取得する
         "channel_name": "",  # 後で実装. 別のAPIで取得する
         "content": message["content"],
-        "message_link": f"https://discord.com/channels/{server_id}/{channel_id}/{message_id}",
-        "send_at": message["timestamp"],
     }
 
 

@@ -24,13 +24,6 @@ def get_slack_message(
         channel=channel_id, inclusive=True, latest=message_id, limit=1
     )
     context = message["messages"][0]["text"]
-    message_link = (
-        server_info["url"]
-        + "archives/"
-        + channel_id
-        + "/p"
-        + message_id.replace(".", "")
-    )
 
     # 送信者
     member_info = client.users_info(user=message["messages"][0]["user"])
@@ -50,11 +43,6 @@ def get_slack_message(
         "sender_name": sender_name,
         "sender_image": sender_image,
         "content": context,
-        "message_link": message_link,
-        # '2024-09-14 05:45:02'
-        "send_at": datetime.fromtimestamp(float(message_id.split(".")[0])).strftime(
-            "%Y-%m-%dT%H:%M:%SZ"
-        ),
     }
 
 
