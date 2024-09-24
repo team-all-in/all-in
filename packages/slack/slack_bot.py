@@ -1,6 +1,7 @@
 import logging
 import os
 import uuid
+from datetime import datetime
 
 from fastapi import FastAPI
 from threading import Thread
@@ -76,6 +77,16 @@ def handle_message(event):
         .execute()
     ).data
 
+    server_info = app.client.team_info(team=server_id)["team"]
+
+    message_link = (
+        server_info["url"]
+        + "archives/"
+        + channel_id
+        + "/p"
+        + message_id.replace(".", "")
+    )
+
     sentiment, priority = get_priority_and_sentient(message)
 
     for user in user_ids:
@@ -91,6 +102,10 @@ def handle_message(event):
                 "message_id": message_id,
                 "sentiment": sentiment,
                 "priority": priority,
+                "send_at": datetime.fromtimestamp(float(message_id.split(".")[0])).strftime(
+                    "%Y-%m-%dT%H:%M:%SZ"
+                ),
+                "message_link": message_link,
             }
         )
 

@@ -22,5 +22,3 @@ class MessageResponse(BaseModel):
     sender_name: str
     sender_image: str
     content: str
-    message_link: str
-    send_at: str
