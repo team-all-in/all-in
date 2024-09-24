@@ -15,9 +15,10 @@ resource "aws_apprunner_service" "all_in_api" {
           SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhamptc29wanp2ZXlwbXljd3FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYyNDY5ODgsImV4cCI6MjA0MTgyMjk4OH0.JrXfH8vNCla4BzoWVbV6IUPOyrg5PoN239qslbb567Q"
         }
         runtime_environment_secrets = {
-          OPENAI_API_KEY = data.aws_ssm_parameter.openai_api_key.arn
-          KEY            = data.aws_ssm_parameter.all_in_key.arn
-          IV             = data.aws_ssm_parameter.all_in_iv.arn
+          OPENAI_API_KEY    = data.aws_ssm_parameter.openai_api_key.arn
+          KEY               = data.aws_ssm_parameter.all_in_key.arn
+          IV                = data.aws_ssm_parameter.all_in_iv.arn
+          DISCORD_BOT_TOKEN = data.aws_ssm_parameter.discord_bot_token.arn
         }
       }
       image_identifier      = "${aws_ecr_repository.all_in_api.repository_url}:latest"
@@ -27,8 +28,8 @@ resource "aws_apprunner_service" "all_in_api" {
   }
 
   instance_configuration {
-    cpu               = "0.5 vCPU"
-    memory            = "1 GB"
+    cpu               = "0.25 vCPU"
+    memory            = "0.5 GB"
     instance_role_arn = aws_iam_role.app_runner_ssm_role.arn
   }
 

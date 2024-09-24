@@ -1,0 +1,29 @@
+name: PR
+on:
+  - pull_request_target
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  assign-author:
+    name: Assign Author
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: technote-space/assign-author@9558557c5c4816f38bd06176fbc324ba14bb3160
+
+  label:
+    name: Labeler
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9
+        with:
+          configuration-path: .github/labeler.yml
+          sync-labels: true

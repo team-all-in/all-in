@@ -11,8 +11,9 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
 
+  // OAuthキャンセル時'/settings'に戻る
   if (!code) {
-    return NextResponse.json({ error: 'No code provided' }, { status: 400 });
+    return NextResponse.redirect(new URL('/settings', request.url));
   }
 
   const tokenRes = await fetch('https://slack.com/api/oauth.v2.access', {
@@ -83,5 +84,5 @@ export async function GET(request: Request) {
     );
   }
 
-  redirect('/settings');
+  redirect('/settings/success?appName=slack');
 }
