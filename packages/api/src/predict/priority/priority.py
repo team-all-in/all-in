@@ -45,11 +45,11 @@ def prioritize_message(input_text: str):
             priority = priority.replace("優先順位:", "").strip()
             
         priority_number_dict = {
-            "low": 0,
-            "medium": 1,
-            "high": 2,
-            "urgent": 3,
-            "critical": 4
+            "low": 1,
+            "medium": 2,
+            "high": 3,
+            "urgent": 4,
+            "critical": 5,
         }
         
         if priority in priority_number_dict.keys():
