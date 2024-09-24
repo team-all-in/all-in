@@ -1,5 +1,5 @@
 import openai
-from fastapi import HTTPException
+from openai.error import OpenAIError
 from dotenv import load_dotenv
 import os
 
@@ -67,5 +67,5 @@ def prioritize_message(input_text: str):
         else:
             return priority_number_dict["medium"]
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"優先順位決定中にエラーが発生しました: {str(e)}")
+    except OpenAIError as e:
+        raise OpenAIError("Failed to prioritize message") from e
