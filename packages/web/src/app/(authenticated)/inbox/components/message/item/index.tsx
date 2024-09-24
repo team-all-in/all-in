@@ -6,7 +6,7 @@ import MessageItemHeader from './header';
 import ItemBackground from './item-background';
 
 const MessageItem: NextPage<Message> = message => {
-  const { app, sender_image, server_image, content } = message;
+  const { app, sender_image, server_image, content, message_link } = message;
   return (
     <ItemBackground app={app}>
       <div className=''>
@@ -14,7 +14,7 @@ const MessageItem: NextPage<Message> = message => {
       </div>
       <div className='flex-grow space-y-1.5 pr-2.5'>
         <MessageItemHeader message={message} />
-        <MessageItemContent content={content} />
+        <MessageItemContent content={content} message_link={message_link} />
       </div>
     </ItemBackground>
   );
