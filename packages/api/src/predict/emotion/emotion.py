@@ -16,8 +16,8 @@ def analyze_emotion(input_text: str):
         response = openai.ChatCompletion.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "あなたは感情分析を行うアシスタントです。"},
-                {"role": "user", "content": f"次のテキストの感情を一つの絵文字（例: 😂）で教えてください: {input_text}"}
+                {"role": "system", "content": "あなたは感情分析を行うアシスタントです。次のテキストを一つの絵文字（例: 😂）で教えてください"},
+                {"role": "user", "content": {input_text}}
             ]
         )
 
