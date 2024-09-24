@@ -5,7 +5,9 @@ import { API_URL, header } from './configs';
 import type { GitHubNotificationsResponse } from './types';
 import { convertGitHubApiUrlToWebUrl, getToken } from './utils';
 
-export const getGitHubNotifications = async (startDate: string): Promise<Message[] | undefined> => {
+export const fetchGitHubNotifications = async (
+  startDate: string,
+): Promise<Message[] | undefined> => {
   // DBからトークン取得
   const token = await getToken();
 
