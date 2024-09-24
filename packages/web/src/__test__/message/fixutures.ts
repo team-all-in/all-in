@@ -18,7 +18,7 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
   },
   // Entry 2
   {
-    app: 'slack',
+    app: 'discord',
     channel_id: 'C07MELMF3TM',
     created_at: '2024-09-15T14:45:00+09:00',
     id: '123e4567-e89b-12d3-a456-426614174001',
@@ -74,7 +74,7 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
   },
   // Entry 6
   {
-    app: 'slack',
+    app: 'discord',
     channel_id: 'C07MELMF3TM',
     created_at: '2024-09-17T18:30:00+09:00',
     id: '123e4567-e89b-12d3-a456-426614174005',
@@ -116,7 +116,7 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
   },
   // Entry 9
   {
-    app: 'slack',
+    app: 'discord',
     channel_id: 'C07MELMF3TM',
     created_at: '2024-09-20T10:00:00+09:00',
     id: '123e4567-e89b-12d3-a456-426614174008',
@@ -172,7 +172,7 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
   },
   // Entry 13
   {
-    app: 'slack',
+    app: 'discord',
     channel_id: 'C07MELMF3TM',
     created_at: '2024-09-25T10:15:00+09:00',
     id: '123e4567-e89b-12d3-a456-426614174012',
@@ -186,7 +186,7 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
   },
   // Entry 14
   {
-    app: 'slack',
+    app: 'discord',
     channel_id: 'C07MELMF3TM',
     created_at: '2024-09-25T15:45:00+09:00',
     id: '123e4567-e89b-12d3-a456-426614174013',
@@ -214,7 +214,7 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
   },
   // Entry 16
   {
-    app: 'slack',
+    app: 'discord',
     channel_id: 'C07MELMF3TM',
     created_at: '2024-09-26T17:30:00+09:00',
     id: '123e4567-e89b-12d3-a456-426614174015',
@@ -256,7 +256,7 @@ export const dummyDatabaseMessages: Database['public']['Tables']['messages']['Ro
   },
   // Entry 19
   {
-    app: 'slack',
+    app: 'discord',
     channel_id: 'C07MELMF3TM',
     created_at: '2024-09-29T16:45:00+09:00',
     id: '123e4567-e89b-12d3-a456-426614174018',
@@ -365,7 +365,7 @@ export const dummyMessageResponse: MessageResponse[] = [
   // Entry 8
   {
     id: '1726422356.158008',
-    app: 'discord',
+    app: 'slack',
     sender_image: 'https://avatars.githubusercontent.com/u/108620445?s=60&v=4',
     sender_name: 'huku',
     server_image: 'https://avatars.githubusercontent.com/u/180974142?s=200&v=4',
@@ -495,14 +495,14 @@ export const dummyMessageResponse: MessageResponse[] = [
     content: '緊張するー',
   },
   // Entry 20
-  {
-    id: '1726422356.158020',
-    app: 'slack',
-    sender_image: 'https://avatars.githubusercontent.com/u/105954560?s=60&v=4',
-    sender_name: 'たぬキング',
-    server_image: 'https://avatars.githubusercontent.com/u/180974142?s=200&v=4',
-    server_name: 'ALL IN',
-    channel_name: 'rondom',
-    content: 'この後の打ち上げ楽しみ',
-  },
+  // {
+  //   id: "1726422356.158020",
+  //   app: "slack",
+  //   sender_image: "https://avatars.githubusercontent.com/u/105954560?s=60&v=4",
+  //   sender_name: "たぬキング",
+  //   server_image: "https://avatars.githubusercontent.com/u/180974142?s=200&v=4",
+  //   server_name: "ALL IN",
+  //   channel_name: "rondom",
+  //   content: "この後の打ち上げ楽しみ",
+  // },
 ];
