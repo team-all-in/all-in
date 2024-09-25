@@ -44,7 +44,8 @@ export async function updateSession(request: NextRequest) {
     if (
       !request.nextUrl.pathname.startsWith('/inbox') &&
       !request.nextUrl.pathname.startsWith('/settings') &&
-      !request.nextUrl.pathname.startsWith('/oauth')
+      !request.nextUrl.pathname.startsWith('/oauth') &&
+      !request.nextUrl.pathname.startsWith('/api')
     ) {
       const url = request.nextUrl.clone();
       url.pathname = '/inbox';
@@ -55,7 +56,9 @@ export async function updateSession(request: NextRequest) {
   if (!user) {
     if (
       request.nextUrl.pathname.startsWith('/inbox') ||
-      request.nextUrl.pathname.startsWith('/settings')
+      request.nextUrl.pathname.startsWith('/settings') ||
+      request.nextUrl.pathname.startsWith('/oauth') ||
+      request.nextUrl.pathname.startsWith('/api')
     ) {
       // no user, potentially respond by redirecting the user to the login page
       const url = request.nextUrl.clone();
