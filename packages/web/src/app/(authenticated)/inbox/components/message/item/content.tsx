@@ -24,5 +24,5 @@ export default function MessageItemContent({
     );
   }
 
-  return <p className='line-clamp-2 break-all text-sm'>{content}</p>;
+  return <p className='break-all text-sm sm:line-clamp-1'>{content}</p>;
 }

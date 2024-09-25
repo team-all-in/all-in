@@ -14,7 +14,7 @@ export default function ItemBackground({
   const appVariant = AppsProps[app];
   return (
     <div className={cn('relative overflow-hidden rounded-xl border p-4', appVariant.itemClass)}>
-      <div className='relative z-10 flex gap-4 sm:h-[86px]'>{children}</div>
+      <div className='relative z-10 flex gap-4 sm:h-[66px]'>{children}</div>
       <Image
         className='-bottom-8 absolute right-12 aspect-square opacity-50'
         src={appVariant.img}
