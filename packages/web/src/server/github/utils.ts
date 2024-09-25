@@ -2,6 +2,7 @@
 
 import { decryptToken } from '~/libs/encryptions/token';
 import { createClient } from '~/libs/supabase/server';
+import type { Database } from '~/libs/types/database';
 import { getUser } from '~/server/auth/data';
 
 export const getToken = async () => {
@@ -53,3 +54,25 @@ export const convertGitHubApiUrlToWebUrl = (apiUrl: string): string => {
 
   return url.toString();
 };
+
+export async function getStartDate(
+  messages: Database['public']['Tables']['messages']['Row'][],
+): Promise<string> {
+  let earliestMessageDate = new Date(); // 今日の日付
+  for (const msg of messages) {
+    if (msg.app === 'discord' || msg.app === 'slack') {
+      const msgDate = new Date(msg.send_at ?? '');
+      if (msgDate < earliestMessageDate) {
+        earliestMessageDate = msgDate;
+      }
+    }
+  }
+
+  const todayMinusFive = new Date();
+  todayMinusFive.setDate(todayMinusFive.getDate() - 5);
+
+  // 5日前の日付と最も古いメッセージの日付を比較して、より古い日付を取得する。
+  const startDate = earliestMessageDate < todayMinusFive ? earliestMessageDate : todayMinusFive;
+
+  return startDate.toISOString();
+}
