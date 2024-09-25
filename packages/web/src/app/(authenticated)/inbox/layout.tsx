@@ -10,7 +10,6 @@ export default function InboxLayout({
 }>) {
   return (
     <div className='flex h-screen flex-col overflow-hidden sm:flex-row'>
-      {/* <InfoMessage /> */}
       <Suspense fallback={null}>
         <SortPullDown />
       </Suspense>

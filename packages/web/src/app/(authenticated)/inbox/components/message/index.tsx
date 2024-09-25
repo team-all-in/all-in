@@ -1,8 +1,11 @@
-import { getMessages } from '../../data/getMessages';
-import MessageList from './list/message-list';
+import { Suspense } from 'react';
+import DatabaseMessages from './database-messages';
+import MessageSkelton from './skelton';
 
-export default async function Messages() {
-  const messages = await getMessages();
-
-  return <MessageList messages={messages} />;
+export default function Messages() {
+  return (
+    <Suspense fallback={<MessageSkelton />}>
+      <DatabaseMessages />
+    </Suspense>
+  );
 }

@@ -1,5 +1,5 @@
 import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import DiscordImg from './assets/discord.svg';
+import DiscordImg from './assets/discordwhite.svg';
 import GitHub from './assets/github.svg';
 import SlackImg from './assets/slack.svg';
 
@@ -14,7 +14,7 @@ const ButtonColorClasses: Record<ButtonState, string> = {
 };
 
 type AppProps = {
-  img: string | StaticImport | undefined;
+  img: string | StaticImport;
   iconBackgroundColorClass: string;
   hasInvert: boolean;
   itemClass: string;
@@ -45,13 +45,5 @@ const AppsProps: Record<string, AppProps> = {
   },
 };
 
-const defaultAppProps: AppProps = {
-  img: undefined,
-  iconBackgroundColorClass: 'primary',
-  hasInvert: false,
-  itemClass: ' text-black bg-gray-400',
-  buttonBackgroundState: ButtonState.Black,
-};
-
-export { AppsProps, ButtonColorClasses, ButtonState, defaultAppProps };
+export { AppsProps, ButtonColorClasses, ButtonState };
 export type { AppProps };

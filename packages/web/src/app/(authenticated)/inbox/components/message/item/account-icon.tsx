@@ -1,27 +1,30 @@
 import type { NextPage } from 'next';
-import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 
 type Props = {
-  app: string;
-  sender_image: string | StaticImport;
-  className: string;
-  iconBackgroundColor: string;
+  sender_image: string;
+  server_image: string;
 };
 
-const AccountIcon: NextPage<Props> = ({ app, sender_image, className, iconBackgroundColor }) => {
+const AccountIcon: NextPage<Props> = ({ sender_image, server_image }) => {
   return (
-    <div className={`flex items-center gap-4 ${className}`}>
-      <div className='relative'>
-        <div className='flex aspect-square h-10 items-center justify-center overflow-hidden rounded-full bg-white'>
-          <Image src={sender_image} width={40} height={40} alt='tool-icon' />
-        </div>
-        <div
-          className={`-right-2 -bottom-2 absolute flex aspect-square h-6 items-center justify-center overflow-hidden bg-${iconBackgroundColor} rounded-full`}
-        >
-          <Image src={`app-logo/${app}.svg`} alt={`${app}のロゴ`} width={20} height={20} />
-        </div>
-      </div>
+    <div className='relative w-12'>
+      <Avatar>
+        <AvatarImage src={sender_image} alt='' />
+        <AvatarFallback />
+      </Avatar>
+      {server_image && (
+        <Image
+          src={server_image}
+          width={20}
+          height={20}
+          alt=''
+          className={
+            '-bottom-1 absolute right-0 aspect-square rounded-sm border-none bg-background shadow-none'
+          }
+        />
+      )}
     </div>
   );
 };

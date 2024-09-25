@@ -5,19 +5,17 @@ import { API_URL, header } from './configs';
 import type { GitHubNotificationsResponse } from './types';
 import { convertGitHubApiUrlToWebUrl, getToken } from './utils';
 
-export const getGitHubNotifications = async (startDate: string): Promise<Message[] | undefined> => {
+export const fetchGitHubNotifications = async (
+  startDate: string,
+): Promise<Message[] | undefined> => {
   // DBからトークン取得
   const token = await getToken();
-
-  // GitHub APIで通知取得
-  const baseDate = new Date(startDate);
-  const fiveDaysLater = new Date(baseDate.getTime() + 5 * 24 * 60 * 60 * 1000);
 
   try {
     const params = new URLSearchParams({
       all: 'false',
-      since: baseDate.toISOString(),
-      before: fiveDaysLater.toISOString(),
+      since: new Date(startDate).toISOString(),
+      before: new Date().toISOString(),
       per_page: '50',
     });
 
@@ -47,8 +45,6 @@ export const getGitHubNotifications = async (startDate: string): Promise<Message
         server_image: '',
         server_name: '',
         channel_name: '',
-        sentiment: '',
-        priority: 2,
       })),
     );
 
