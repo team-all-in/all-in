@@ -15,6 +15,6 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE 8000 3000
 
 CMD ["python", "slack_bot.py"]
