@@ -1,7 +1,4 @@
-import { Suspense } from 'react';
-
 import { getDatabaseMessages } from '../../data/get-database-messages';
-import MessageList from './message-list';
 import ResponseMessages from './response-messages';
 
 export default async function DatabaseMessages() {
@@ -12,11 +9,9 @@ export default async function DatabaseMessages() {
   }
 
   return (
-    <Suspense fallback={<MessageList messages={result.messages} isPadding />}>
-      <ResponseMessages
-        databaseMessages={result.databaseMessages}
-        githubMessages={result.githubMessages}
-      />
-    </Suspense>
+    <ResponseMessages
+      databaseMessages={result.databaseMessages}
+      githubMessages={result.githubMessages}
+    />
   );
 }
