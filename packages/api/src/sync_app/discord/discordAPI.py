@@ -1,4 +1,5 @@
 import os
+import re
 
 from dotenv import load_dotenv
 import requests
@@ -39,6 +40,7 @@ def create_message_response(
     channel_name = channel["name"]
     sender = message["author"]
     sender_name = sender["global_name"] if sender["global_name"] else sender["username"]
+    content = re.sub(r"<@[^>]+>", "", message["content"].replace("\n", "").replace(" ", ""))
     return {
         "id": message_id,
         "app": "discord",
@@ -47,7 +49,7 @@ def create_message_response(
         "server_image": f"https://cdn.discordapp.com/icons/{guild['id']}/{guild['icon']}.png",
         "server_name": guild["name"],
         "channel_name": channel_name,
-        "content": message["content"],
+        "content": content,
         "message_link": f"https://discord.com/channels/{server_id}/{channel_id}/{message_id}",
         "send_at": message["timestamp"],
     }
