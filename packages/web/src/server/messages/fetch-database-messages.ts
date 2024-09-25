@@ -10,7 +10,7 @@ export const fetchDatabaseMessages = async (): Promise<
   Database['public']['Tables']['messages']['Row'][] | undefined
 > => {
   const offset = 0;
-  const LIMIT = 20;
+  const LIMIT = 5;
 
   const user = await getUser();
   if (!user) {
