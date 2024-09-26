@@ -11,7 +11,5 @@ export const getDatabaseMessages = async () => {
   const date = await getStartDate(databaseMessages);
   const githubMessages = (await fetchGitHubNotifications(date)) ?? [];
 
-  const messages = githubMessages ? [...databaseMessages, ...githubMessages] : databaseMessages;
-
-  return { databaseMessages, githubMessages, messages };
+  return { databaseMessages, githubMessages };
 };

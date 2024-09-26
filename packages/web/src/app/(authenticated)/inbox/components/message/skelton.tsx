@@ -1,4 +1,7 @@
 import { Skeleton } from '~/components/ui/skeleton';
+import type { Database } from '~/libs/types/database';
+import type { Message } from '~/libs/types/message';
+import MessageList from './message-list';
 
 export default function MessageSkelton() {
   const num = 20;
@@ -10,4 +13,12 @@ export default function MessageSkelton() {
       ))}
     </div>
   );
+}
+
+export function AppMessageSkelton({
+  messages,
+}: {
+  messages: (Database['public']['Tables']['messages']['Row'] | Message)[];
+}) {
+  return <MessageList messages={messages} isPadding />;
 }
