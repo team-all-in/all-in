@@ -12,7 +12,7 @@ export default async function UserInfo({
   email: string;
 }) {
   return (
-    <div className='flex flex-wrap items-center justify-between gap-5'>
+    <div className='flex flex-wrap items-center justify-between gap-5 rounded-xl border border-neutral p-8'>
       <div className='flex items-center gap-3'>
         <Avatar className='size-16'>
           <AvatarImage src={avatar_url} alt={full_name[0]} />
