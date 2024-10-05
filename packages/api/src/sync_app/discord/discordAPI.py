@@ -40,7 +40,7 @@ def create_message_response(
     channel_name = channel["name"]
     sender = message["author"]
     sender_name = sender["global_name"] if sender["global_name"] else sender["username"]
-    content = re.sub(r"<@[^>]+> ", "", message["content"]).strip()
+    content = re.sub(r"<@\d+>", "", message["content"]).strip()
     return {
         "id": message_id,
         "app": "discord",

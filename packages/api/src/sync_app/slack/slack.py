@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 
 from slack_sdk import WebClient
 from src.const.message import MessageResponse
@@ -7,7 +8,6 @@ from src.const.message import MessageResponse
 def get_slack_message(
     slack_access_token: str, server_id: str, channel_id: str, message_id: str
 ) -> MessageResponse:
-
     client = WebClient(token=slack_access_token)
 
     # サーバー
@@ -23,7 +23,7 @@ def get_slack_message(
     message = client.conversations_history(
         channel=channel_id, inclusive=True, latest=message_id, limit=1
     )
-    context = message["messages"][0]["text"]
+    context = re.sub(r"<@\d+>", "", message["messages"][0]["text"]).strip()
 
     # 送信者
     member_info = client.users_info(user=message["messages"][0]["user"])
