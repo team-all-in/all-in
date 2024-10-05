@@ -77,10 +77,10 @@ async def get_messages(
 async def predict(
     text: str,
 ):
-    emoji = analyze_emotion(text)["emoji"]
+    emotion = analyze_emotion(text)["emotion"]
     priority = prioritize_message(text)
 
-    return {"sentiment": emoji, "priority": priority}
+    return {"sentiment": emotion, "priority": priority}
 
 
 def has_slack(messages: list[Message]) -> bool:
