@@ -23,7 +23,7 @@ def get_slack_message(
     message = client.conversations_history(
         channel=channel_id, inclusive=True, latest=message_id, limit=1
     )
-    context = re.sub(r"<@\d+>", "", message["messages"][0]["text"]).strip()
+    context = re.sub(r"<@U\d+>", "", message["messages"][0]["text"]).strip()
 
     # 送信者
     member_info = client.users_info(user=message["messages"][0]["user"])
