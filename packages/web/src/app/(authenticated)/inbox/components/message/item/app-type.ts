@@ -18,6 +18,7 @@ type AppProps = {
   iconBackgroundColorClass: string;
   hasInvert: boolean;
   itemClass: string;
+  actionClass: string;
   buttonBackgroundState: ButtonState;
 };
 
@@ -27,6 +28,7 @@ const AppsProps: Record<string, AppProps> = {
     iconBackgroundColorClass: 'white',
     hasInvert: true,
     itemClass: ' text-white bg-blue-800',
+    actionClass: ' border-blue-800 text-blue-800 bg-white',
     buttonBackgroundState: ButtonState.White,
   },
   slack: {
@@ -34,6 +36,7 @@ const AppsProps: Record<string, AppProps> = {
     iconBackgroundColorClass: 'white',
     hasInvert: false,
     itemClass: ' text-black bg-white',
+    actionClass: ' text-black bg-white',
     buttonBackgroundState: ButtonState.Black,
   },
   github: {
@@ -41,6 +44,7 @@ const AppsProps: Record<string, AppProps> = {
     iconBackgroundColorClass: 'background',
     hasInvert: true,
     itemClass: ' text-white bg-black',
+    actionClass: ' text-white bg-black',
     buttonBackgroundState: ButtonState.White,
   },
 };

@@ -36,7 +36,7 @@ export const fetchResponseMessages = async (
       console.error('Failed to fetch messages from backend:', response.statusText);
     }
   } else {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // await new Promise(resolve => setTimeout(resolve, 2000));
     responseMessages.push(...dummyMessageResponse);
   }
 
