@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { getUser } from '~/server/auth/data';
+import ThemeSettingList from './theme-setting-list';
 import UserInfo from './user-info';
 
 export default async function UserSettings() {
@@ -21,6 +22,8 @@ export default async function UserSettings() {
           full_name={user.user_metadata.full_name}
           email={user.user_metadata.email}
         />
+        <p className='my-2 font-bold'>テーマ</p>
+        <ThemeSettingList />
       </CardContent>
     </Card>
   );
