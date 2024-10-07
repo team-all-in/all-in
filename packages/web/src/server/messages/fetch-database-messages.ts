@@ -37,7 +37,7 @@ export const fetchDatabaseMessages = async (): Promise<
       databaseMessages.push(...data);
     }
   } else {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // await new Promise(resolve => setTimeout(resolve, 1000));
     databaseMessages.push(...dummyDatabaseMessages);
   }
 
