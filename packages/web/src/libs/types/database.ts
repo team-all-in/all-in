@@ -37,24 +37,21 @@ export type Database = {
       };
       discord_settings: {
         Row: {
-          access_token: string;
           created_at: string;
           id: number;
-          refresh_token: string;
+          member_id: string;
           user_id: string;
         };
         Insert: {
-          access_token: string;
           created_at?: string;
           id?: number;
-          refresh_token: string;
+          member_id?: string;
           user_id: string;
         };
         Update: {
-          access_token?: string;
           created_at?: string;
           id?: number;
-          refresh_token?: string;
+          member_id?: string;
           user_id?: string;
         };
         Relationships: [
@@ -151,6 +148,7 @@ export type Database = {
           access_token: string;
           created_at: string;
           id: number;
+          member_id: string;
           refresh_token: string;
           user_id: string;
         };
@@ -158,6 +156,7 @@ export type Database = {
           access_token: string;
           created_at?: string;
           id?: number;
+          member_id?: string;
           refresh_token: string;
           user_id: string;
         };
@@ -165,6 +164,7 @@ export type Database = {
           access_token?: string;
           created_at?: string;
           id?: number;
+          member_id?: string;
           refresh_token?: string;
           user_id?: string;
         };
@@ -172,7 +172,7 @@ export type Database = {
           {
             foreignKeyName: 'slack_settings_user_id_fkey';
             columns: ['user_id'];
-            isOneToOne: true;
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
@@ -180,7 +180,23 @@ export type Database = {
       };
     };
     Views: {
-      [_ in never]: never;
+      user_relation: {
+        Row: {
+          discord_member_id: string | null;
+          email: string | null;
+          slack_member_id: string | null;
+          user_id: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'all-in-relation_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: true;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Functions: {
       [_ in never]: never;
