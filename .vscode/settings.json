@@ -18,8 +18,5 @@
       "editor.codeActionsOnSave": {
           "source.organizeImports": "explicit",
       }
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
   }
 }
