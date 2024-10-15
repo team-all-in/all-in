@@ -11,7 +11,7 @@ export const fetchResponseMessages = async (
   databaseMessages: Database['public']['Tables']['messages']['Row'][],
 ) => {
   const responseMessages: MessageResponse[] = [];
-  if (!IS_DUMMY) {
+  if (false) {
     const session = await getSession();
     if (!session?.access_token) {
       return;

@@ -18,7 +18,7 @@ export const fetchDatabaseMessages = async (): Promise<
   }
 
   const databaseMessages: Database['public']['Tables']['messages']['Row'][] = [];
-  if (!IS_DUMMY) {
+  if (false) {
     // 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
     const supabase = createClient();
 
