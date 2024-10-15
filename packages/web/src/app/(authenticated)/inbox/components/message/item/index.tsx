@@ -7,10 +7,10 @@ import MessageItemHeader from './header';
 import ItemBackground from './item-background';
 
 const MessageItem: NextPage<Message> = message => {
-  const { app, sender_image, server_image, content, message_link } = message;
+  const { app, sender_image, server_image, content, message_link, id } = message;
   return (
     <div className='group relative'>
-      <Actions app={app} />
+      <Actions app={app} id={id} message_link={message_link} />
       <ItemBackground app={app}>
         <div>
           <AccountIcon sender_image={sender_image} server_image={server_image} />

@@ -1,12 +1,32 @@
+import { getFormProps, getInputProps, useForm } from '@conform-to/react';
+import { parseWithZod } from '@conform-to/zod';
 import { CircleCheckBig, Sparkles, SquareArrowOutUpRight, Trash2 } from 'lucide-react';
+import { useActionState } from 'react';
+import { z } from 'zod';
+import { markAsReadAction } from '~/app/(authenticated)/inbox/actions/markAsRead';
+import { Input } from '~/components/ui/input';
 import { Separator } from '~/components/ui/separator';
 import { cn } from '~/libs/classes';
 import type { Message } from '~/libs/types/message';
 import { AppsProps } from '../app-type';
 import ActionButton from './action-button';
 
-export default function Actions({ app }: { app: Message['app'] }) {
+export const formSchema = z.object({
+  id: z.string(),
+});
+
+export default function Actions({ app, id, message_link }: { app: Message['app'], id:Message['id'], message_link: Message['message_link'] }) {
+  const [_, formAction, isPending] = useActionState(markAsReadAction, '');
+
+  const [form, fields] = useForm({
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: formSchema });
+    },
+    defaultValue: { id },
+    shouldValidate: 'onBlur',
+  });
   const appVariant = AppsProps[app];
+
   return (
     <div
       className={cn(
@@ -16,16 +36,21 @@ export default function Actions({ app }: { app: Message['app'] }) {
     >
       {app === 'github' ? (
         <>
-          <ActionButton
-            Icon={CircleCheckBig}
-            text='既読を付ける'
-            className='hover:bg-white/10'
-            handleClick={() => console.log('read')}
-          />
+          <form {...getFormProps(form)} action={formAction}>
+            <Input {...getInputProps(fields.id, { type: 'hidden' })} value={id} />
+            <ActionButton
+              Icon={CircleCheckBig}
+              text='既読を付ける'
+              className='hover:bg-white/10'
+              type='submit'
+              disabled={isPending}
+            />
+          </form>
           <ActionButton
             Icon={SquareArrowOutUpRight}
             className='hover:bg-white/10'
             handleClick={() => console.log('read')}
+            type='button'
           />
         </>
       ) : (
@@ -34,17 +59,20 @@ export default function Actions({ app }: { app: Message['app'] }) {
             Icon={Sparkles}
             text='返信を生成する'
             handleClick={() => console.log('read')}
+            type='button'
           />
           <ActionButton
             Icon={SquareArrowOutUpRight}
             className='text-black'
             handleClick={() => console.log('read')}
+            type='button'
           />
           <Separator orientation='vertical' className='mx-1 h-5' />
           <ActionButton
             Icon={Trash2}
             className='text-red-500 hover:bg-red-500/15'
             handleClick={() => console.log('read')}
+            type='button'
           />
         </>
       )}
