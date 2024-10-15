@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function Inbox() {
   return (
     <div className='h-dvh overflow-y-auto p-3'>
-      <Badge variant={'destructive'} className='fixed top-16 right-1/2 translate-x-1/2'>
+      <Badge variant={'destructive'} className='fixed top-16 right-1/2 translate-x-1/2 z-10'>
         <InfoIcon className='size-5 mr-1' />
         SlackとDiscordはダミーデータです
       </Badge>
