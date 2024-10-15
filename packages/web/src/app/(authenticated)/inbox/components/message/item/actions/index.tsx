@@ -49,7 +49,7 @@ export default function Actions({ app, id, message_link }: { app: Message['app']
           <ActionButton
             Icon={SquareArrowOutUpRight}
             className='hover:bg-white/10'
-            handleClick={() => console.log('read')}
+            handleClick={() => window.open(message_link, '_brank')}
             type='button'
           />
         </>
