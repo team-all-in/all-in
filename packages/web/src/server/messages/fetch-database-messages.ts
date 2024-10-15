@@ -1,8 +1,6 @@
 'use server';
 
 import { dummyDatabaseMessages } from '~/__test__/message/fixutures';
-import { IS_DUMMY } from '~/libs/configs';
-import { createClient } from '~/libs/supabase/server';
 import type { Database } from '~/libs/types/database';
 import { getUser } from '~/server/auth/data';
 
@@ -18,24 +16,24 @@ export const fetchDatabaseMessages = async (): Promise<
   }
 
   const databaseMessages: Database['public']['Tables']['messages']['Row'][] = [];
-  if (!IS_DUMMY) {
-    // 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
-    const supabase = createClient();
+  if (false) {
+    // // 今日から20件分のDiscord、SlackメッセージIdをSupabaseから取得する。
+    // const supabase = createClient();
 
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .eq('user_id', user.id)
-      .range(offset, offset + LIMIT - 1);
+    // const { data, error } = await supabase
+    //   .from('messages')
+    //   .select('*')
+    //   .eq('user_id', user.id)
+    //   .range(offset, offset + LIMIT - 1);
 
-    if (error) {
-      console.error('error', error);
-      return;
-    }
+    // if (error) {
+    //   console.error('error', error);
+    //   return;
+    // }
 
-    if (data) {
-      databaseMessages.push(...data);
-    }
+    // if (data) {
+    //   databaseMessages.push(...data);
+    // }
   } else {
     // await new Promise(resolve => setTimeout(resolve, 1000));
     databaseMessages.push(...dummyDatabaseMessages);
