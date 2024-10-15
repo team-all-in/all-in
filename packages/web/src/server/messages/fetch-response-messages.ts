@@ -12,29 +12,29 @@ export const fetchResponseMessages = async (
 ) => {
   const responseMessages: MessageResponse[] = [];
   if (false) {
-    const session = await getSession();
-    if (!session?.access_token) {
-      return;
-    }
+    // const session = await getSession();
+    // if (!session?.access_token) {
+    //   return;
+    // }
 
-    const url = 'https://kctebirgsq.ap-northeast-1.awsapprunner.com/messages';
+    // const url = 'https://kctebirgsq.ap-northeast-1.awsapprunner.com/messages';
 
-    // Discord、SlackメッセージId含めたリクエストをバックエンドに送る。
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify(transformData(databaseMessages)),
-    });
+    // // Discord、SlackメッセージId含めたリクエストをバックエンドに送る。
+    // const response = await fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: `Bearer ${session.access_token}`,
+    //   },
+    //   body: JSON.stringify(transformData(databaseMessages)),
+    // });
 
-    if (response.ok) {
-      const data = await response.json();
-      responseMessages.push(...data);
-    } else {
-      console.error('Failed to fetch messages from backend:', response.statusText);
-    }
+    // if (response.ok) {
+    //   const data = await response.json();
+    //   responseMessages.push(...data);
+    // } else {
+    //   console.error('Failed to fetch messages from backend:', response.statusText);
+    // }
   } else {
     // await new Promise(resolve => setTimeout(resolve, 2000));
     responseMessages.push(...dummyMessageResponse);
